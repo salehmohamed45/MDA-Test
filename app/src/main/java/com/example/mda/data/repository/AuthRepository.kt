@@ -34,7 +34,7 @@ class AuthRepository(
 
     
     fun getAuthUrl(requestToken: String): String {
-        return "https:
+        return "https://www.themoviedb.org/authenticate/$requestToken"
     }
 
     

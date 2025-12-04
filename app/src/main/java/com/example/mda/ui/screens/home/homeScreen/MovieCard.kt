@@ -30,7 +30,7 @@ fun MovieCard(movie: Movie, onClick: (Movie) -> Unit) {
     ) {
         Box {
             AsyncImage(
-                model = "https:
+                model = "https://image.tmdb.org/t/p/w500${movie.posterPath}",
                 contentDescription = movie.title,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
@@ -44,7 +44,7 @@ fun MovieCard(movie: Movie, onClick: (Movie) -> Unit) {
                     .padding(horizontal = 6.dp, vertical = 2.dp)
             ) {
                 Text(
-                    text = "${String.format("%.1f", movie.voteAverage)}",
+                    text = "⭐ ${String.format("%.1f", movie.voteAverage)}",
                     color = Color.White,
                     fontSize = 12.sp
                 )

@@ -177,7 +177,7 @@ fun TMDbWebView(
                         }
 
                         when {
-                            loadUrl.startsWith("https:
+                            loadUrl.startsWith("https://www.themoviedb.org/") &&
                                     !loadUrl.contains("/authenticate/") &&
                                     !loadUrl.contains("/login") &&
                                     !loadUrl.contains("/signup") -> {
@@ -202,7 +202,7 @@ fun TMDbWebView(
                         }
 
                         if (url != null &&
-                            url.startsWith("https:
+                            url.startsWith("https://www.themoviedb.org/") &&
                             !url.contains("/authenticate/") &&
                             !url.contains("/signup") &&
                             !url.contains("/login")) {

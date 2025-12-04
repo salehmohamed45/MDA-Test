@@ -62,8 +62,8 @@ fun MovieCardWithFavorite(
         ) {
             Image(
                 painter = rememberAsyncImagePainter(
-                    posterUrl?.let { "https:
-                        ?: "https:
+                    posterUrl?.let { "https://image.tmdb.org/t/p/w500$it" }
+                        ?: "https://via.placeholder.com/150"
                 ),
                 contentDescription = title,
                 contentScale = ContentScale.Crop,

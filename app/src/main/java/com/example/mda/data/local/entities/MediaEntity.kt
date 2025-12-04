@@ -67,10 +67,10 @@ data class MediaEntity(
         get() = mediaType ?: if (!firstAirDate.isNullOrEmpty() || (title.isNullOrEmpty() && !name.isNullOrEmpty())) "tv" else "movie"
 
     fun getFullPosterUrl(): String? {
-        return posterPath?.let { "https:
+        return posterPath?.let { "https://image.tmdb.org/t/p/w500$it" }
     }
 
     fun getFullBackdropUrl(): String? {
-        return backdropPath?.let { "https:
+        return backdropPath?.let { "https://image.tmdb.org/t/p/original$it" }
     }
 }

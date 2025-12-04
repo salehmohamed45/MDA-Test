@@ -203,7 +203,7 @@ fun MovieCardGrid(popularItem: MediaEntity, onClick: () -> Unit) {
         shape = MaterialTheme.shapes.medium
     ) {
         AsyncImage(
-            model = "https:
+            model = "https://image.tmdb.org/t/p/w500${popularItem.posterPath}",
             contentDescription = popularItem.title ?: popularItem.name,
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -229,7 +229,7 @@ fun MovieCardListItem(item: MediaEntity, onClick: () -> Unit) {
             verticalAlignment = Alignment.Top
         ) {
             AsyncImage(
-                model = "https:
+                model = "https://image.tmdb.org/t/p/w300${item.posterPath}",
                 contentDescription = item.title ?: item.name,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier

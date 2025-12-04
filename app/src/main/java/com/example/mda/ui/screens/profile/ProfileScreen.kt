@@ -94,7 +94,7 @@ fun ProfileScreen(
                         val avatarUrl = account.avatar?.tmdb?.avatarPath
                         if (avatarUrl != null) {
                             AsyncImage(
-                                model = "https:
+                                model = "https://image.tmdb.org/t/p/w200$avatarUrl",
                                 contentDescription = "Avatar",
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier

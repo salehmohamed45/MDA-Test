@@ -38,7 +38,7 @@ fun MovieCardGridWithFavorite(
         Box(modifier = Modifier.fillMaxSize()) {
 
             Image(
-                painter = rememberAsyncImagePainter("https:
+                painter = rememberAsyncImagePainter("https://image.tmdb.org/t/p/w500${movie.posterPath}"),
                 contentDescription = movie.title ?: movie.name ?: "Movie",
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop

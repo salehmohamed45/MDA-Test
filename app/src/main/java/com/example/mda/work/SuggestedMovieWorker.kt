@@ -36,7 +36,7 @@ class SuggestedMovieWorker(
 
             val cached = repo.getAllOnce()
 
-            Log.d("WorkerDebug", "SuggestedMovieWorker found ${cached.size} movies in DB")
+            Log.d("WorkerDebug", "🎬 SuggestedMovieWorker found ${cached.size} movies in DB")
 
             if (cached.isNotEmpty()) {
                 val movie = cached.random()
@@ -49,7 +49,7 @@ class SuggestedMovieWorker(
                 }
 
                 val fullImageUrl = if (movie.posterPath != null) {
-                    "https:
+                    "https://image.tmdb.org/t/p/w500${movie.posterPath}"
                 } else null
 
                 NotificationHelper.sendNotification(

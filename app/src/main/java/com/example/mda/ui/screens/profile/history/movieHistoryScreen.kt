@@ -67,7 +67,7 @@ fun MoviesHistoryScreen(
         ) {
             items(moviesHistory) { movie ->
 
-                val imageUrl = "https:
+                val imageUrl = "https://image.tmdb.org/t/p/w500${movie.backdropPath ?: movie.posterPath ?: ""}"
 
                 Box(
                     modifier = Modifier

@@ -34,7 +34,7 @@ fun ActorProfile(
             .height(430.dp)
     ) {
         Image(
-            painter = rememberAsyncImagePainter("https:
+            painter = rememberAsyncImagePainter("https://image.tmdb.org/t/p/w500$profilePath"),
             contentDescription = name,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()

@@ -67,7 +67,7 @@ fun PrivacyPolicyScreen(
                         onClickButton = {
                             val intent = Intent(
                                 Intent.ACTION_VIEW,
-                                Uri.parse("https:
+                                Uri.parse("https://www.themoviedb.org/privacy-policy")
                             )
                             context.startActivity(intent)
                         }

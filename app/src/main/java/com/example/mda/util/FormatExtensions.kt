@@ -54,7 +54,7 @@ fun Double?.toPercentage(): String {
 
 fun Double?.toRatingString(): String {
     if (this == null || this == 0.0) return "N/A"
-    return String.format(Locale.US, "%.1f", this)
+    return String.format(Locale.US, "%.1f ⭐", this)
 }
 
 fun String?.toYear(): String {

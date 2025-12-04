@@ -65,7 +65,7 @@ fun ActorListItem(
                     .background(MaterialTheme.colorScheme.onSurfaceVariant)
             ) {
                 AsyncImage(
-                    model = "https:
+                    model = "https://image.tmdb.org/t/p/w500${actor.profilePath}",
                     contentDescription = actor.name,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.matchParentSize(),

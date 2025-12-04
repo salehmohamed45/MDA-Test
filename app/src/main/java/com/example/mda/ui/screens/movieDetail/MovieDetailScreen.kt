@@ -415,7 +415,7 @@ fun SimilarItemCard(
     media: MediaEntity,
     onClick: () -> Unit
 ) {
-    val posterUrl = media.posterPath?.let { "https:
+    val posterUrl = media.posterPath?.let { "https://image.tmdb.org/t/p/w342$it" }
     Column(
         modifier = Modifier
             .width(120.dp)
@@ -654,7 +654,7 @@ fun MovieDetailsContent(
         )
     }
     val scroll = rememberScrollState()
-    val bgUrl = "https:
+    val bgUrl = "https://image.tmdb.org/t/p/w780${details.backdropPath ?: details.posterPath ?: ""}"
     val context = LocalContext.current
     var isDarkBackdrop by remember(bgUrl) { mutableStateOf<Boolean?>(null) }
     val isDarkTheme = isSystemInDarkTheme()
@@ -746,7 +746,7 @@ fun MovieDetailsContent(
                     else -> MaterialTheme.colorScheme.onBackground
                 }
 
-                val thumbUrl = details.posterPath?.let { "https:
+                val thumbUrl = details.posterPath?.let { "https://image.tmdb.org/t/p/w185$it" }
                 Surface(
                     shape = MaterialTheme.shapes.medium,
                     color = MaterialTheme.colorScheme.surfaceVariant,
@@ -1305,7 +1305,7 @@ fun ProviderLogosRow(
         Spacer(Modifier.height(6.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             logos.take(10).forEach { lp ->
-                val logoUrl = lp.logoPath?.let { "https:
+                val logoUrl = lp.logoPath?.let { "https://image.tmdb.org/t/p/w185$it" }
                 Surface(
                     shape = MaterialTheme.shapes.medium,
                     color = MaterialTheme.colorScheme.surfaceVariant,
@@ -1411,7 +1411,7 @@ fun MediaTabs(details: MediaEntity) {
                             horizontalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
                             items(items = posters) { path: String ->
-                                val url = "https:
+                                val url = "https://image.tmdb.org/t/p/w500$path"
                                 Surface(
                                     shape = MaterialTheme.shapes.medium,
                                     color = MaterialTheme.colorScheme.surfaceVariant,
@@ -1446,7 +1446,7 @@ fun MediaTabs(details: MediaEntity) {
                             horizontalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
                             items(items = backdrops) { path: String ->
-                                val url = "https:
+                                val url = "https://image.tmdb.org/t/p/w780$path"
                                 Surface(
                                     shape = MaterialTheme.shapes.medium,
                                     color = MaterialTheme.colorScheme.surfaceVariant,

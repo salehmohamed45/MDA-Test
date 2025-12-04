@@ -8,12 +8,12 @@ data class Video(
 ) {
     
     fun getYouTubeUrl(): String {
-        return "https:
+        return "https://www.youtube.com/watch?v=$key"
     }
     
     
     fun getThumbnailUrl(): String {
-        return "https:
+        return "https://img.youtube.com/vi/$key/hqdefault.jpg"
     }
     
     

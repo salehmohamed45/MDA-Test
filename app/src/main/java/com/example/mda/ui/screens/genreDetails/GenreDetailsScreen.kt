@@ -348,7 +348,7 @@ fun MovieCardList(movie: MediaEntity, onClick: () -> Unit) {
             verticalAlignment = Alignment.Top
         ) {
             AsyncImage(
-                model = "https:
+                model = "https://image.tmdb.org/t/p/w300${movie.posterPath}",
                 contentDescription = movie.title ?: movie.name,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier

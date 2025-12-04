@@ -67,7 +67,7 @@ fun BannerSection(
     ) {
         Crossfade(targetState = movie) { currentMovie ->
             AsyncImage(
-                model = "https:
+                model = "https://image.tmdb.org/t/p/w780${currentMovie.posterPath}",
                 contentDescription = currentMovie.title,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()

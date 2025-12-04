@@ -37,7 +37,7 @@ fun ActorPhotosSection(photos: List<Image>) {
             ) {
                 items(photos) { photo ->
                     Image(
-                        painter = rememberAsyncImagePainter("https:
+                        painter = rememberAsyncImagePainter("https://image.tmdb.org/t/p/w500${photo.file_path}"),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier

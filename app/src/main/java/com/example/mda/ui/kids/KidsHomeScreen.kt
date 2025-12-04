@@ -171,8 +171,8 @@ private fun HeroCarousel(
                 Crossfade(targetState = current, label = "HeroCrossfade") { item ->
                     if (item != null) {
                         AsyncImage(
-                            model = item.backdropPath?.let { "https:
-                                ?: item.posterPath?.let { "https:
+                            model = item.backdropPath?.let { "https://image.tmdb.org/t/p/w780$it" }
+                                ?: item.posterPath?.let { "https://image.tmdb.org/t/p/w500$it" },
                             contentDescription = item.title ?: item.name ?: "",
                             contentScale = ContentScale.Crop,
                             modifier = Modifier.fillMaxSize()
@@ -302,8 +302,8 @@ fun KidsPosterCard(
     ) {
         Box(modifier = modifier) {
             AsyncImage(
-                model = media.posterPath?.let { "https:
-                    ?: media.backdropPath?.let { "https:
+                model = media.posterPath?.let { "https://image.tmdb.org/t/p/w500$it" }
+                    ?: media.backdropPath?.let { "https://image.tmdb.org/t/p/w500$it" },
                 contentDescription = media.title ?: media.name ?: "",
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
@@ -318,7 +318,7 @@ fun KidsPosterCard(
                     .padding(horizontal = 6.dp, vertical = 2.dp)
             ) {
                 Text(
-                    text = "${String.format("%.1f", media.voteAverage ?: 0.0)}",
+                    text = "⭐ ${String.format("%.1f", media.voteAverage ?: 0.0)}",
                     color = Color.White,
                     style = MaterialTheme.typography.labelSmall
                 )

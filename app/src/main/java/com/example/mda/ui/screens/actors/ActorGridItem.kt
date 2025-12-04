@@ -34,7 +34,7 @@ fun ActorGridItem(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
-    val imageUrl = actor.profilePath?.let { "https:
+    val imageUrl = actor.profilePath?.let { "https://image.tmdb.org/t/p/w500$it" }
     Log.d("ActorGridItem", "Loading image for ${actor.name}: $imageUrl")
 
     Column(

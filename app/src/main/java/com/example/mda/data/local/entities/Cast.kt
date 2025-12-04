@@ -8,7 +8,7 @@ data class Cast(
 ) {
     
     fun getProfileImageUrl(): String? {
-        return profilePath?.let { "https:
+        return profilePath?.let { "https://image.tmdb.org/t/p/w185$it" }
     }
     
     

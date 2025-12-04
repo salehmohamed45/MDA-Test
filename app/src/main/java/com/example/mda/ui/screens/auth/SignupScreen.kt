@@ -57,7 +57,7 @@ fun SignupScreen(
                     WebView(context).apply {
                         settings.javaScriptEnabled = true
                         webViewClient = WebViewClient()
-                        loadUrl("https:
+                        loadUrl("https://www.themoviedb.org/signup")
                     }
                 },
                 modifier = Modifier.fillMaxSize()

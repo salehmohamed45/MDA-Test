@@ -152,10 +152,10 @@ fun ActorDetailsScreenContent(
 private fun SocialLinks(actor: ActorFullDetails) {
     val context = LocalContext.current
     val items = listOfNotNull(
-        actor.external_ids?.instagram_id?.let { "instagram" to "https:
-        actor.external_ids?.twitter_id?.let { "twitter" to "https:
-        actor.external_ids?.imdb_id?.let { "imdb" to "https:
-        actor.external_ids?.imdb_id?.let { "facebook" to "https:
+        actor.external_ids?.instagram_id?.let { "instagram" to "https://www.instagram.com/$it" },
+        actor.external_ids?.twitter_id?.let { "twitter" to "https://twitter.com/$it" },
+        actor.external_ids?.imdb_id?.let { "imdb" to "https://www.imdb.com/name/$it/" },
+        actor.external_ids?.imdb_id?.let { "facebook" to "https://www.imdb.com/name/$it/" }
 
     )
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {

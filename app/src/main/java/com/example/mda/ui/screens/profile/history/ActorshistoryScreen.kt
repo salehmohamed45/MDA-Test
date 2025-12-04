@@ -92,7 +92,7 @@ fun HistoryScreen(
                                 .background(MaterialTheme.colorScheme.onSurfaceVariant)
                         ) {
                             AsyncImage(
-                                model = "https:
+                                model = "https://image.tmdb.org/t/p/w200${person.profilePath}",
                                 contentDescription = person.name,
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier.matchParentSize(),

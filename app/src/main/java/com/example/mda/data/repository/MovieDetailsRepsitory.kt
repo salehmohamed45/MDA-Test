@@ -38,7 +38,7 @@ private fun overrideTextOnly(baseEn: MediaEntity, localized: MediaEntity): Media
     }
 
     suspend fun getMovieById(id: Int): MediaEntity? = withContext(Dispatchers.IO) {
-        Log.d(TAG, "Fetching movie details for ID: $id")
+        Log.d(TAG, "🎬 Fetching movie details for ID: $id")
         try {
             val enResp = apiService.getMovieDetails(
                 movieId = id,
@@ -48,9 +48,9 @@ private fun overrideTextOnly(baseEn: MediaEntity, localized: MediaEntity): Media
 
             if (enResp.isSuccessful) {
                 val enBody: MovieDetailsResponse? = enResp.body()
-                Log.d(TAG, "Movie EN response: ${enBody?.title}")
-                Log.d(TAG, "Credits: ${enBody?.credits?.cast?.size ?: 0} cast members")
-                Log.d(TAG, "Videos: ${enBody?.videos?.results?.size ?: 0} videos")
+                Log.d(TAG, "✅ Movie EN response: ${enBody?.title}")
+                Log.d(TAG, "📊 Credits: ${enBody?.credits?.cast?.size ?: 0} cast members")
+                Log.d(TAG, "🎥 Videos: ${enBody?.videos?.results?.size ?: 0} videos")
 
                 var entity = enBody?.toMediaEntity("movie") ?: return@withContext null
 
@@ -78,21 +78,21 @@ private fun overrideTextOnly(baseEn: MediaEntity, localized: MediaEntity): Media
                     entity
                 }
 
-                Log.d(TAG, "Saving to database: Cast=${finalEntity.cast?.size}, Videos=${finalEntity.videos?.size}, isFavorite=${finalEntity.isFavorite}")
+                Log.d(TAG, "💾 Saving to database: Cast=${finalEntity.cast?.size}, Videos=${finalEntity.videos?.size}, isFavorite=${finalEntity.isFavorite}")
                 mediaDao.upsert(finalEntity)
                 finalEntity
             } else {
-                Log.e(TAG, "API Error: ${enResp.code()} - ${enResp.message()}")
+                Log.e(TAG, "❌ API Error: ${enResp.code()} - ${enResp.message()}")
                 throw Exception("Failed to load movie details: ${enResp.code()}")
             }
         } catch (e: Exception) {
-            Log.e(TAG, "Exception in getMovieById: ${e.message}", e)
+            Log.e(TAG, "❌ Exception in getMovieById: ${e.message}", e)
             throw e
         }
     }
 
     suspend fun getTvById(id: Int): MediaEntity? = withContext(Dispatchers.IO) {
-        Log.d(TAG, "Fetching TV details for ID: $id")
+        Log.d(TAG, "📺 Fetching TV details for ID: $id")
         try {
             val enResp = apiService.getTvDetails(
                 tvId = id,
@@ -102,9 +102,9 @@ private fun overrideTextOnly(baseEn: MediaEntity, localized: MediaEntity): Media
 
             if (enResp.isSuccessful) {
                 val enBody: MovieDetailsResponse? = enResp.body()
-                Log.d(TAG, "TV EN response: ${enBody?.title}")
-                Log.d(TAG, "Credits: ${enBody?.credits?.cast?.size ?: 0} cast members")
-                Log.d(TAG, "Videos: ${enBody?.videos?.results?.size ?: 0} videos")
+                Log.d(TAG, "✅ TV EN response: ${enBody?.title}")
+                Log.d(TAG, "📊 Credits: ${enBody?.credits?.cast?.size ?: 0} cast members")
+                Log.d(TAG, "🎥 Videos: ${enBody?.videos?.results?.size ?: 0} videos")
 
                 var entity = enBody?.toMediaEntity("tv") ?: return@withContext null
 
@@ -132,15 +132,15 @@ private fun overrideTextOnly(baseEn: MediaEntity, localized: MediaEntity): Media
                     entity
                 }
 
-                Log.d(TAG, "Saving to database: Cast=${finalEntity.cast?.size}, Videos=${finalEntity.videos?.size}, isFavorite=${finalEntity.isFavorite}")
+                Log.d(TAG, "💾 Saving to database: Cast=${finalEntity.cast?.size}, Videos=${finalEntity.videos?.size}, isFavorite=${finalEntity.isFavorite}")
                 mediaDao.upsert(finalEntity)
                 finalEntity
             } else {
-                Log.e(TAG, "API Error: ${enResp.code()} - ${enResp.message()}")
+                Log.e(TAG, "❌ API Error: ${enResp.code()} - ${enResp.message()}")
                 throw Exception("Failed to load tv details: ${enResp.code()}")
             }
         } catch (e: Exception) {
-            Log.e(TAG, "Exception in getTvById: ${e.message}", e)
+            Log.e(TAG, "❌ Exception in getTvById: ${e.message}", e)
             throw e
         }
     }
