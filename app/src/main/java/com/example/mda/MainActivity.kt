@@ -45,6 +45,8 @@ import com.example.mda.localization.LocalizationManager
 import com.example.mda.localization.LanguageProvider
 import com.example.mda.localization.LocalizationKeys
 import com.example.mda.localization.localizedString
+import com.example.mda.localization.LocalizationProvider
+import com.example.mda.localization.LocalAppLanguage
 import com.example.mda.ui.navigation.*
 import com.example.mda.ui.screens.actors.ActorViewModel
 import com.example.mda.ui.screens.actors.ActorViewModelFactory
@@ -181,15 +183,16 @@ class MainActivity : ComponentActivity() {
             }
 
             MovieAppTheme(darkTheme = darkTheme) {
-                val compContext = LocalContext.current
-                val locManager = remember { LocalizationManager(compContext) }
-                val appLanguage by locManager.currentLanguage.collectAsState(initial = LocalizationManager.Language.ENGLISH)
-                
-                LaunchedEffect(appLanguage) { LanguageProvider.currentCode = appLanguage.code }
+                LocalizationProvider {
+                    val appLanguage = LocalAppLanguage.current
+                    
+                    LaunchedEffect(appLanguage) { 
+                        LanguageProvider.currentCode = appLanguage.code 
+                    }
 
-                val layoutDir = if (appLanguage == LocalizationManager.Language.ARABIC) LayoutDirection.Rtl else LayoutDirection.Ltr
-                
-                CompositionLocalProvider(LocalLayoutDirection provides layoutDir) {
+                    val layoutDir = if (appLanguage == LocalizationManager.Language.ARABIC) LayoutDirection.Rtl else LayoutDirection.Ltr
+                    
+                    CompositionLocalProvider(LocalLayoutDirection provides layoutDir) {
                     
                     if (networkStatus == ConnectivityObserver.Status.Lost || networkStatus == ConnectivityObserver.Status.Unavailable) {
                         NoInternetScreen(
@@ -400,6 +403,7 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                     }
+                }
                 }
             }
         }
