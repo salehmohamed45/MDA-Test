@@ -46,10 +46,23 @@ fun localizedString(key: String): String {
 
 @Composable
 fun localizedString(key: String, replacements: Map<String, String>): String {
-    var text = localizedString(key)
-    replacements.forEach { (placeholder, value) ->
-        text = text.replace("{$placeholder}", value)
+    val manager = LocalLocalizationManager.current
+    val language = LocalAppLanguage.current
+    var text = manager.getString(key, language)
+    
+    if (replacements.isNotEmpty()) {
+        val builder = StringBuilder(text)
+        replacements.forEach { (placeholder, value) ->
+            val pattern = "{$placeholder}"
+            var index = builder.indexOf(pattern)
+            while (index >= 0) {
+                builder.replace(index, index + pattern.length, value)
+                index = builder.indexOf(pattern, index + value.length)
+            }
+        }
+        text = builder.toString()
     }
+    
     return text
 }
 
