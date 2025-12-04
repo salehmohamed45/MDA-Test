@@ -56,7 +56,7 @@ class HomeViewModel(
     private var lastRecommendationUpdateTime by mutableStateOf<Long?>(null)
 
     init {
-        Log.d("HomeVM", "✅ HomeViewModel initialized")
+        Log.d("HomeVM", "HomeViewModel initialized")
 
         if (_trendingMedia.value.isEmpty()) {
             loadTrending("day")
@@ -110,7 +110,7 @@ class HomeViewModel(
             try {
                 val movies = repository.getPopularMovies()
                 val tvShows = repository.getPopularTvShows()
-                Log.d("HomeVM", "📺 TV Shows Loaded: ${tvShows.size}")
+                Log.d("HomeVM", "TV Shows Loaded: ${tvShows.size}")
 
                 _popularMovies.value = movies
                 _popularTvShows.value = tvShows
@@ -146,15 +146,15 @@ class HomeViewModel(
 
                 if (list.isNotEmpty()) {
                     _recommendedMedia.value = list
-                    Log.d("HomeVM", "✅ Smart recommendations loaded (${list.size} items)")
+                    Log.d("HomeVM", "Smart recommendations loaded (${list.size} items)")
                 } else {
-                    Log.d("HomeVM", "⚠️ Empty recommendations list. Generating fallback.")
+                    Log.d("HomeVM", "Empty recommendations list. Generating fallback.")
                     generateFallbackRecommendations()
                 }
                 lastRecommendationUpdateTime = System.currentTimeMillis()
             } catch (e: Exception) {
                 e.printStackTrace()
-                Log.d("HomeVM", "❌ Error loading recommendations. Generating fallback.")
+                Log.d("HomeVM", "Error loading recommendations. Generating fallback.")
                 generateFallbackRecommendations()
             }
         }
@@ -168,7 +168,7 @@ class HomeViewModel(
         if (moviesFallback.isNotEmpty() || tvFallback.isNotEmpty()) {
             val mixed = (moviesFallback + tvFallback).shuffled()
             _recommendedMedia.value = mixed
-            Log.d("HomeVM", "✅ Fallback generated: ${moviesFallback.size} Movies + ${tvFallback.size} TV Shows")
+            Log.d("HomeVM", "Fallback generated: ${moviesFallback.size} Movies + ${tvFallback.size} TV Shows")
         } else {
             _recommendedMedia.value = _trendingMedia.value
         }

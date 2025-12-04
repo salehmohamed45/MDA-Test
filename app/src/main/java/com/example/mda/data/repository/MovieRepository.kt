@@ -33,7 +33,7 @@ class MoviesRepository(
             val response = apiCall()
             if (response != null && !response.results.isNullOrEmpty()) {
 
-                Log.d(TAG, "✅ API Success: Fetched ${response.results.size} items. Processing...")
+                Log.d(TAG, "API Success: Fetched ${response.results.size} items. Processing...")
 
                 val rawResults = response.results
                     .filter { it.adult != true }
@@ -57,11 +57,11 @@ class MoviesRepository(
 
                 entities
             } else {
-                Log.w(TAG, "⚠️ API returned null or empty. Using Fallback.")
+                Log.w(TAG, "API returned null or empty. Using Fallback.")
                 fallback()
             }
         } catch (e: Exception) {
-            Log.e(TAG, "❌ API Call Failed: ${e.message}. Using Fallback.")
+            Log.e(TAG, "API Call Failed: ${e.message}. Using Fallback.")
             e.printStackTrace()
             fallback()
         }
@@ -362,7 +362,7 @@ class MoviesRepository(
                 .take(25)
                 .map { it.toMediaEntity() }
 
-            Log.d(TAG, "💾 Saving Fallback data to DB (${finalEntities.size} items)")
+            Log.d(TAG, "Saving Fallback data to DB (${finalEntities.size} items)")
             localRepo.addOrUpdateAllFromApi(finalEntities)
 
             finalEntities
