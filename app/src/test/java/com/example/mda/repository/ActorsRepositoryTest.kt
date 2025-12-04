@@ -1,5 +1,7 @@
 package com.example.mda.repository
 
+// Repository for data operations
+
 import android.util.Log
 import com.example.mda.data.local.dao.ActorDao
 import com.example.mda.data.local.entities.ActorEntity
@@ -28,7 +30,6 @@ class ActorsRepositoryTest {
 
     @Before
     fun setup() {
-        // ✅ حل نهائي لمشكلة اللوجز: نعمل Mock لكل أنواع Log
         mockkStatic(Log::class)
         every { Log.d(any<String>(), any<String>()) } returns 0
         every { Log.i(any<String>(), any<String>()) } returns 0
@@ -40,7 +41,6 @@ class ActorsRepositoryTest {
 
     @Test
     fun `getPopularActorsWithCache returns data from API when successful`() = runTest {
-        // Arrange
         val fakeActor = Actor(
             id = 1,
             name = "Tom Cruise",
@@ -58,10 +58,8 @@ class ActorsRepositoryTest {
 
         coEvery { api.getPopularPeople(page = 1) } returns response
 
-        // Act
         val result = repository.getPopularActorsWithCache(1)
 
-        // Assert
         assertEquals(1, result.size)
         assertEquals("Tom Cruise", result.first().name)
         coVerify(exactly = 1) { api.getPopularPeople(1) }
@@ -69,7 +67,6 @@ class ActorsRepositoryTest {
 
     @Test
     fun `getPopularActorsWithCache returns data from cache when API throws exception`() = runTest {
-        // Arrange
         coEvery { api.getPopularPeople(page = 1) } throws RuntimeException("Network error")
         val cachedActors = listOf(
             ActorEntity(
@@ -85,17 +82,14 @@ class ActorsRepositoryTest {
         )
         coEvery { actorDao.getAllActors() } returns cachedActors
 
-        // Act
         val result = repository.getPopularActorsWithCache(1)
 
-        // Assert
         assertFalse(result.isEmpty())
         assertEquals("Emma Stone", result.first().name)
     }
 
     @Test
     fun `getCachedActors returns actors from DAO`() = runTest {
-        // Arrange
         val cached = listOf(
             ActorEntity(
                 id = 3,
@@ -110,10 +104,8 @@ class ActorsRepositoryTest {
         )
         coEvery { actorDao.getAllActors() } returns cached
 
-        // Act
         val result = repository.getCachedActors()
 
-        // Assert
         assertEquals(1, result.size)
         assertEquals("Johnny Depp", result.first().name)
         coVerify { actorDao.getAllActors() }

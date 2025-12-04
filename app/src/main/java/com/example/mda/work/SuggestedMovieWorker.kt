@@ -36,7 +36,7 @@ class SuggestedMovieWorker(
 
             val cached = repo.getAllOnce()
 
-            Log.d("WorkerDebug", "🎬 SuggestedMovieWorker found ${cached.size} movies in DB")
+            Log.d("WorkerDebug", "SuggestedMovieWorker found ${cached.size} movies in DB")
 
             if (cached.isNotEmpty()) {
                 val movie = cached.random()
@@ -54,8 +54,8 @@ class SuggestedMovieWorker(
 
                 NotificationHelper.sendNotification(
                     applicationContext,
-                    "${movie.name ?: movie.title} 🎬",
-                    "جرب تشوف: ${movie.overview}",
+                    "${movie.name ?: movie.title}",
+                    "Watch now: ${movie.overview}",
                     imageUrl = fullImageUrl,
                     tapIntent = intent
                 )
@@ -67,8 +67,8 @@ class SuggestedMovieWorker(
 
                 NotificationHelper.sendNotification(
                     applicationContext,
-                    "تطبيق الأفلام جاهز! 🚀",
-                    "لسه مفيش أفلام متسجلة.. افتح الصفحة الرئيسية وقلب شوية عشان نقدر نقترحلك حاجات تعجبك!",
+                    "Movie App Ready!",
+                    "No movies saved yet. Browse the home page to discover movies we can recommend!",
                     imageUrl = null,
                     tapIntent = intent
                 )
@@ -76,7 +76,7 @@ class SuggestedMovieWorker(
 
             Result.success()
         } catch (e: Exception) {
-            Log.e("WorkerDebug", "❌ Error in worker: ${e.message}")
+            Log.e("WorkerDebug", "Error in worker: ${e.message}")
             e.printStackTrace()
             Result.failure()
         }

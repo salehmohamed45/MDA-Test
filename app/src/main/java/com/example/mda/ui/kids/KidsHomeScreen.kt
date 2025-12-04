@@ -318,7 +318,7 @@ fun KidsPosterCard(
                     .padding(horizontal = 6.dp, vertical = 2.dp)
             ) {
                 Text(
-                    text = "⭐ ${String.format("%.1f", media.voteAverage ?: 0.0)}",
+                    text = "${String.format("%.1f", media.voteAverage ?: 0.0)}",
                     color = Color.White,
                     style = MaterialTheme.typography.labelSmall
                 )

@@ -1,5 +1,6 @@
 package com.example.mda.viewmodel
 
+// ViewModel for managing UI state
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.*
@@ -53,7 +54,6 @@ class GenreDetailsViewModelTest {
 
     @Test
     fun `loadMoviesByGenre adds movies and stops when empty`() = runTest {
-        // First call returns two items, second call returns empty list (simulate end)
         coEvery { repository.getMoviesByGenre(1, 1) } returns listOf(sampleMedia(1), sampleMedia(2))
         coEvery { repository.getMoviesByGenre(1, 2) } returns emptyList()
 
@@ -64,7 +64,6 @@ class GenreDetailsViewModelTest {
 
         assertEquals(2, viewModel.movies.size)
         assertFalse(viewModel.isLoading)
-        // call again -> no additional items
         viewModel.loadMoviesByGenre(1)
         advanceUntilIdle()
         assertEquals(2, viewModel.movies.size)
@@ -77,7 +76,6 @@ class GenreDetailsViewModelTest {
 
         viewModel.loadMoviesByGenre(1)
         advanceUntilIdle()
-        // initially all
         assertEquals(2, viewModel.movies.size)
 
         viewModel.applyFilter(FilterType.FAMILY_FRIENDLY)
@@ -93,11 +91,9 @@ class GenreDetailsViewModelTest {
         viewModel = GenreDetailsViewModel(repository)
         advanceUntilIdle()
 
-        // switch to TV shows -> should call tv shows endpoint and reset list
         viewModel.setMediaTypeFilter(MediaTypeFilter.TV_SHOWS, 1)
         advanceUntilIdle()
 
-        // should have loaded tv result (our fake maps to id 10)
         assertTrue(viewModel.movies.any { it.id == 10 })
     }
 }

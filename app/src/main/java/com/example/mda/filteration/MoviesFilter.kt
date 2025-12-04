@@ -46,7 +46,7 @@ fun FilterDialog(
                         }
                     ) {
                         val isSelected = viewModel.currentFilter == type
-                        Text(text = if (isSelected) "✅ $label" else label)
+                        Text(text = if (isSelected) "✓ $label" else label)
                     }
                 }
             }

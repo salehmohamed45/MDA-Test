@@ -292,6 +292,6 @@ val onboardingItems = listOf(
         subtitle = "Stay Informed, Watch Trailers",
         description = "Check ratings, cast details, and watch trailers before you decide.",
         imageRes = R.drawable.preview,
-        icon = "🎬"
+        icon = ""
     )
 )

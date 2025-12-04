@@ -48,7 +48,7 @@ fun MovieCardWithFavorite(
                     .padding(horizontal = 6.dp, vertical = 2.dp)
             ) {
                 Text(
-                    text = "⭐ ${String.format("%.1f", movie.voteAverage)}",
+                    text = "${String.format("%.1f", movie.voteAverage)}",
                     color = Color.White,
                     fontSize = 12.sp
                 )

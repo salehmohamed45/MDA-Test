@@ -80,7 +80,6 @@ class SearchMoviesUseCaseTest {
 
         val result = useCase.invoke("inc", "all")
 
-        // المفروض يرجع الفيلم اللي فيه كلمة inc
         assertEquals(1, result.size)
         assertEquals("Inception", result.first().title)
     }
