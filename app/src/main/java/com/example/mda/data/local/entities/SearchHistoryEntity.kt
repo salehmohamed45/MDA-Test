@@ -1,12 +1,11 @@
 package com.example.mda.data.local.entities
 
+// Database entity
+
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
-/**
- * كيان سجل البحث مع فهرسة وتحكم بالتكرار
- */
 @Entity(
     tableName = "search_history",
     indices = [

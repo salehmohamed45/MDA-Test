@@ -99,14 +99,12 @@ fun KidsRoot(
     }
     val topTitle = if (isSection) "Kids - $sectionTitle" else "Kids Mode"
 
-    // Exit PIN dialog state
     var showExitPin by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
     var pinInput by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf("") }
     var pinError by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf<String?>(null) }
     val requiredPinLength = remember(savedPin) { (savedPin?.length ?: 6).coerceIn(4, 6) }
 
     LaunchedEffect(Unit) {
-        // Mark Kids Mode as active when entering KidsRoot
         kidsSecurityStore.setActive(true)
     }
 
@@ -124,7 +122,6 @@ fun KidsRoot(
         }
     }
 
-    // Handle system back: if at root of kids and lock is on, require PIN
     val atKidsRoot = currentRoute == KidsScreens.Home.route
     BackHandler(enabled = atKidsRoot) {
         if (lockEnabled && !savedPin.isNullOrEmpty()) {

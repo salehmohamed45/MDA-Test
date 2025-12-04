@@ -1,5 +1,7 @@
 package com.example.mda.data.remote.model
 
+// Data model
+
 import com.google.gson.annotations.SerializedName
 
 data class MovieResponse(
@@ -13,7 +15,6 @@ data class MovieResponse(
     val totalResults: Int
 )
 
-// ✅ النسخة المحسَّنة
 data class Movie(
     @SerializedName("id") val id: Int,
     @SerializedName("title") val title: String? = null,
@@ -26,5 +27,5 @@ data class Movie(
     @SerializedName("vote_average") val voteAverage: Double,
     @SerializedName("media_type") val mediaType: String? = null,
     @SerializedName("adult") val adult: Boolean? = false,
-    @SerializedName("genre_ids") val genreIds: List<Int>? = null // ✅ أضفنا
+    @SerializedName("genre_ids") val genreIds: List<Int>? = null
 )

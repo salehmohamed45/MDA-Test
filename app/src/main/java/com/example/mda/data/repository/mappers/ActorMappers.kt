@@ -1,13 +1,12 @@
 package com.example.mda.data.repository.mappers
 
-
 import com.example.mda.data.local.entities.ActorDetailsEntity
 import com.example.mda.data.remote.model.*
 
 fun ActorDetailsEntity.toRemote(): ActorFullDetails {
     return ActorFullDetails(
         id = id,
-        name = name ?: "",                // ✅ استخدم قيمة افتراضية فاضية لو null
+        name = name ?: "",
         biography = biography ?: "",
         birthday = birthday ?: "",
         profile_path = profilePath ?: "",

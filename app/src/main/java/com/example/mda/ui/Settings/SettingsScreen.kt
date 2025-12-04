@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.settings
 
+// UI screen component
+
 import android.os.Build
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -23,10 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.mda.data.SettingsDataStore
-// 🟢 Imports from Fares (Localization)
 import com.example.mda.localization.LocalizationKeys
 import com.example.mda.localization.localizedString
-// 🟢 Imports from Main (Notification & Workers)
 import com.example.mda.notifications.NotificationHelper
 import com.example.mda.ui.navigation.TopBarState
 import com.example.mda.ui.screens.auth.AuthUiState
@@ -57,7 +57,6 @@ fun SettingsScreen(
     val uiState by authViewModel?.uiState?.collectAsState()
         ?: remember { mutableStateOf(AuthUiState()) }
 
-    // flows من الـ DataStore
     val localName by sessionManager.accountName.collectAsState(initial = "")
     val localUsername by sessionManager.accountUsername.collectAsState(initial = "")
     val isLoggedIn = uiState.isAuthenticated
@@ -143,7 +142,6 @@ fun SettingsScreen(
             )
         }
 
-        // ================= Group 3: App Info & Dev Tools =================
         SettingsGroupCard {
             SettingsItem(Icons.Default.Language, localizedString(LocalizationKeys.SETTINGS_LANGUAGE)) { navController.navigate("language_settings") }
             Divider()

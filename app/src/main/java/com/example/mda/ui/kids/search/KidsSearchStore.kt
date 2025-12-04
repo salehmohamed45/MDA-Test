@@ -26,7 +26,7 @@ object KidsSearchStore {
         if (query.isBlank()) return
         context.kidsSearchDataStore.edit { prefs ->
             val current = prefs[KEY_HISTORY] ?: emptySet()
-            prefs[KEY_HISTORY] = (current + query).take(50).toSet() // cap size
+            prefs[KEY_HISTORY] = (current + query).take(50).toSet()
             prefs[KEY_LAST_QUERY] = query
         }
     }

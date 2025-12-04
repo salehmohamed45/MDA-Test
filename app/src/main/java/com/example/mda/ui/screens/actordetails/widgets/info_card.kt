@@ -19,7 +19,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-
 @Composable
 fun InfoCard(title: String, value: String, subtitle: String) {
     val  barColor = colorScheme.surface.copy(alpha = 0.8f)

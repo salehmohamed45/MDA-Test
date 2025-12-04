@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.favorites
 
+// ViewModel for managing UI state
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mda.data.local.entities.MediaEntity
@@ -62,9 +64,5 @@ class FavoritesViewModel(private val repository: FavoritesRepository) : ViewMode
             repository.syncFavoritesFromTmdb()
         }
     }
-
-
-
-
 
 }

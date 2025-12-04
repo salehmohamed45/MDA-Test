@@ -1,5 +1,7 @@
 package com.example.mda.ui.navigation
 
+// Navigation configuration
+
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
@@ -54,21 +56,18 @@ fun AnimatedNavigationBar(
         buttons.indexOfFirst { it.route == currentRoute }.takeIf { it != -1 } ?: 0
     }
 
-    // الحاوية الرئيسية
     Surface(
         modifier = modifier
-            .padding(horizontal = 12.dp) // مسافة من اليمين واليسار
-            // 🔥 حل المشكلة رقم 3: البار هيحترم زراير الموبايل ويطلع فوقيها
+            .padding(horizontal = 12.dp)
             .navigationBarsPadding()
-            .padding(bottom = 0.dp) // مسافة إضافية صغيرة فوق الزراير
+            .padding(bottom = 0.dp)
             .fillMaxWidth()
-            .height(79.dp), // قللت الارتفاع سنة بسيطة للشياكة
+            .height(79.dp),
         color = barColor,
         shape = RoundedCornerShape(20.dp),
         shadowElevation = 8.dp,
         tonalElevation = 8.dp
     ) {
-// نحدد إذا كانت اللغة عربية ولا لأ
         val layoutDir = LocalLayoutDirection.current
         val isArabic = layoutDir == LayoutDirection.Rtl
 
@@ -90,7 +89,6 @@ fun AnimatedNavigationBar(
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // نخلي الترتيب يتقلب لو العربية
                 val toDisplay = if (isArabic) buttons.reversed() else buttons
 
                 toDisplay.forEach { button ->
@@ -142,7 +140,6 @@ fun PillItem(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null
             ) { onItemClick() }
-            // 🔥 حل المشكلة رقم 2: قللت البادينج عشان كلمة Settings تاخد راحتها ومتبقاش Sett
             .padding(vertical = 8.dp, horizontal = 12.dp),
         contentAlignment = Alignment.Center
     ) {
@@ -169,11 +166,11 @@ fun PillItem(
                         color = contentColor,
                         style = MaterialTheme.typography.labelLarge.copy(
                             fontWeight = FontWeight.Bold,
-                            fontSize = 13.sp // صغرت الخط سنة بسيطة عشان المساحة
+                            fontSize = 13.sp
                         ),
                         maxLines = 1,
                         softWrap = false,
-                        overflow = TextOverflow.Clip // عشان ميحطش ... لو زنقت أوي
+                        overflow = TextOverflow.Clip
                     )
                 }
             }

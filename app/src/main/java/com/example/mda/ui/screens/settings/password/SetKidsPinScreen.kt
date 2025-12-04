@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.settings.password
 
+// UI screen component
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -35,7 +37,7 @@ fun SetKidsPinScreen(
     val locManager = remember { LocalizationManager(context) }
     val appLanguage by locManager.currentLanguage.collectAsState(initial = LocalizationManager.Language.ENGLISH)
 
-    var stage by remember { mutableStateOf(1) } // 1-enter, 2-confirm
+    var stage by remember { mutableStateOf(1) }
     var firstPin by remember { mutableStateOf("") }
     var pin by remember { mutableStateOf("") }
     var error by remember { mutableStateOf<String?>(null) }
@@ -56,7 +58,6 @@ fun SetKidsPinScreen(
 
     LaunchedEffect(pin, stage) {
         if (pin.length == 6) {
-            // clear previous error only when user completes another 6 digits
             error = null
             if (stage == 1) {
                 firstPin = pin
@@ -66,7 +67,6 @@ fun SetKidsPinScreen(
                 if (firstPin == pin) {
                     scope.launch {
                         store.setPin(pin)
-                        // If security questions not set, go set them now
                         val needsQA = qa.q1 == null || qa.q2 == null || qa.q3 == null || qa.a1.isNullOrBlank() || qa.a2.isNullOrBlank() || qa.a3.isNullOrBlank()
                         if (needsQA) {
                             navController.navigate("security_questions_setup") {

@@ -62,8 +62,8 @@ fun MovieCardWithFavorite(
         ) {
             Image(
                 painter = rememberAsyncImagePainter(
-                    posterUrl?.let { "https://image.tmdb.org/t/p/w500$it" }
-                        ?: "https://via.placeholder.com/150"
+                    posterUrl?.let { "https:
+                        ?: "https:
                 ),
                 contentDescription = title,
                 contentScale = ContentScale.Crop,
@@ -95,11 +95,9 @@ fun MovieCardWithFavorite(
                 )
             }
 
-            // Favorite Button
             Box(
                 modifier = Modifier.padding(end = 8.dp)
             ) {
-                // Convert Credit to Movie
                 val movieData = Movie(
                     id = movie.id,
                     title = movie.title,

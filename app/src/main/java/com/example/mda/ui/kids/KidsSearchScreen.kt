@@ -1,5 +1,7 @@
 package com.example.mda.ui.kids
 
+// UI screen component
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -61,7 +63,6 @@ fun KidsSearchScreen(
             .padding(horizontal = 16.dp, vertical = 20.dp)
     ) {
 
-        // 🔹 شريط البحث
         ExposedDropdownMenuBox(
             expanded = expanded && allSuggestions.isNotEmpty(),
             onExpandedChange = { expanded = it }
@@ -170,7 +171,6 @@ fun KidsSearchScreen(
 
         Spacer(Modifier.height(8.dp))
 
-        // 🔹 الفلاتر
         KidsSearchFiltersRow(
             selectedFilter = selectedFilter,
             onFilterChange = { newFilter ->
@@ -201,7 +201,6 @@ fun KidsSearchScreen(
             }
         )
 
-        // 🔹 الـ Recent Searches
         if (query.isBlank() && allSuggestions.isNotEmpty()) {
             Column(
                 Modifier
@@ -278,7 +277,6 @@ fun KidsSearchScreen(
             }
         }
 
-        // 🔹 لا توجد نتائج
         if (isSearchDone && query.isNotBlank() && results.isEmpty()) {
             Box(
                 modifier = Modifier
@@ -311,7 +309,6 @@ fun KidsSearchScreen(
             }
         }
 
-        // 🔹 النتائج
         if (results.isNotEmpty()) {
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(140.dp),

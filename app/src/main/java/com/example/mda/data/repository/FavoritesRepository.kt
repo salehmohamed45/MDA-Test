@@ -1,5 +1,7 @@
 package com.example.mda.data.repository
 
+// Repository for data operations
+
 import com.example.mda.data.datastore.SessionManager
 import com.example.mda.data.local.LocalRepository
 import com.example.mda.data.local.entities.MediaEntity
@@ -17,16 +19,13 @@ class FavoritesRepository(
     fun getFavorites(): Flow<List<MediaEntity>> = localRepo.getFavorites()
 
     suspend fun toggleFavorite(movie: Movie): Boolean {
-        // التأكد أولاً إن الفيلم موجود في القاعدة
         val existingEntity = localRepo.getById(movie.id)
         val currentStatus = existingEntity?.isFavorite ?: false
         val newStatus = !currentStatus
 
-        // إذا كان الفيلم موجود، نحدث الـ isFavorite فقط مع الحفاظ على كل البيانات
         val mediaEntity = if (existingEntity != null) {
             existingEntity.copy(isFavorite = newStatus)
         } else {
-            // إذا كان جديد، نضيفه بالكامل
             MediaEntity(
                 id = movie.id,
                 title = movie.title,
@@ -44,10 +43,8 @@ class FavoritesRepository(
             )
         }
 
-        // 1️⃣ حدّث الـ local DB (UX أسرع حتى لو النت وقع)
         localRepo.addOrUpdate(mediaEntity)
 
-        // 2️⃣ حاول تزامن مع TMDb account
         try {
             val sessionId = sessionManager.sessionId.first()
             val accountId = sessionManager.accountId.first()
@@ -64,7 +61,6 @@ class FavoritesRepository(
                 )
             }
         } catch (e: Exception) {
-            // هنا ممكن تعمل Log بس عادي ما نكسرش الابلكيشن
             e.printStackTrace()
         }
 
@@ -73,9 +69,7 @@ class FavoritesRepository(
 
     suspend fun isFavorite(id: Int): Boolean = localRepo.isFavorite(id)
 
-    /**
-     * Get remote favorites list from TMDb
-     */
+    
     suspend fun fetchFavoritesFromTmdb(): List<Int> {
         val sessionId = sessionManager.sessionId.first()
         val accountId = sessionManager.accountId.first()
@@ -88,24 +82,18 @@ class FavoritesRepository(
         return response.body()!!.results.map { it.id }
     }
 
-    /**
-     * Sync remote TMDb favorites → local Room DB
-     */
+    
     suspend fun syncFavoritesFromTmdb() {
         val remoteFavorites = fetchFavoritesFromTmdb()
 
-        // Clear old local favorites
         localRepo.clearAllFavorites()
 
-        // Add new ones
         remoteFavorites.forEach { id ->
             localRepo.setFavorite(id, true)
         }
     }
     suspend fun clearAllLocalFavorites() {
-        // Remove all favorites from local Room DB
         localRepo.clearAllFavorites()
     }
-
 
 }

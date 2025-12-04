@@ -8,7 +8,6 @@ import com.example.mda.data.local.entities.MoviesViewedEntitty
 import com.example.mda.data.local.entities.PersonEntity
 import kotlinx.coroutines.flow.Flow
 
-
 @Dao
 interface HistoryDao {
 

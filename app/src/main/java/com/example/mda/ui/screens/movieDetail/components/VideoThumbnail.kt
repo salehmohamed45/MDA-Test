@@ -22,9 +22,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.mda.data.local.entities.Video
 
-/**
- * عنصر عرض الفيديو (Video Thumbnail)
- */
 @Composable
 fun VideoThumbnail(
     video: Video,
@@ -36,12 +33,10 @@ fun VideoThumbnail(
         modifier = modifier
             .width(200.dp)
             .clickable {
-                // فتح الفيديو في YouTube
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(video.getYouTubeUrl()))
                 context.startActivity(intent)
             }
     ) {
-        // Thumbnail
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -57,7 +52,6 @@ fun VideoThumbnail(
                 modifier = Modifier.fillMaxSize()
             )
             
-            // أيقونة Play
             Box(
                 modifier = Modifier
                     .size(48.dp)
@@ -76,7 +70,6 @@ fun VideoThumbnail(
         
         Spacer(Modifier.height(8.dp))
         
-        // اسم الفيديو
         Text(
             text = video.name,
             style = MaterialTheme.typography.bodyMedium,
@@ -85,7 +78,6 @@ fun VideoThumbnail(
             overflow = TextOverflow.Ellipsis
         )
         
-        // نوع الفيديو
         Text(
             text = video.type,
             style = MaterialTheme.typography.bodySmall,

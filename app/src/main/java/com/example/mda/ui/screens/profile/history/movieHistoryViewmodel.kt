@@ -27,7 +27,6 @@ class MoviesHistoryViewModel(
     }
 }
 
-
 class MoviesHistoryViewModelFactory(
     private val repository: MoviesHistoryRepository
 ) : ViewModelProvider.Factory {

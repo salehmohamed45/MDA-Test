@@ -1,5 +1,7 @@
 package com.example.mda.data.local.entities
 
+// Database entity
+
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -9,5 +11,5 @@ data class PersonEntity(
     val name: String?,
     val profilePath: String?,
     val knownForDepartment: String?,
-    val viewedAt: Long = System.currentTimeMillis() // timestamp
+    val viewedAt: Long = System.currentTimeMillis()
 )

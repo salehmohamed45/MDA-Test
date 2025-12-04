@@ -1,5 +1,7 @@
 package com.example.mda.ui.kids
 
+// UI screen component
+
 sealed class KidsScreens(val route: String) {
     data object Splash : KidsScreens("kids_splash")
     data object Home : KidsScreens("kids_home")

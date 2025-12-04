@@ -15,30 +15,25 @@ private val Context.localizationDataStore: DataStore<Preferences> by preferences
 class LocalizationManager(private val context: Context) {
     private val LANGUAGE_KEY = stringPreferencesKey("selected_language")
 
-    // Available languages
     enum class Language(val code: String, val displayName: String) {
         ENGLISH("en", "English"),
         ARABIC("ar", "العربية"),
         GERMAN("de", "Deutsch")
     }
 
-    // Get current language as Flow
     val currentLanguage: Flow<Language> = context.localizationDataStore.data
         .map { preferences ->
             val code = preferences[LANGUAGE_KEY] ?: "en"
             Language.values().find { it.code == code } ?: Language.ENGLISH
         }
 
-    // Set language
     suspend fun setLanguage(language: Language) {
         context.localizationDataStore.edit { preferences ->
             preferences[LANGUAGE_KEY] = language.code
         }
-        // Update global language provider for network layer
         LanguageProvider.currentCode = language.code
     }
 
-     // Get string by key and language with English fallback if missing
     fun getString(key: String, language: Language): String {
         val value = when (language) {
             Language.ENGLISH -> StringsEN[key]
@@ -46,24 +41,19 @@ class LocalizationManager(private val context: Context) {
             Language.GERMAN -> StringsDE[key]
         }
         if (value != null) return value
-        // Fallback to English if translation missing
         val en = StringsEN[key]
         if (en != null) return en
-        // As a last resort, return the key (useful to detect missing entries during dev)
         return key
     }
 
-    // Get string by key using current language (requires coroutine context)
     suspend fun getStringAsync(key: String): String {
         val lang = currentLanguage.first()
         return getString(key, lang)
     }
 }
 
-// ==================== ENGLISH STRINGS ====================
 object StringsEN {
     private val strings = mapOf(
-        // Home Screen
         "home_greeting_morning" to "Good Morning",
         "home_greeting_afternoon" to "Good Afternoon",
         "home_greeting_evening" to "Good Evening",
@@ -77,7 +67,6 @@ object StringsEN {
         "home_popular_tv" to "Popular TV Shows",
         "home_top_rated" to "Top Rated",
 
-        // Search Screen
         "search_title" to "Search",
         "search_filter_all" to "All",
         "search_placeholder" to "Search movies, shows, people...",
@@ -91,7 +80,6 @@ object StringsEN {
         "search_start_typing" to "Start typing to search ",
         "search_error" to "Error: {error}",
 
-        // Movie Detail Screen
         "detail_production_details" to "Production Details",
         "detail_spoken_languages" to "Spoken Languages",
         "detail_production_countries" to "Production Countries",
@@ -113,14 +101,12 @@ object StringsEN {
         "detail_no_recommendations" to "No recommendations",
         "detail_no_similar" to "No similar",
 
-        // Detail About extras
         "detail_about_movie" to "About movie",
         "detail_status" to "Status",
         "detail_original_language" to "Original language",
         "detail_production_country" to "Production country",
         "detail_production_companies" to "Production companies",
 
-        // Authentication
         "auth_login_title" to "Login with TMDb",
         "auth_signup_title" to "Sign Up",
         "auth_authenticating" to "Authenticating...",
@@ -130,7 +116,6 @@ object StringsEN {
         "auth_login_required" to "Login Required",
         "auth_login_required_msg" to "You must login to add this movie to favorites.",
 
-        // Settings Screen
         "settings_title" to "Settings",
         "settings_other" to "Other settings",
         "settings_favorites" to "Favorite Movies",
@@ -146,24 +131,20 @@ object StringsEN {
         "settings_about" to "About",
         "settings_login_prompt" to "Login or Sign up",
         "settings_login_subtitle" to "Access your account to sync settings",
-        // Language Settings Screen
         "settings_language_select_title" to "Select Your Language",
         "settings_language_info_title" to "Language Information",
         "settings_language_info_body" to "Your language preference will be applied immediately across the entire app. All content will be displayed in your selected language.",
         "settings_language_selected_cd" to "Selected",
 
-        // Profile
         "profile_title" to "Profile",
         "profile_login_or_signup" to "Login or Sign up",
         "profile_access_account" to "Access your account to sync settings",
 
-        // Favorites
         "favorites_title" to "Favorites",
         "favorites_empty" to "No favorites yet",
         "favorites_add_success" to "Added to favorites",
         "favorites_remove_success" to "Removed from favorites",
 
-        // Help & FAQ
         "help_title" to "Help & FAQ",
         "help_faq_q1" to "How does the movie search work?",
         "help_faq_a1" to "You can search for any movie by typing its title in the search bar. The results update instantly as you type.",
@@ -178,7 +159,6 @@ object StringsEN {
         "help_faq_q6" to "Data loading is slow. What can I do?",
         "help_faq_a6" to "Check your internet connection or swipe down to refresh the page.",
 
-        // Privacy Policy
         "privacy_title" to "Privacy Policy",
         "privacy_commitment_title" to "Our Privacy Commitment",
         "privacy_commitment_desc" to "We value your privacy and handle your data responsibly. Our app uses The Movie Database (TMDb) API for movie data and account integration only.",
@@ -190,7 +170,6 @@ object StringsEN {
         "privacy_learn_more_desc" to "Click the section below to visit TMDb's official privacy policy for full details.",
         "privacy_view_tmdb" to "View TMDb Privacy Policy",
 
-        // About
         "about_title" to "About",
         "about_app_name" to "Movie Discovery App",
         "about_app_desc" to "Discover trending, popular & upcoming movies effortlessly.",
@@ -224,7 +203,6 @@ object StringsEN {
         "about_copyright" to "© 2025 SBCO – All Rights Reserved",
          "developer_tools" to "Developer Tools",
 
-        // Kids Mode
         "kids_title" to "Kids Mode",
         "kids_search_placeholder" to "Search kids-safe content...",
         "kids_filter_movies" to "Movies",
@@ -234,8 +212,6 @@ object StringsEN {
         "kids_no_results" to "No results found for",
         "kids_clear_all" to "Clear all",
 
-
-        // Genre Details
         "genre_title" to "{genre}",
         "genre_filter_all" to "All Movies",
         "genre_filter_top_rated" to "Top Rated",
@@ -245,7 +221,6 @@ object StringsEN {
         "genre_filter_dialog_title" to "Filter Movies",
         "genre_filter_close" to "Close",
 
-        // Buttons
         "btn_login" to "Login",
         "btn_signup" to "Sign Up",
         "btn_logout" to "Logout",
@@ -259,7 +234,6 @@ object StringsEN {
         "btn_next" to "Next",
         "btn_previous" to "Previous",
 
-        // Labels
         "label_username" to "Username",
         "label_email" to "Email",
         "label_password" to "Password",
@@ -267,7 +241,6 @@ object StringsEN {
         "label_language" to "Language",
         "label_theme" to "Theme",
 
-        // Messages
         "msg_loading" to "Loading...",
         "msg_success" to "Success",
         "msg_error" to "Error",
@@ -275,18 +248,15 @@ object StringsEN {
         "msg_no_internet" to "No internet connection",
         "msg_refresh" to "Refresh",
 
-        // Validation
         "validation_required" to "This field is required",
         "validation_invalid_email" to "Invalid email address",
         "validation_password_short" to "Password must be at least 6 characters",
         "validation_password_mismatch" to "Passwords do not match",
 
-        // Dialogs
         "dialog_confirm_delete" to "Are you sure you want to delete this?",
         "dialog_confirm_logout" to "Are you sure you want to logout?",
         "dialog_confirm_clear_history" to "Are you sure you want to clear your search history?",
 
-        // Navigation
         "nav_home" to "Home",
         "nav_movies" to "Movies",
         "nav_actors" to "People",
@@ -297,14 +267,12 @@ object StringsEN {
         "nav_kids" to "Kids",
         "nav_history" to "History",
 
-        // Filter Options
         "filter_all_movies" to "All Movies",
         "filter_top_rated" to "Top Rated",
         "filter_newest" to "Newest",
         "filter_most_popular" to "Most Popular",
         "filter_family_friendly" to "Family Friendly",
 
-        // Common
         "common_loading" to "Loading...",
         "common_error" to "Error",
         "common_retry" to "Retry",
@@ -325,7 +293,6 @@ object StringsEN {
         "common_expand" to "Expand",
         "common_collapse" to "Collapse",
 
-        // -------------------- Password / Kids PIN --------------------
         "pw_manage_desc" to "Manage Kids Mode password and lock settings.",
         "pw_require_pin_label" to "Require PIN to exit Kids mode",
         "pw_set_pin_first" to "Set a PIN first",
@@ -347,7 +314,6 @@ object StringsEN {
         "pw_incorrect_old_pin" to "Incorrect old PIN",
         "pw_forgot_pin" to "Forgot PIN?",
 
-        // -------------------- Security Questions --------------------
         "sq_title" to "Security Questions",
         "sq_verify_title" to "Verify Identity",
         "sq_header_setup" to "Answer recovery questions (choose from lists)",
@@ -373,10 +339,8 @@ object StringsEN {
     operator fun get(key: String): String? = strings[key]
 }
 
-// ==================== ARABIC STRINGS ====================
 object StringsAR {
     private val strings = mapOf(
-        // Home Screen
         "home_greeting_morning" to "صباح الخير",
         "home_greeting_afternoon" to "مساء الخير",
         "home_greeting_evening" to "تصبح على خير",
@@ -390,7 +354,6 @@ object StringsAR {
         "home_popular_tv" to "المسلسلات الشهيرة",
         "home_top_rated" to "الأعلى تقييماً",
         "developer_tools" to "أدوات المطورين",
-        // Search Screen
         "search_title" to "البحث",
         "search_filter_all" to "الكل",
         "search_placeholder" to "ابحث عن أفلام أو مسلسلات أو ممثلين...",
@@ -402,7 +365,6 @@ object StringsAR {
         "search_no_results" to "لم يتم العثور على نتائج",
         "search_try_another" to "جرّب البحث عن فيلم أو مسلسل آخر",
         "search_error" to "خطأ: {error}",
-        // -------------------- Kids Mode --------------------
         "kids_title" to "وضع الأطفال",
         "kids_search_placeholder" to "ابحث عن محتوى آمن للأطفال...",
         "kids_filter_all" to "الكل",
@@ -413,7 +375,6 @@ object StringsAR {
         "kids_try_another" to "جرّب البحث عن فيلم أطفال آخر ",
         "kids_clear_all" to "مسح الكل",
 
-        // -------------------- Password / Kids PIN --------------------
         "pw_manage_desc" to "إدارة كلمة مرور وضع الأطفال وإعدادات القفل.",
         "pw_require_pin_label" to "طلب رمز PIN للخروج من وضع الأطفال",
         "pw_set_pin_first" to "قم بتعيين رمز PIN أولاً",
@@ -435,7 +396,6 @@ object StringsAR {
         "pw_incorrect_old_pin" to "الرمز القديم غير صحيح",
         "pw_forgot_pin" to "نسيت الرمز؟",
 
-        // -------------------- Security Questions --------------------
         "sq_title" to "أسئلة الأمان",
         "sq_verify_title" to "تحقق من الهوية",
         "sq_header_setup" to "أجب عن أسئلة الاستعادة (اختر من القوائم)",
@@ -457,8 +417,6 @@ object StringsAR {
         "sq_question_2" to "السؤال 2",
         "sq_question_3" to "السؤال 3",
 
-
-        // Movie Detail Screen
         "detail_production_details" to "تفاصيل الإنتاج",
         "detail_spoken_languages" to "اللغات المستخدمة",
         "detail_production_countries" to "دول الإنتاج",
@@ -480,14 +438,12 @@ object StringsAR {
         "detail_no_recommendations" to "لا توجد توصيات",
         "detail_no_similar" to "لا توجد أعمال مشابهة",
 
-        // Detail About extras
         "detail_about_movie" to "عن الفيلم",
         "detail_status" to "الحالة",
         "detail_original_language" to "اللغة الأصلية",
         "detail_production_country" to "بلد الإنتاج",
         "detail_production_companies" to "شركات الإنتاج",
 
-        // Authentication
         "auth_login_title" to "تسجيل الدخول عبر TMDb",
         "auth_signup_title" to "إنشاء حساب",
         "auth_authenticating" to "جاري المصادقة...",
@@ -497,7 +453,6 @@ object StringsAR {
         "auth_login_required" to "تسجيل الدخول مطلوب",
         "auth_login_required_msg" to "يجب عليك تسجيل الدخول لإضافة هذا الفيلم إلى المفضلة.",
 
-        // Settings Screen
         "settings_title" to "الإعدادات",
         "settings_other" to "إعدادات أخرى",
         "settings_favorites" to "الأفلام المفضلة",
@@ -513,24 +468,20 @@ object StringsAR {
         "settings_about" to "حول التطبيق",
         "settings_login_prompt" to "تسجيل الدخول أو إنشاء حساب",
         "settings_login_subtitle" to "الوصول إلى حسابك لمزامنة الإعدادات",
-        // Language Settings Screen
         "settings_language_select_title" to "اختر لغتك",
         "settings_language_info_title" to "معلومات اللغة",
         "settings_language_info_body" to "سيتم تطبيق تفضيل اللغة الخاص بك فورًا عبر التطبيق بالكامل. سيتم عرض جميع المحتويات باللغة التي اخترتها.",
         "settings_language_selected_cd" to "محدد",
 
-        // Profile
         "profile_title" to "الملف الشخصي",
         "profile_login_or_signup" to "تسجيل الدخول أو إنشاء حساب",
         "profile_access_account" to "الوصول إلى حسابك لمزامنة الإعدادات",
 
-        // Favorites
         "favorites_title" to "المفضلة",
         "favorites_empty" to "لا توجد أفلام مفضلة حتى الآن",
         "favorites_add_success" to "تمت الإضافة إلى المفضلة",
         "favorites_remove_success" to "تمت الإزالة من المفضلة",
 
-        // Navigation
         "nav_home" to "الرئيسية",
         "nav_movies" to "الأفلام",
         "nav_actors" to "People",
@@ -541,7 +492,6 @@ object StringsAR {
         "nav_kids" to "الأطفال",
         "nav_history" to "السجل",
 
-        // Help & FAQ
         "help_title" to "المساعدة والأسئلة الشائعة",
         "help_faq_q1" to "كيف يعمل البحث عن الأفلام؟",
         "help_faq_a1" to "يمكنك البحث عن أي فيلم بكتابة اسمه في شريط البحث. تتحدث النتائج على الفور أثناء الكتابة.",
@@ -556,7 +506,6 @@ object StringsAR {
         "help_faq_q6" to "تحميل البيانات بطيء. ماذا يمكنني أن أفعل؟",
         "help_faq_a6" to "تحقق من اتصالك بالإنترنت أو اسحب لأسفل لتحديث الصفحة.",
 
-        // Privacy Policy
         "privacy_title" to "سياسة الخصوصية",
         "privacy_commitment_title" to "التزامنا بالخصوصية",
         "privacy_commitment_desc" to "نحن نقدر خصوصيتك ونتعامل مع بياناتك بمسؤولية. يستخدم تطبيقنا واجهة برمجة تطبيقات The Movie Database (TMDb) لبيانات الأفلام والتكامل مع الحساب فقط.",
@@ -568,7 +517,6 @@ object StringsAR {
         "privacy_learn_more_desc" to "انقر على القسم أدناه لزيارة سياسة الخصوصية الرسمية لـ TMDb للحصول على التفاصيل الكاملة.",
         "privacy_view_tmdb" to "عرض سياسة خصوصية TMDb",
 
-        // About
         "about_title" to "حول التطبيق",
         "about_app_name" to "تطبيق اكتشاف الأفلام",
         "about_app_desc" to "اكتشف الأفلام الرائجة والشهيرة والقادمة بسهولة.",
@@ -602,11 +550,8 @@ object StringsAR {
     operator fun get(key: String): String? = strings[key]
 }
 
-// ==================== GERMAN STRINGS ====================
 object StringsDE {
     private val strings = mapOf(
-        // ... (rest of the code remains the same)
-// -------------------- Search --------------------
         "search_title" to "Suche",
         "search_filter_all" to "Alle",
         "search_placeholder" to "Nach Filmen, Serien oder Personen suchen...",
@@ -619,21 +564,18 @@ object StringsDE {
         "search_try_another" to "Versuchen Sie, nach einem anderen Film oder einer Serie zu suchen ",
         "search_start_typing" to "Beginnen Sie mit der Eingabe, um zu suchen ",
         "search_error" to "Fehler: {error}",
-        // Detail Screen (extras)
         "detail_discover" to "Entdecken",
         "detail_recommendations_count" to "Empfehlungen {count}",
         "detail_similar_count" to "Ähnlich {count}",
         "detail_no_recommendations" to "Keine Empfehlungen",
         "detail_no_similar" to "Keine Ähnlichen",
 
-        // Detail About extras
         "detail_about_movie" to "Über den Film",
         "detail_status" to "Status",
         "detail_original_language" to "Originalsprache",
         "detail_production_country" to "Produktionsland",
         "detail_production_companies" to "Produktionsfirmen",
 
-        // Settings Screen
         "settings_title" to "Einstellungen",
         "settings_other" to "Weitere Einstellungen",
         "settings_favorites" to "Lieblingsfilme",
@@ -650,13 +592,11 @@ object StringsDE {
         "settings_login_prompt" to "Anmelden oder Registrieren",
         "settings_login_subtitle" to "Greifen Sie auf Ihr Konto zu, um Einstellungen zu synchronisieren",
 
-        // Language Settings Screen
         "settings_language_select_title" to "Sprache auswählen",
         "settings_language_info_title" to "Sprachinformationen",
         "settings_language_info_body" to "Ihre bevorzugte Sprache wird sofort in der gesamten App angewendet. Alle Inhalte werden in der gewählten Sprache angezeigt.",
         "settings_language_selected_cd" to "Ausgewählt",
 
-        // About
         "about_title" to "Über",
         "about_app_name" to "Film-Entdeckungs-App",
         "about_app_desc" to "Entdecke mühelos Trending-, beliebte und kommende Filme.",
@@ -687,8 +627,6 @@ object StringsDE {
         "privacy_learn_more_desc" to "Klicken Sie unten, um die offizielle Datenschutzrichtlinie von TMDb anzuzeigen.",
         "privacy_view_tmdb" to "TMDb-Datenschutzrichtlinie anzeigen",
         "developer_tools" to "Developer Tools",
-        // -------------------- Kids --------------------
-        // -------------------- Kids Mode --------------------
         "kids_title" to "Kindermodus",
         "kids_search_placeholder" to "Kinderfreundliche Inhalte durchsuchen...",
         "kids_filter_all" to "Alle",
@@ -700,7 +638,6 @@ object StringsDE {
         "genre_filter_dialog_title" to "Filme filtern",
         "genre_filter_close" to "Schließen",
 
-        // Buttons
         "btn_login" to "Anmelden",
         "btn_signup" to "Registrieren",
         "btn_logout" to "Abmelden",
@@ -714,7 +651,6 @@ object StringsDE {
         "btn_next" to "Weiter",
         "btn_previous" to "Zurück",
 
-        // Labels
         "label_username" to "Benutzername",
         "label_email" to "E-Mail",
         "label_password" to "Passwort",
@@ -722,7 +658,6 @@ object StringsDE {
         "label_language" to "Sprache",
         "label_theme" to "Design",
 
-        // Messages
         "msg_loading" to "Wird geladen...",
         "msg_success" to "Erfolg",
         "msg_error" to "Fehler",
@@ -730,18 +665,15 @@ object StringsDE {
         "msg_no_internet" to "Keine Internetverbindung",
         "msg_refresh" to "Aktualisieren",
 
-        // Validation
         "validation_required" to "Dieses Feld ist erforderlich",
         "validation_invalid_email" to "Ungültige E-Mail-Adresse",
         "validation_password_short" to "Das Passwort muss mindestens 6 Zeichen lang sein",
         "validation_password_mismatch" to "Passwörter stimmen nicht überein",
 
-        // Dialogs
         "dialog_confirm_delete" to "Bist du sicher, dass du dies löschen möchtest?",
         "dialog_confirm_logout" to "Bist du sicher, dass du dich abmelden möchtest?",
         "dialog_confirm_clear_history" to "Bist du sicher, dass du deinen Suchverlauf löschen möchtest?",
 
-        // Navigation
         "nav_home" to "Startseite",
         "nav_movies" to "Filme",
         "nav_actors" to "People",
@@ -752,14 +684,12 @@ object StringsDE {
         "nav_kids" to "Kinder",
         "nav_history" to "Verlauf",
 
-        // Filter Options
         "filter_all_movies" to "Alle Filme",
         "filter_top_rated" to "Top bewertet",
         "filter_newest" to "Neueste",
         "filter_most_popular" to "Am beliebtesten",
         "filter_family_friendly" to "Familienfreundlich",
 
-        // Common (extras)
         "common_loading" to "Wird geladen...",
         "common_error" to "Fehler",
         "common_retry" to "Erneut versuchen",

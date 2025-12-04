@@ -1,6 +1,5 @@
 package com.example.mda.ui.Settings
 
-
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

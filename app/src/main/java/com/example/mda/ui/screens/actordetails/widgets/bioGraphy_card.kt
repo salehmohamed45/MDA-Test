@@ -30,7 +30,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-
 @Composable
 fun BiographyCard(text: String, minimizedMaxLines: Int = 3) {
     val  barColor = colorScheme.surface.copy(alpha = 0.8f)

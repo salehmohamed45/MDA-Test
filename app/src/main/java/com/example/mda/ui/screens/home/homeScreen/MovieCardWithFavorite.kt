@@ -34,13 +34,12 @@ fun MovieCardWithFavorite(
     ) {
         Box {
             AsyncImage(
-                model = "https://image.tmdb.org/t/p/w500${movie.posterPath}",
+                model = "https:
                 contentDescription = movie.title,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
 
-            // تقييم فوق يسار
             Box(
                 modifier = Modifier
                     .align(Alignment.TopStart)
@@ -55,7 +54,6 @@ fun MovieCardWithFavorite(
                 )
             }
 
-            // زر القلب فوق يمين
             Box(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
@@ -63,7 +61,6 @@ fun MovieCardWithFavorite(
             ) {
                 favoriteButton()
             }
-
 
         }
     }

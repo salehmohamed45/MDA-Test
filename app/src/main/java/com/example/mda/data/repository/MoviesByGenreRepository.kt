@@ -1,5 +1,7 @@
 package com.example.mda.data.repository
 
+// Repository for data operations
+
 import com.example.mda.data.local.dao.MediaDao
 import com.example.mda.data.local.entities.MediaEntity
 import com.example.mda.data.remote.api.TmdbApi
@@ -12,21 +14,17 @@ class MoviesByGenreRepository(
     private val dao: MediaDao
 ) {
 
-    // Khaled Edit: جلب Movies حسب Genre مع الكاش
     suspend fun getMoviesByGenre(genreId: Int): List<MediaEntity> {
-        // 🔹 جلب من الكاش أولاً
         val cached: List<MediaEntity> = dao.getAll().first()
-            .filter { it.genreIds?.contains(genreId) == true } // فلترة حسب الـ Genre
+            .filter { it.genreIds?.contains(genreId) == true }
 
         if (cached.isNotEmpty()) return cached
 
-        // 🔹 لو مفيش كاش، جلب من الـ API
         val response = api.getMoviesByGenre(genreId)
         if (response.isSuccessful) {
             val movies: List<MediaEntity> = response.body()?.results
                 ?.map { it.toMediaEntity("movie") } ?: emptyList()
 
-            // 🔹 حفظ في الكاش
             movies.forEach { dao.upsert(it) }
 
             return movies

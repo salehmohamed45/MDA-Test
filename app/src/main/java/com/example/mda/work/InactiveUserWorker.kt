@@ -1,5 +1,7 @@
 package com.example.mda.work
 
+// Background worker
+
 import android.content.Context
 import android.os.Build
 import android.util.Log
@@ -14,13 +16,11 @@ class InactiveUserWorker(ctx: Context, params: WorkerParameters) : CoroutineWork
 
     @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun doWork(): Result {
-        Log.d("WorkerDebug", "🟢 InactiveUserWorker: بدأ العمل") // 1. هل اشتغل أصلاً؟
+        Log.d("WorkerDebug", "🟢 InactiveUserWorker: بدأ العمل")
 
         return try {
-            // ---------------------- Read user settings ----------------------
             val settingsDataStore = SettingsDataStore(applicationContext)
 
-            // قراءة القيمة وطباعتها
             val notificationsEnabled = settingsDataStore.notificationsFlow.first()
             Log.d("WorkerDebug", "🧐 حالة الإشعارات في الإعدادات: $notificationsEnabled")
 
@@ -29,15 +29,12 @@ class InactiveUserWorker(ctx: Context, params: WorkerParameters) : CoroutineWork
                 return Result.success()
             }
 
-            // ---------------------- Check last open ----------------------
             val prefs = applicationContext.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
             val lastOpen = prefs.getLong("last_open", 0L)
 
-            // حساب الساعات وطباعتها
             val hours = (System.currentTimeMillis() - lastOpen) / (1000 * 60 * 60)
             Log.d("WorkerDebug", "⏳ آخر فتح كان من: $hours ساعات")
 
-            // الشرط اللي إنت بتجرب بيه
             if (hours >= 0) {
                 Log.d("WorkerDebug", "🚀 الشرط تحقق! جاري إرسال الإشعار...")
 

@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.profile
 
+// UI screen component
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -40,12 +42,10 @@ fun ProfileScreen(
     val uiState = authViewModel?.uiState?.collectAsState()?.value
     val account = uiState?.accountDetails
 
-
     LaunchedEffect(Unit) {
         onTopBarStateChange(TopBarState(title = "Profile", showBackButton = true))
         authViewModel?.fetchAccountDetails()
     }
-
 
     LaunchedEffect(uiState?.isAuthenticated) {
         if (authViewModel?.uiState?.value?.isAuthenticated == true) {
@@ -84,7 +84,6 @@ fun ProfileScreen(
                 ) {
                     Spacer(modifier = Modifier.height(40.dp))
 
-                    // ===== Avatar =====
                     Box(
                         modifier = Modifier
                             .size(110.dp)
@@ -95,7 +94,7 @@ fun ProfileScreen(
                         val avatarUrl = account.avatar?.tmdb?.avatarPath
                         if (avatarUrl != null) {
                             AsyncImage(
-                                model = "https://image.tmdb.org/t/p/w200$avatarUrl",
+                                model = "https:
                                 contentDescription = "Avatar",
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier
@@ -129,7 +128,6 @@ fun ProfileScreen(
 
                     Spacer(modifier = Modifier.height(28.dp))
 
-                    // ===== Account Information Card =====
                     Surface(
                         shape = RoundedCornerShape(16.dp),
                         color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f),
@@ -152,7 +150,6 @@ fun ProfileScreen(
 
                     Spacer(modifier = Modifier.height(24.dp))
 
-                    // ===== Logout card (زي الشكل القديم) =====
                     Surface(
                         onClick = {
                             authViewModel?.logout()

@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.actors
 
+// UI screen component
+
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.layout.*
@@ -103,6 +105,4 @@ fun ActorsScreen(
         }
     }
 }
-
-
 

@@ -1,5 +1,7 @@
 package com.example.mda.data.local.entities
 
+// Database entity
+
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.mda.data.remote.model.KnownFor
@@ -17,4 +19,3 @@ data class ActorEntity(
 
 )
 
-// Khalid: Entity for Room database to store actor info

@@ -1,5 +1,7 @@
 package com.example.mda.data.local.entities
 
+// Database entity
+
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters

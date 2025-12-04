@@ -1,5 +1,7 @@
 package com.example.mda.data.repository
 
+// Repository for data operations
+
 import android.util.Log
 import com.example.mda.data.local.LocalRepository
 import com.example.mda.data.local.entities.MediaEntity
@@ -20,9 +22,7 @@ class MoviesRepository(
         private const val TAG = "RepoDebug"
     }
 
-    /** ---------------------------------------------------------------------
-     *  SAFE API CALL
-     *  --------------------------------------------------------------------*/
+    
     private suspend fun safeApiCall(
         apiCall: suspend () -> MovieResponse?,
         fallback: suspend () -> List<MediaEntity>,
@@ -35,29 +35,22 @@ class MoviesRepository(
 
                 Log.d(TAG, "✅ API Success: Fetched ${response.results.size} items. Processing...")
 
-                // 🔥 التعديل: فلترة النتائج لإزالة العناصر السيئة (بدون صور أو أسماء)
                 val rawResults = response.results
-                    .filter { it.adult != true } // استبعاد المحتوى غير اللائق
-                    .filter { !it.posterPath.isNullOrBlank() } // ✅ استبعاد العناصر اللي من غير صورة (أهم خطوة)
-                    .filter { !it.title.isNullOrBlank() || !it.name.isNullOrBlank() } // ✅ استبعاد العناصر اللي من غير اسم
-
-                // تم إزالة sortedByDescending { it.popularity } لأن المتغير غير موجود في الموديل عندك
-                // الفلترة بالأعلى كافية جداً لتنظيف البحث
+                    .filter { it.adult != true }
+                    .filter { !it.posterPath.isNullOrBlank() }
+                    .filter { !it.title.isNullOrBlank() || !it.name.isNullOrBlank() }
 
                 var entities = rawResults.map { it.toMediaEntity(typeFilter) }
 
-                // إجبار الـ mediaType لو ناقص
                 entities = entities.map {
                     if (it.mediaType.isNullOrBlank() && typeFilter != null)
                         it.copy(mediaType = typeFilter)
                     else it
                 }
 
-                // فلترة إضافية عند الحاجة
                 if (typeFilter != null) entities = entities.filter { it.mediaType == typeFilter }
                 if (genreId != null) entities = entities.filter { it.genreIds?.contains(genreId) == true }
 
-                // 🔥 حفظ في الكاش المحلي
                 if (entities.isNotEmpty()) {
                     localRepo.addOrUpdateAllFromApi(entities)
                 }
@@ -74,7 +67,6 @@ class MoviesRepository(
         }
     }
 
-    // ---------------------- Movies ----------------------
     suspend fun getPopularMovies(): List<MediaEntity> = safeApiCall(
         apiCall = {
             val res = api.getPopularMovies()
@@ -130,7 +122,6 @@ class MoviesRepository(
         genreId = genreId
     )
 
-    // ---------------------- TV Shows ----------------------
     suspend fun getPopularTvShows(): List<MediaEntity> = safeApiCall(
         apiCall = {
             val res = api.getPopularTvShows()
@@ -140,7 +131,6 @@ class MoviesRepository(
         typeFilter = "tv"
     )
 
-    // ---------------------- Trending ----------------------
     suspend fun getTrendingMedia(
         mediaType: String = "all",
         timeWindow: String = "day"
@@ -152,7 +142,6 @@ class MoviesRepository(
         fallback = { localRepo.getAll().first() }
     )
 
-    // ---------------------- Search ----------------------
     suspend fun searchMulti(query: String): List<MediaEntity> = safeApiCall(
         apiCall = {
             val res = api.searchMulti(query = query)
@@ -164,7 +153,7 @@ class MoviesRepository(
         }
     )
 
-    /** 🔹 بحث بنوع محدد (Movie / TV / Person) */
+    
     suspend fun searchByType(query: String, type: String): List<MediaEntity> {
         val rawResults: List<MediaEntity> = when (type.lowercase()) {
             "movie" -> safeApiCall(
@@ -239,10 +228,8 @@ class MoviesRepository(
             )
         }
 
-        // 🔎 فلترة خاصة بالأطفال
-        // ✅ إصلاح: تخطي فلترة الأطفال عند البحث عن ممثلين "people"
         val filteredResults = if (type.lowercase() == "people") {
-            rawResults // نرجّعهم زي ما هم بدون فلترة genres/adult
+            rawResults
         } else {
             KidsFilter.filterKids(
                 rawResults.filterNot {
@@ -253,29 +240,21 @@ class MoviesRepository(
             )
         }
 
-
         return filteredResults
     }
 
-    // ---------------------- Smart Recommendations ----------------------
     suspend fun getSmartRecommendations(accountId: Int, sessionId: String): List<MediaEntity> = try {
 
         val collected = mutableListOf<MediaEntity>()
 
-        // =================================================
-        // 1️⃣ Viewed History & Similar (سجل المشاهدة)
-        // =================================================
-        // ✅ تصحيح: استخدام الدالة المساعدة في LocalRepo
         val historyList = localRepo.getMovieHistoryOnce()
 
         if (historyList.isNotEmpty()) {
-            // أ) إضافة آخر 5 أفلام شاهدها المستخدم
             val mappedHistory = historyList.take(5).map { it.toMediaEntity() }
             collected.addAll(mappedHistory)
 
-            // ب) جلب توصيات لآخر فيلم تمت مشاهدته
             val lastViewed = historyList.first()
-            val isTv = lastViewed.mediaType == "tv" || lastViewed.mediaType.isNullOrBlank() // تحوط للنوع
+            val isTv = lastViewed.mediaType == "tv" || lastViewed.mediaType.isNullOrBlank()
 
             val recResponse = if (isTv) {
                 api.getSimilarTvShows(lastViewed.id)
@@ -288,16 +267,12 @@ class MoviesRepository(
                     .filterNot { it.id == lastViewed.id }
                     .take(5)
                     .map {
-                        // استخدام الـ mapper الموجود لديك
                         it.toMediaEntity(defaultType = lastViewed.mediaType)
                     }
                 collected.addAll(similarItems)
             }
         }
 
-        // =================================================
-        // 2️⃣ Rated Movies & TV (التقييمات)
-        // =================================================
         val ratedMoviesRes = api.getRatedMovies(accountId, sessionId)
         val ratedTvRes = api.getRatedTvShows(accountId, sessionId)
 
@@ -324,10 +299,6 @@ class MoviesRepository(
             }
         }
 
-        // =================================================
-        // 3️⃣ Search History (سجل البحث)
-        // =================================================
-        // ✅ تصحيح: استخدام الدالة المساعدة بدلاً من الوصول المباشر للـ DAO
         val searchHistory = localRepo.getSearchHistoryOnce(accountId.toString())
         if (searchHistory.isNotEmpty()) {
             searchHistory.take(3).forEach { item ->
@@ -342,9 +313,6 @@ class MoviesRepository(
             }
         }
 
-        // =================================================
-        // 4️⃣ Final Processing
-        // =================================================
         val finalList = if (collected.isEmpty()) {
             getGeneralFallback()
         } else {
@@ -352,7 +320,6 @@ class MoviesRepository(
                 .distinctBy { it.id }
                 .shuffled()
 
-            // ✅ تصحيح: استخدام دالة الحفظ الذكية للحفاظ على المفضلة
             localRepo.addOrUpdateAllFromApi(distinctList)
 
             distinctList
@@ -362,12 +329,10 @@ class MoviesRepository(
 
     } catch (e: Exception) {
         e.printStackTrace()
-        // ✅ تصحيح: استخدام الدالة المساعدة للجلب من الكاش
         val cached = localRepo.getAllOnce()
         if (cached.isNotEmpty()) cached.shuffled().take(20) else getGeneralFallback()
     }
 
-    // ---------------------- Fallback ----------------------
     private suspend fun getGeneralFallback(): List<MediaEntity> {
         return try {
             val trendingMovies = api.getTrendingMedia("movie", "day")
@@ -397,7 +362,6 @@ class MoviesRepository(
                 .take(25)
                 .map { it.toMediaEntity() }
 
-            // 🔥 Save Fallback to DB
             Log.d(TAG, "💾 Saving Fallback data to DB (${finalEntities.size} items)")
             localRepo.addOrUpdateAllFromApi(finalEntities)
 

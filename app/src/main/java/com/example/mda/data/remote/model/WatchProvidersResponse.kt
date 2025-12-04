@@ -1,9 +1,8 @@
 package com.example.mda.data.remote.model
 
-import com.google.gson.annotations.SerializedName
+// Data model
 
-// TMDB watch providers response
-// https://developer.themoviedb.org/reference/watch-providers
+import com.google.gson.annotations.SerializedName
 
 data class WatchProvidersResponse(
     @SerializedName("results") val results: Map<String, WatchProviderCountry> = emptyMap()

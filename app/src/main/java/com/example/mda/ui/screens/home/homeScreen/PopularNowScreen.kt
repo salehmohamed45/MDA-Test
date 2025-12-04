@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.home.homeScreen
 
+// UI screen component
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -41,7 +43,6 @@ fun PopularNowScreen(
     var showGrid by remember { mutableStateOf(true) }
     var selectedFilter by remember { mutableStateOf(MediaTypeFilter.MOVIES) }
 
-    // البيانات
     val movies = homeViewModel.popularMovies.collectAsState(initial = emptyList()).value
     val tvShows = homeViewModel.popularTvShows.collectAsState(initial = emptyList()).value
 
@@ -202,7 +203,7 @@ fun MovieCardGrid(popularItem: MediaEntity, onClick: () -> Unit) {
         shape = MaterialTheme.shapes.medium
     ) {
         AsyncImage(
-            model = "https://image.tmdb.org/t/p/w500${popularItem.posterPath}",
+            model = "https:
             contentDescription = popularItem.title ?: popularItem.name,
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -228,7 +229,7 @@ fun MovieCardListItem(item: MediaEntity, onClick: () -> Unit) {
             verticalAlignment = Alignment.Top
         ) {
             AsyncImage(
-                model = "https://image.tmdb.org/t/p/w300${item.posterPath}",
+                model = "https:
                 contentDescription = item.title ?: item.name,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier

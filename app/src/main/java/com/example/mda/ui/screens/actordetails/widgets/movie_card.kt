@@ -32,7 +32,6 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.mda.data.remote.model.Credit
 
-
 @Composable
 fun MovieCard(
     navController: NavController,
@@ -51,7 +50,7 @@ fun MovieCard(
             .padding(vertical = 6.dp)
             .height(110.dp)
             .clickable(
-                onClick = { // will navigate to Movie details screen (Fares)
+                onClick = {
                     navController.navigate("detail/${movie.media_type ?: "movie"}/${movie.id}")
                 })
             .background(barOverlayColor)
@@ -62,8 +61,8 @@ fun MovieCard(
         ) {
             Image(
                 painter = rememberAsyncImagePainter(
-                    posterUrl?.let { "https://image.tmdb.org/t/p/w500$it" }
-                        ?: "https://via.placeholder.com/150" // placeholder
+                    posterUrl?.let { "https:
+                        ?: "https:
                 ),
                 contentDescription = title,
                 contentScale = ContentScale.Crop,
@@ -72,7 +71,6 @@ fun MovieCard(
                     .fillMaxHeight()
                     .clip(RoundedCornerShape(topStart = 16.dp, bottomStart = 16.dp))
             )
-
 
             Spacer(modifier = Modifier.width(12.dp))
 

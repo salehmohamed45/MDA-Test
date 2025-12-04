@@ -9,7 +9,6 @@ object KidsFilter {
     private const val GENRE_FAMILY_ID = 10751
     private const val GENRE_KIDS_TV_ID = 10762
 
-    // كلمات تدلّ على أنها تمسّ بالبالغين أو أنمي للكبار
     private val blockedKeywords = listOf(
         "attack on titan", "death note", "tokyo ghoul", "naruto",
         "bleach", "chainsaw man", "demon slayer", "one piece",
@@ -20,13 +19,11 @@ object KidsFilter {
         "adult", "revenge", "violence", "abuse", "apocalypse"
     )
 
-    // أنواع أو تصنيفات غير مناسبة للأطفال
     private val blockedGenres = listOf(
         "horror", "thriller", "crime", "drama",
         "romance", "documentary", "war", "mystery"
     )
 
-    // الأنواع المسموح بها للأطفال
     private val allowedGenres = listOf("family", "animation", "kids", "child")
 
     fun isKidsSafe(item: MediaEntity): Boolean {

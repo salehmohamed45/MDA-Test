@@ -67,7 +67,7 @@ fun PrivacyPolicyScreen(
                         onClickButton = {
                             val intent = Intent(
                                 Intent.ACTION_VIEW,
-                                Uri.parse("https://www.themoviedb.org/privacy-policy")
+                                Uri.parse("https:
                             )
                             context.startActivity(intent)
                         }
@@ -98,7 +98,6 @@ fun PrivacyItem(
             .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.2f))
             .padding(14.dp)
     ) {
-        // عنوان القسم
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -118,7 +117,6 @@ fun PrivacyItem(
             )
         }
 
-        // النص داخل السؤال
         AnimatedVisibility(visible = expanded) {
             Column(
                 modifier = Modifier.padding(top = 8.dp)

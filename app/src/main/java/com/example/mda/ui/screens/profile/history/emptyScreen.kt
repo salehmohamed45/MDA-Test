@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.profile.history
 
+// UI screen component
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -50,7 +52,6 @@ fun emptyScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // ===== العنوان الرئيسي =====
         Text(
             text = title,
             style = MaterialTheme.typography.titleMedium,
@@ -62,7 +63,6 @@ fun emptyScreen(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // ===== النص الفرعي =====
         Text(
             text = subtitle,
             style = MaterialTheme.typography.bodyMedium,

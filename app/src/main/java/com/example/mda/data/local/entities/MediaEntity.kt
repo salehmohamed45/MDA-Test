@@ -1,10 +1,11 @@
 package com.example.mda.data.local.entities
 
+// Database entity
+
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.example.mda.data.local.converters.Converters
-
 
 @Entity(tableName = "media_items")
 @TypeConverters(Converters::class)
@@ -51,7 +52,6 @@ data class MediaEntity(
     val cast: List<Cast>? = null,
     val videos: List<Video>? = null,
 
-    // Images
     val posters: List<String>? = null,
     val backdrops: List<String>? = null,
 
@@ -67,10 +67,10 @@ data class MediaEntity(
         get() = mediaType ?: if (!firstAirDate.isNullOrEmpty() || (title.isNullOrEmpty() && !name.isNullOrEmpty())) "tv" else "movie"
 
     fun getFullPosterUrl(): String? {
-        return posterPath?.let { "https://image.tmdb.org/t/p/w500$it" }
+        return posterPath?.let { "https:
     }
 
     fun getFullBackdropUrl(): String? {
-        return backdropPath?.let { "https://image.tmdb.org/t/p/original$it" }
+        return backdropPath?.let { "https:
     }
 }

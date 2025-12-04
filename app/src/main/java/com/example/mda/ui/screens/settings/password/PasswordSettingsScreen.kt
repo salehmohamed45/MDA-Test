@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.settings.password
 
+// UI screen component
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -94,7 +96,6 @@ fun PasswordSettingsScreen(
             modifier = Modifier.fillMaxWidth()
         ) { Text(if (pin.isNullOrEmpty()) localizedString(LocalizationKeys.PW_SET_KIDS_PIN) else localizedString(LocalizationKeys.PW_CHANGE_KIDS_PIN)) }
 
-        // Clear PIN action with verification
         if (!pin.isNullOrEmpty()) {
             var showClearDialog by remember { mutableStateOf(false) }
             var input by remember { mutableStateOf("") }
@@ -124,7 +125,6 @@ fun PasswordSettingsScreen(
                                 onDigit = {
                                     if (input.length < 6) input += it.toString()
                                     if (input.length == 6) {
-                                        // Clear previous error only when full length reached again
                                         val entered = input
                                         error = null
                                         if (entered == pin) {

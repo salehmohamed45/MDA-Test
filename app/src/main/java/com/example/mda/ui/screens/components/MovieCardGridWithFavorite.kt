@@ -37,15 +37,13 @@ fun MovieCardGridWithFavorite(
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
 
-            // Poster image
             Image(
-                painter = rememberAsyncImagePainter("https://image.tmdb.org/t/p/w500${movie.posterPath}"),
+                painter = rememberAsyncImagePainter("https:
                 contentDescription = movie.title ?: movie.name ?: "Movie",
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
 
-            // Bottom gradient + Release date
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -68,7 +66,6 @@ fun MovieCardGridWithFavorite(
                 }
             }
 
-            // Top-left rating
             Row(
                 modifier = Modifier
                     .align(Alignment.TopStart)
@@ -95,7 +92,6 @@ fun MovieCardGridWithFavorite(
                 )
             }
 
-            // Favorite button - Top right
             Box(
                 modifier = Modifier
                     .align(Alignment.TopEnd)

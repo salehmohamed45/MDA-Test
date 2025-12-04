@@ -1,5 +1,7 @@
 package com.example.mda
 
+// UI screen component
+
 import android.Manifest
 import android.app.Activity
 import android.content.Context
@@ -39,7 +41,6 @@ import com.example.mda.data.local.LocalRepository
 import com.example.mda.data.local.database.AppDatabase
 import com.example.mda.data.remote.RetrofitInstance
 import com.example.mda.data.repository.*
-// Merged Imports
 import com.example.mda.localization.LocalizationManager
 import com.example.mda.localization.LanguageProvider
 import com.example.mda.localization.LocalizationKeys
@@ -71,7 +72,6 @@ import androidx.compose.runtime.key
 @OptIn(ExperimentalMaterial3Api::class)
 class MainActivity : ComponentActivity() {
 
-    // ======= Database & Repository =======
     private lateinit var database: AppDatabase
     private lateinit var localRepository: LocalRepository
     private lateinit var moviesRepository: MoviesRepository
@@ -79,7 +79,6 @@ class MainActivity : ComponentActivity() {
     private lateinit var actorRepository: ActorsRepository
     private lateinit var favoritesRepository: FavoritesRepository
 
-    // ======= ViewModels =======
     private lateinit var searchViewModel: SearchViewModel
     private lateinit var historyViewModel: HistoryViewModel
     private lateinit var moviesHistoryViewModel: MoviesHistoryViewModel
@@ -87,14 +86,12 @@ class MainActivity : ComponentActivity() {
     private lateinit var favoritesViewModel: FavoritesViewModel
     private lateinit var authViewModel: com.example.mda.ui.screens.auth.AuthViewModel
 
-    // ✅ OPTIMIZATION: Define static sets here (Merged from Main & Fares)
     companion object {
         val HIDE_BAR_ROUTES = setOf(
             "splash", "ActorDetails/{personId}", "detail/{mediaType}/{id}",
-            "onboarding", "login", "signup", "account", "kids", // Added 'kids' from fares
-            "language_settings" // Hide bottom navigation on Language Settings screen
+            "onboarding", "login", "signup", "account", "kids",
+            "language_settings"
         )
-        // Reset titles for specific settings pages
         val RESET_TOP_BAR_ROUTES = setOf("about_app", "help_faq", "privacy_policy")
     }
 
@@ -110,14 +107,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // ======= Room Database Setup =======
         database = AppDatabase.getInstance(applicationContext)
         localRepository = LocalRepository(mediaDao = database.mediaDao(), movieHistoryDao = database.MoviehistoryDao(), searchHistoryDao = database.searchHistoryDao())
         moviesRepository = MoviesRepository(RetrofitInstance.api, localRepository)
         movieDetailsRepository = MovieDetailsRepository(RetrofitInstance.api, database.mediaDao())
         actorRepository = ActorsRepository(RetrofitInstance.api, database.actorDao())
 
-        // ======= Session & Favorites & Auth =======
         val sessionManager = com.example.mda.data.datastore.SessionManager(applicationContext)
 
         favoritesRepository = FavoritesRepository(
@@ -132,7 +127,6 @@ class MainActivity : ComponentActivity() {
         val authRepository = AuthRepository(RetrofitInstance.api, sessionManager)
         authViewModel = com.example.mda.ui.screens.auth.AuthViewModel(authRepository)
 
-        // ======= SearchViewModel Factory =======
         val searchViewModelFactory = object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 val savedStateHandle = SavedStateHandle()
@@ -145,7 +139,6 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        // ======= UI Content =======
         setContent {
             val dataStore = SettingsDataStore(applicationContext)
             val themeMode by dataStore.themeModeFlow.collectAsState(initial = 0)
@@ -157,7 +150,6 @@ class MainActivity : ComponentActivity() {
             }
             val context = this
 
-            // ✅ Notification Permission
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 val permissionLauncher =
                     rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {}
@@ -172,17 +164,14 @@ class MainActivity : ComponentActivity() {
             val isIntroShownFlow = introDataStore.isIntroShown
             val isIntroShown by isIntroShownFlow.collectAsState(initial = null)
 
-            // ✅ Network Status
             val connectivityObserver = remember { NetworkConnectivityObserver(applicationContext) }
             val networkStatus by connectivityObserver.observe()
                 .collectAsState(initial = ConnectivityObserver.Status.Available)
 
             val navController = rememberNavController()
 
-            // ✅ OPTIMIZATION 1: Observe BackStack only once at the top level
             val navBackStackEntry by navController.currentBackStackEntryAsState()
 
-            // ✅ OPTIMIZATION 2: Derive route and visibility states (Minimizes Recomposition)
             val currentRoute by remember {
                 derivedStateOf { navBackStackEntry?.destination?.route }
             }
@@ -196,15 +185,12 @@ class MainActivity : ComponentActivity() {
                 val locManager = remember { LocalizationManager(compContext) }
                 val appLanguage by locManager.currentLanguage.collectAsState(initial = LocalizationManager.Language.ENGLISH)
                 
-                // Update global LanguageProvider when language changes
                 LaunchedEffect(appLanguage) { LanguageProvider.currentCode = appLanguage.code }
 
-                // 🌈 Gradient Background + RTL Support (Merged Logic)
                 val layoutDir = if (appLanguage == LocalizationManager.Language.ARABIC) LayoutDirection.Rtl else LayoutDirection.Ltr
                 
                 CompositionLocalProvider(LocalLayoutDirection provides layoutDir) {
                     
-                    // ✅ Merged: Check Network inside the RTL Provider
                     if (networkStatus == ConnectivityObserver.Status.Lost || networkStatus == ConnectivityObserver.Status.Unavailable) {
                         NoInternetScreen(
                             isDarkTheme = darkTheme,
@@ -225,7 +211,6 @@ class MainActivity : ComponentActivity() {
                         ) {
                             when (isIntroShown) {
                                 null -> {
-                                    // ⏳ Loading (Kept 32dp padding from fares for better UI)
                                     Box(
                                         modifier = Modifier
                                             .fillMaxSize()
@@ -241,7 +226,6 @@ class MainActivity : ComponentActivity() {
                                 true -> {
                                     val mediaDao = remember { database.mediaDao() }
 
-                                    // Initializing ViewModels (Merged for cleaner syntax)
                                     val homeViewModel: HomeViewModel = viewModel(factory = HomeViewModelFactory(moviesRepository, authRepository))
                                     val genreViewModel: GenreViewModel = viewModel(factory = GenreViewModelFactory(moviesRepository))
                                     val searchVM: SearchViewModel = viewModel(factory = searchViewModelFactory)
@@ -270,7 +254,6 @@ class MainActivity : ComponentActivity() {
                                                 val route = currentRoute ?: ""
                                                 val isResetRoute = route in RESET_TOP_BAR_ROUTES
 
-                                                // Merged: Localization logic + Optimization
                                                 val titleToShow = if (isResetRoute) {
                                                     when (route) {
                                                         "about_app" -> localizedString(LocalizationKeys.ABOUT_TITLE)
@@ -322,7 +305,6 @@ class MainActivity : ComponentActivity() {
                                                         navigationIcon = {
                                                             if (topBarState.showBackButton) {
                                                                 IconButton(onClick = { navController.navigateUp() }) {
-                                                                    // Merged: Updated Icon but kept Localized Description
                                                                     Icon(
                                                                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                                                         contentDescription = localizedString(LocalizationKeys.COMMON_BACK)
@@ -366,7 +348,6 @@ class MainActivity : ComponentActivity() {
                                         }
                                     ) { innerPadding ->
                                         val navBarInsets = WindowInsets.navigationBars.asPaddingValues()
-                                        // Merged: Logic for 'kids' route padding
                                         val isKidsRoute = currentRoute == "kids"
 
                                         Box(
@@ -394,10 +375,9 @@ class MainActivity : ComponentActivity() {
                                                 moviesHistoryViewModel = moviesHistoryViewModel,
                                                 authRepository = authRepository,
                                                 darkTheme = darkTheme,
-                                                homeViewModel = homeViewModel // Merged: Added this back
+                                                homeViewModel = homeViewModel
                                             )
 
-                                            // ✅✅ OPTIMIZATION 4: Efficient Deep Link Handling (From Main)
                                             LaunchedEffect(Unit) {
                                                 val intent = (context as? Activity)?.intent
                                                 if (intent?.getStringExtra("target_screen") == "details") {

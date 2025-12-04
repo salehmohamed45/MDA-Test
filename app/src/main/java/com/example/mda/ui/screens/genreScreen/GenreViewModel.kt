@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.genreScreen
 
+// ViewModel for managing UI state
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mda.data.remote.model.Genre

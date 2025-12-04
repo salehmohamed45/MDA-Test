@@ -22,7 +22,7 @@ import com.example.mda.data.local.entities.MediaEntity
 
 @Composable
 fun MovieCardGrid(
-    movie: MediaEntity,  // ✅ بدل Movie استخدم MediaEntity
+    movie: MediaEntity,
     onClick: () -> Unit
 ) {
     Card(
@@ -36,15 +36,13 @@ fun MovieCardGrid(
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
 
-            // Poster image
             Image(
-                painter = rememberAsyncImagePainter("https://image.tmdb.org/t/p/w500${movie.posterPath}"),
+                painter = rememberAsyncImagePainter("https:
                 contentDescription = movie.title ?: movie.name ?: "Movie",
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
 
-            // Bottom gradient + Release date
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -67,7 +65,6 @@ fun MovieCardGrid(
                 }
             }
 
-            // Top-left rating
             Row(
                 modifier = Modifier
                     .align(Alignment.TopStart)

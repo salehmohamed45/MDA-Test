@@ -1,5 +1,7 @@
 package com.example.mda.ui.theme
 
+// Theme configuration
+
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -63,7 +65,7 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun MovieAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = false, // Disabled to use our custom theme colors
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val backgroundGradient = AppBackgroundGradient(darkTheme)
@@ -82,16 +84,12 @@ fun MovieAppTheme(
             window.statusBarColor = colorScheme.background.toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
 
-            // 1. هذا السطر مهم جداً: يسمح للتطبيق بالرسم خلف شريط الحالة وشريط التنقل
             WindowCompat.setDecorFitsSystemWindows(window, false)
 
-            // 2. تغيير لون شريط التنقل (الأسهم) إلى شفاف
             window.navigationBarColor = Color.Transparent.toArgb()
 
-            // 3. تغيير لون شريط الحالة (الساعة والبطارية) إلى شفاف أيضاً (للتناسق)
             window.statusBarColor = Color.Transparent.toArgb()
 
-            // 4. التحكم في لون الأيقونات (جعلها فاتحة في الوضع الليلي وداكنة في الوضع النهاري)
             val controller = WindowCompat.getInsetsController(window, view)
             controller.isAppearanceLightStatusBars = !darkTheme
             controller.isAppearanceLightNavigationBars = !darkTheme

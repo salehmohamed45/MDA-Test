@@ -19,82 +19,6 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.mda.data.remote.model.Movie
 
-
-//@Composable
-//fun SmallMovieCard(movie: Movie) {
-//    Column(
-//        modifier = Modifier
-//            .width(120.dp)
-//            .clip(RoundedCornerShape(12.dp))
-//            .background(Color(0xFF1E1E2F))
-//            .padding(4.dp)
-//    ) {
-//        AsyncImage(
-//            model = "https://image.tmdb.org/t/p/w500${movie.posterPath}",
-//            contentDescription = movie.title ?: movie.name,
-//            modifier = Modifier
-//                .height(160.dp)
-//                .fillMaxWidth()
-//                .clip(RoundedCornerShape(12.dp)),
-//            contentScale = ContentScale.Crop
-//        )
-//
-//        Spacer(modifier = Modifier.height(6.dp))
-//
-//        Text(
-//            text = movie.title ?: movie.name ?: "Unknown",
-//            color = Color.White,
-//            fontSize = 14.sp,
-//            maxLines = 2
-//        )
-//
-//        Row(
-//            horizontalArrangement = Arrangement.SpaceBetween,
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            val year = (movie.releaseDate ?: movie.firstAirDate)?.take(4) ?: "-"
-//            Text(
-//                text = year,
-//                color = Color.Cyan,
-//                fontSize = 12.sp
-//            )
-//            Text(
-//                text = "⭐ ${movie.voteAverage}",
-//                color = Color.Yellow,
-//                fontSize = 12.sp
-//            )
-//        }
-//    }
-//}
-//@Composable
-//fun MovieCard(movie: Movie, onClick: (Movie) -> Unit) {
-//    Card(
-//        onClick = { onClick(movie) },
-//        modifier = Modifier
-//            .width(140.dp)
-//            .aspectRatio(0.65f),
-//        shape = RoundedCornerShape(12.dp)
-//    ) {
-//        Box {
-//            AsyncImage(
-//                model = "https://image.tmdb.org/t/p/w500${movie.posterPath}",
-//                contentDescription = movie.title,
-//                contentScale = ContentScale.Crop,
-//                modifier = Modifier.fillMaxSize()
-//            )
-//            Box(
-//                modifier = Modifier
-//                    .align(Alignment.TopStart)
-//                    .padding(6.dp)
-//                    .background(Color.Black.copy(alpha = 0.6f), RoundedCornerShape(6.dp))
-//                    .padding(horizontal = 6.dp, vertical = 2.dp)
-//            ) {
-//                Text("⭐ ${String.format("%.1f", movie.voteAverage)}", color = Color.White, fontSize = 12.sp)
-//            }
-//        }
-//    }
-//}
-
 @Composable
 fun MovieCard(movie: Movie, onClick: (Movie) -> Unit) {
     Card(
@@ -106,13 +30,12 @@ fun MovieCard(movie: Movie, onClick: (Movie) -> Unit) {
     ) {
         Box {
             AsyncImage(
-                model = "https://image.tmdb.org/t/p/w500${movie.posterPath}",
+                model = "https:
                 contentDescription = movie.title,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
 
-            // تقييم فوق
             Box(
                 modifier = Modifier
                     .align(Alignment.TopStart)
@@ -126,8 +49,6 @@ fun MovieCard(movie: Movie, onClick: (Movie) -> Unit) {
                     fontSize = 12.sp
                 )
             }
-
-
 
         }
     }

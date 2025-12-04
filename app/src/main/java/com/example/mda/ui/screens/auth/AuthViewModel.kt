@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.auth
 
+// ViewModel for managing UI state
+
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -38,9 +40,6 @@ class AuthViewModel(
         }
     }
 
-
-    // Start the authentication flow by creating a request token
-
     fun startAuthentication() {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true, error = null)
@@ -66,8 +65,6 @@ class AuthViewModel(
             )
         }
     }
-
-     // Step 2: Complete authentication after user approves in WebView
 
     suspend fun completeAuthentication() {
         _uiState.value = _uiState.value.copy(isLoading = true, error = null)
@@ -105,9 +102,6 @@ class AuthViewModel(
         )
     }
 
-
-    //  Fetch account details after login
-
     fun fetchAccountDetails() {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true, error = null)
@@ -129,9 +123,6 @@ class AuthViewModel(
             )
         }
     }
-
-
-    // Logout
 
     fun logout() {
         viewModelScope.launch {

@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.auth
 
+// UI screen component
+
 import android.annotation.SuppressLint
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -37,7 +39,6 @@ fun LoginScreen(
     val topBarText = if (darkTheme) Color.White else Color.Black
 
     LaunchedEffect(Unit) {
-        // Start the authentication flow
         viewModel.startAuthentication()
     }
 
@@ -135,12 +136,10 @@ fun LoginScreen(
                             if (approved && !hasCompletedAuth) {
                                 hasCompletedAuth = true
                                 scope.launch {
-                                    // Add a delay to ensure TMDb processes the approval
                                     delay(1500)
                                     viewModel.completeAuthentication()
                                 }
                             } else if (!approved) {
-                                // User denied authentication
                                 navController.popBackStack()
                             }
                         }
@@ -173,15 +172,12 @@ fun TMDbWebView(
                     ): Boolean {
                         val loadUrl = request?.url?.toString() ?: return false
 
-                        // Don't handle if we already triggered the callback
                         if (hasTriggeredCallback) {
                             return true
                         }
 
-                        // Check if user completed authentication
                         when {
-                            // User approved - TMDb redirects away from /authenticate/
-                            loadUrl.startsWith("https://www.themoviedb.org/") &&
+                            loadUrl.startsWith("https:
                                     !loadUrl.contains("/authenticate/") &&
                                     !loadUrl.contains("/login") &&
                                     !loadUrl.contains("/signup") -> {
@@ -189,7 +185,6 @@ fun TMDbWebView(
                                 onAuthComplete(true)
                                 return true
                             }
-                            // Handle explicit deny
                             loadUrl.contains("denied") || loadUrl.contains("cancel") -> {
                                 hasTriggeredCallback = true
                                 onAuthComplete(false)
@@ -202,15 +197,12 @@ fun TMDbWebView(
                     override fun onPageFinished(view: WebView?, url: String?) {
                         super.onPageFinished(view, url)
 
-                        // Don't handle if we already triggered the callback
                         if (hasTriggeredCallback) {
                             return
                         }
 
-                        // Check if we've successfully navigated away from authenticate page
-                        // This happens after user clicks "Approve"
                         if (url != null &&
-                            url.startsWith("https://www.themoviedb.org/") &&
+                            url.startsWith("https:
                             !url.contains("/authenticate/") &&
                             !url.contains("/signup") &&
                             !url.contains("/login")) {

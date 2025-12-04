@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.movieDetail
 
+// ViewModel for managing UI state
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mda.data.local.entities.MediaEntity
@@ -43,12 +45,12 @@ class MovieDetailsViewModel(
     private val _releaseSummary = MutableStateFlow<ReleaseSummary?>(null)
     val releaseSummary: StateFlow<ReleaseSummary?> = _releaseSummary
 
-    /** Load Movie details, fallback to cache if needed */
+    
     fun loadMovieDetails(id: Int, fromNetwork: Boolean = false) {
         load(id, isTv = false, fromNetwork = fromNetwork)
     }
 
-    /** Load TV details, fallback to cache if needed */
+    
     fun loadTvDetails(id: Int, fromNetwork: Boolean = false) {
         load(id, isTv = true, fromNetwork = fromNetwork)
     }
@@ -58,44 +60,38 @@ class MovieDetailsViewModel(
             _isLoading.value = true
             _error.value = null
             try {
-                // ✅ جيب من الـ cache أول عشان نعرض بيانات سريعة
                 val cached = if (isTv) repository.getCachedTv(id) else repository.getCachedMovie(id)
 
-                // لو فيه cache، اعرضه أول (للسرعة)
                 if (cached != null && !fromNetwork) {
                     _details.value = cached
                 }
 
-                // ✅ بعد كده روح للـ API عشان تجيب البيانات الكاملة (cast, videos, etc.)
                 val fresh = if (isTv) repository.getTvById(id) else repository.getMovieById(id)
 
                 if (fresh != null) {
-                    // اعرض التفاصيل فوراً
                     _details.value = fresh
 
-                    // اعتبر التحميل الأساسي انتهى
                     _isLoading.value = false
 
-                    // باقي الأقسام تتجاب في الخلفية بشكل متوازي
-                    viewModelScope.launch { // similar
+                    viewModelScope.launch {
                         val similarItems = if (isTv) repository.getSimilarTvShows(id) else repository.getSimilarMovies(id)
                         _similar.value = similarItems.filter { !it.posterPath.isNullOrBlank() }
                     }
-                    viewModelScope.launch { // recommendations
+                    viewModelScope.launch {
                         val recItems = if (isTv) repository.getRecommendedTvShows(id) else repository.getRecommendedMovies(id)
                         _recommendations.value = recItems.filter { !it.posterPath.isNullOrBlank() }
                     }
-                    viewModelScope.launch { // providers
+                    viewModelScope.launch {
                         _providers.value = if (isTv) repository.getTvProviders(id) else repository.getMovieProviders(id)
                     }
-                    viewModelScope.launch { // reviews
+                    viewModelScope.launch {
                         _reviews.value = if (isTv) repository.getTvReviews(id) else repository.getMovieReviews(id)
                     }
-                    viewModelScope.launch { // keywords
+                    viewModelScope.launch {
                         _keywords.value = if (isTv) repository.getTvKeywords(id) else repository.getMovieKeywords(id)
                     }
                     if (!isTv) {
-                        viewModelScope.launch { // movie release summary
+                        viewModelScope.launch {
                             _releaseSummary.value = repository.getMovieReleaseSummary(id)
                         }
                     }
@@ -107,7 +103,6 @@ class MovieDetailsViewModel(
             } catch (e: Exception) {
                 _error.value = e.message ?: "Unknown error"
             } finally {
-                // لو كنا بالفعل عرضنا التفاصيل ووقفنا التحميل، بلاش نعيد تشغيله
                 if (_details.value == null) _isLoading.value = false
             }
         }

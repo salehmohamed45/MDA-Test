@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.actordetails
 
+// UI screen component
+
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.background
@@ -44,11 +46,10 @@ fun ActorDetailsScreenContent(
                id = actor.id,
                name = actor.name ,
                profilePath = actor.profile_path,
-               knownForDepartment = actor.birthday   // will modifed
+               knownForDepartment = actor.birthday
            )
        )
    }
-
 
     val bgGradient = Brush.verticalGradient(
         colors = listOf(
@@ -151,10 +152,10 @@ fun ActorDetailsScreenContent(
 private fun SocialLinks(actor: ActorFullDetails) {
     val context = LocalContext.current
     val items = listOfNotNull(
-        actor.external_ids?.instagram_id?.let { "instagram" to "https://www.instagram.com/$it" },
-        actor.external_ids?.twitter_id?.let { "twitter" to "https://twitter.com/$it" },
-        actor.external_ids?.imdb_id?.let { "imdb" to "https://www.imdb.com/name/$it/" },
-        actor.external_ids?.imdb_id?.let { "facebook" to "https://www.imdb.com/name/$it/" }
+        actor.external_ids?.instagram_id?.let { "instagram" to "https:
+        actor.external_ids?.twitter_id?.let { "twitter" to "https:
+        actor.external_ids?.imdb_id?.let { "imdb" to "https:
+        actor.external_ids?.imdb_id?.let { "facebook" to "https:
 
     )
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {

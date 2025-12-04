@@ -15,15 +15,14 @@ private val Context.kidsSecurityDataStore: DataStore<Preferences> by preferences
 class KidsSecurityDataStore(private val context: Context) {
     companion object {
         private val KEY_PIN = stringPreferencesKey("kids_pin")
-        private val KEY_LOCK_ENABLED = intPreferencesKey("kids_lock_enabled") // 1 true, 0 false
-        private val KEY_ACTIVE = intPreferencesKey("kids_active") // 1 active, 0 inactive
+        private val KEY_LOCK_ENABLED = intPreferencesKey("kids_lock_enabled")
+        private val KEY_ACTIVE = intPreferencesKey("kids_active")
         private val KEY_Q1 = intPreferencesKey("kids_sec_q1")
         private val KEY_Q2 = intPreferencesKey("kids_sec_q2")
         private val KEY_Q3 = intPreferencesKey("kids_sec_q3")
         private val KEY_A1 = stringPreferencesKey("kids_sec_a1")
         private val KEY_A2 = stringPreferencesKey("kids_sec_a2")
         private val KEY_A3 = stringPreferencesKey("kids_sec_a3")
-        // Index-based answers to be language-independent
         private val KEY_A1_INDEX = intPreferencesKey("kids_sec_a1_index")
         private val KEY_A2_INDEX = intPreferencesKey("kids_sec_a2_index")
         private val KEY_A3_INDEX = intPreferencesKey("kids_sec_a3_index")
@@ -90,11 +89,9 @@ class KidsSecurityDataStore(private val context: Context) {
             prefs[KEY_Q1] = q1
             prefs[KEY_Q2] = q2
             prefs[KEY_Q3] = q3
-            // store indices
             prefs[KEY_A1_INDEX] = a1Index
             prefs[KEY_A2_INDEX] = a2Index
             prefs[KEY_A3_INDEX] = a3Index
-            // store texts for backward compatibility / debug
             prefs[KEY_A1] = a1Text.trim()
             prefs[KEY_A2] = a2Text.trim()
             prefs[KEY_A3] = a3Text.trim()
@@ -104,11 +101,8 @@ class KidsSecurityDataStore(private val context: Context) {
     suspend fun verifyPin(pin: String): Boolean {
         val current = pinFlow.map { it }.let { flow ->
             var v: String? = null
-            // NOTE: caller should collect, but for simplicity this method is suspend-called from UI with collect-first pattern elsewhere
-            // Keep this method simple by using a one-shot read via edit hack is not good; leaving verification to caller is preferred.
             v
         }
-        // This method is unused directly; verify in UI by collecting pinFlow.
         return false
     }
 }

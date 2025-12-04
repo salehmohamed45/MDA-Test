@@ -25,14 +25,12 @@ fun FavoriteButton(
     viewModel: FavoritesViewModel,
     modifier: Modifier = Modifier,
     showBackground: Boolean = true,
-    onLoginRequired: () -> Unit,           // screen decides what "login" does (navigate)
+    onLoginRequired: () -> Unit,
     isAuthenticated: Boolean = true,
-    navController: NavController? = null,  // still here if you use it somewhere else
+    navController: NavController? = null,
 ) {
-    // dialog state is now INSIDE the button
     var showLoginDialog by remember { mutableStateOf(false) }
 
-    // reactive favorites state from ViewModel
     val favorites by viewModel.favorites.collectAsState()
     val isFavorite = favorites.any { it.id == movie.id && it.isFavorite }
 
@@ -49,7 +47,6 @@ fun FavoriteButton(
             )
             .clickable {
                 if (!isAuthenticated) {
-                    // show dialog instead of doing navigation directly
                     showLoginDialog = true
                 } else {
                     viewModel.toggleFavorite(movie)
@@ -65,13 +62,12 @@ fun FavoriteButton(
         )
     }
 
-    // login dialog shown by the button itself
     if (showLoginDialog) {
         LoginRequiredDialog(
             onDismiss = { showLoginDialog = false },
             onLogin = {
                 showLoginDialog = false
-                onLoginRequired()      // screen will usually call navController.navigate("profile")
+                onLoginRequired()
             }
         )
     }

@@ -27,7 +27,6 @@ class MovieDetailsRepository(
         mediaDao.getById(id, type = "movie")
     }
 
-// Only override language-dependent UI text (e.g., overview)
 private fun overrideTextOnly(baseEn: MediaEntity, localized: MediaEntity): MediaEntity {
     return baseEn.copy(
         overview = localized.overview?.takeIf { it.isNotBlank() } ?: baseEn.overview
@@ -41,7 +40,6 @@ private fun overrideTextOnly(baseEn: MediaEntity, localized: MediaEntity): Media
     suspend fun getMovieById(id: Int): MediaEntity? = withContext(Dispatchers.IO) {
         Log.d(TAG, "🎬 Fetching movie details for ID: $id")
         try {
-            // 1) Always get English as the base to keep consistent metadata across languages
             val enResp = apiService.getMovieDetails(
                 movieId = id,
                 language = "en",
@@ -56,12 +54,10 @@ private fun overrideTextOnly(baseEn: MediaEntity, localized: MediaEntity): Media
 
                 var entity = enBody?.toMediaEntity("movie") ?: return@withContext null
 
-                // 2) If current language is not English, fetch localized and override text-only fields
                 if (LanguageProvider.currentCode != "en") {
                     runCatching {
                         val locResp = apiService.getMovieDetails(
                             movieId = id,
-                            // no explicit language -> interceptor adds selected language
                             apiKey = TMDB_API_KEY
                         )
                         if (locResp.isSuccessful) {
@@ -72,7 +68,6 @@ private fun overrideTextOnly(baseEn: MediaEntity, localized: MediaEntity): Media
                     }.onFailure { Log.w(TAG, "Localized fetch failed: ${it.message}") }
                 }
 
-                // الحفاظ على حالة المفضلة و الـ Watchlist
                 val existingEntity = mediaDao.getByIdOnly(id)
                 val finalEntity = if (existingEntity != null) {
                     entity.copy(
@@ -99,7 +94,6 @@ private fun overrideTextOnly(baseEn: MediaEntity, localized: MediaEntity): Media
     suspend fun getTvById(id: Int): MediaEntity? = withContext(Dispatchers.IO) {
         Log.d(TAG, "📺 Fetching TV details for ID: $id")
         try {
-            // 1) Always get English base
             val enResp = apiService.getTvDetails(
                 tvId = id,
                 language = "en",
@@ -114,7 +108,6 @@ private fun overrideTextOnly(baseEn: MediaEntity, localized: MediaEntity): Media
 
                 var entity = enBody?.toMediaEntity("tv") ?: return@withContext null
 
-                // 2) Overlay localized text-only fields
                 if (LanguageProvider.currentCode != "en") {
                     runCatching {
                         val locResp = apiService.getTvDetails(
@@ -129,7 +122,6 @@ private fun overrideTextOnly(baseEn: MediaEntity, localized: MediaEntity): Media
                     }.onFailure { Log.w(TAG, "Localized fetch (TV) failed: ${it.message}") }
                 }
 
-                // الحفاظ على حالة المفضلة و الـ Watchlist
                 val existingEntity = mediaDao.getByIdOnly(id)
                 val finalEntity = if (existingEntity != null) {
                     entity.copy(
@@ -153,7 +145,6 @@ private fun overrideTextOnly(baseEn: MediaEntity, localized: MediaEntity): Media
         }
     }
 
-    // ================= Similar =================
     suspend fun getSimilarMovies(id: Int): List<MediaEntity> = withContext(Dispatchers.IO) {
         runCatching {
             val response = apiService.getSimilarMovies(movieId = id)
@@ -174,7 +165,6 @@ private fun overrideTextOnly(baseEn: MediaEntity, localized: MediaEntity): Media
         }.getOrElse { emptyList() }
     }
 
-    // ================= Recommendations =================
     suspend fun getRecommendedMovies(id: Int): List<MediaEntity> = withContext(Dispatchers.IO) {
         runCatching {
             val response = apiService.getRecommendedMovies(movieId = id)
@@ -195,7 +185,6 @@ private fun overrideTextOnly(baseEn: MediaEntity, localized: MediaEntity): Media
         }.getOrElse { emptyList() }
     }
 
-    // ================= Watch Providers =================
     data class ProvidersGrouped(
         val link: String?,
         val buy: List<ProviderLogo>,
@@ -229,7 +218,6 @@ private fun overrideTextOnly(baseEn: MediaEntity, localized: MediaEntity): Media
         }.getOrNull()
     }
 
-    // ================= Reviews & Keywords =================
     suspend fun getMovieReviews(id: Int): ReviewsResponse? = withContext(Dispatchers.IO) {
         runCatching { apiService.getMovieReviews(id) }.getOrNull()?.body()
     }
@@ -246,7 +234,6 @@ private fun overrideTextOnly(baseEn: MediaEntity, localized: MediaEntity): Media
         runCatching { apiService.getTvKeywords(id) }.getOrNull()?.body()
     }
 
-    // ================= Release Dates (Movies) =================
     data class ReleaseSummary(
         val certification: String? = null,
         val theatrical: String? = null,
@@ -263,7 +250,6 @@ private fun overrideTextOnly(baseEn: MediaEntity, localized: MediaEntity): Media
                 ?: body.results.firstOrNull()
                 ?: return@withContext null
 
-            // TMDB types: 1=Premiere,2=Theatrical (limited),3=Theatrical,4=Digital,5=Physical,6=TV
             val theatrical = node.releaseDates.firstOrNull { it.type == 3 }?.releaseDate
                 ?: node.releaseDates.firstOrNull { it.type == 2 }?.releaseDate
             val digital = node.releaseDates.firstOrNull { it.type == 4 }?.releaseDate
@@ -280,8 +266,6 @@ private fun overrideTextOnly(baseEn: MediaEntity, localized: MediaEntity): Media
     }
 }
 
-
-// 🔹 Mapper لتحويل MovieDetailsResponse لـ MediaEntity
 private fun mergeEntities(primary: MediaEntity, fallback: MediaEntity): MediaEntity {
     fun <T> pick(p: T?, f: T?): T? = p ?: f
     fun pickText(p: String?, f: String?): String? = if (!p.isNullOrBlank()) p else f

@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.genreDetails
 
+// ViewModel for managing UI state
+
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
