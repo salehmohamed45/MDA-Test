@@ -1,5 +1,7 @@
 package com.example.mda.data.remote.model
 
+// Data model
+
 import com.google.gson.annotations.SerializedName
 
 data class ReviewsResponse(

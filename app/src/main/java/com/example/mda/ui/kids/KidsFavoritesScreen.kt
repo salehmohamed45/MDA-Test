@@ -1,5 +1,7 @@
 package com.example.mda.ui.kids
 
+// UI screen component
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize

@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.movieDetail
 
+// ViewModel for managing UI state
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.mda.data.repository.MovieDetailsRepository

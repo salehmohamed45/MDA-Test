@@ -1,5 +1,7 @@
 package com.example.mda.data.repository
 
+// Repository for data operations
+
 import android.util.Log
 import com.example.mda.data.local.dao.ActorDao
 import com.example.mda.data.local.entities.ActorEntity
@@ -14,40 +16,26 @@ import kotlinx.coroutines.withContext
 import retrofit2.Response
 import kotlin.collections.emptyList
 
-/**
- * ✅ Khalid: Repository for fetching popular actors, caching them,
- * and retrieving full actor details with offline fallback.
- */
 class ActorsRepository(
     private val api: TmdbApi,
     private val actorDao: ActorDao? = null
 ) {
 
-    // ✅ 1. Fetch list of popular actors (API direct)
     suspend fun getPopularActors(page: Int = 1): Response<ActorResponse> =
         withContext(Dispatchers.IO) {
-//            Log.d("ActorsRepo", "getPopularActors called, page=$page")
             val response = api.getPopularPeople(page = page)
-//            Log.d("ActorsRepo", "API response success=${response.isSuccessful}")
             response
         }
 
-    /**
-     * ✅ 2. Fetch actors with cache fallback
-     * Try API first — if fails, fallback to cache.
-     */
+    
     suspend fun getPopularActorsWithCache(page: Int = 1): List<ActorEntity> =
         withContext(Dispatchers.IO) {
-//            Log.d("ActorsRepo", "getPopularActorsWithCache called, page=$page")
             try {
                 val response = api.getPopularPeople(page = page)
-//                Log.d("ActorsRepo", "API call completed, success=${response.isSuccessful}")
 
                 if (response.isSuccessful) {
                     val actors = response.body()?.results ?: emptyList()
-//                    Log.d("ActorsRepo", "Fetched ${actors.size} actors from API")
                     actors.forEach {
-//                        Log.d("ActorsRepo", "API known_for for ${it.name}: ${it.knownFor}")
                     }
 
                     cacheActors(actors)
@@ -64,32 +52,24 @@ class ActorsRepository(
                         )
                     }
                 } else {
-//                    Log.d("ActorsRepo", "API error, using cache")
                     actorDao?.getAllActors()
                         ?.also {
-//                            Log.d("ActorsRepo", "Fetched ${it.size} actors from cache")
                         }
                         ?: emptyList()
                 }
             } catch (e: Exception) {
-//                Log.d("ActorsRepo", "Exception in API call: ${e.localizedMessage}, using cache")
                 actorDao?.getAllActors()
                     ?.also {
-//                        Log.d("ActorsRepo", "Fetched ${it.size} actors from cache")
                     }
                     ?: emptyList()
             }
         }
 
-    /**
-     * ✅ 3. Cache list of actors (used after API success)
-     */
+    
     suspend fun cacheActors(actors: List<Actor>) = withContext(Dispatchers.IO) {
         if (actorDao == null) {
-//            Log.d("ActorsRepo", "cacheActors skipped: actorDao is null")
             return@withContext
         }
-//        Log.d("ActorsRepo", "Caching ${actors.size} actors")
         actors.forEach { actor ->
             val gson = Gson()
             val knownForJson = gson.toJson(actor.knownFor)
@@ -105,22 +85,16 @@ class ActorsRepository(
                 knownFor = knownForJson
             )
             actorDao.upsert(entity)
-//            Log.d("ActorsRepo", "Cached actor: ${actor.name}")
         }
     }
 
-    /**
-     * ✅ 4. Get all cached actors (used when no internet)
-     */
+    
     suspend fun getCachedActors(): List<ActorEntity> = withContext(Dispatchers.IO) {
         val cached = actorDao?.getAllActors() ?: emptyList()
-//        Log.d("ActorsRepo", "getCachedActors returned ${cached.size} actors")
         cached
     }
 
-    /**
-     * ✅ 5. Get full actor details by ID (API → Cache fallback)
-     */
+    
     suspend fun getFullActorDetails(
         personId: Int,
         forceRefresh: Boolean = false

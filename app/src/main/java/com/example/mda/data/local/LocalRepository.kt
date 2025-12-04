@@ -1,5 +1,7 @@
 package com.example.mda.data.local
 
+// Repository for data operations
+
 import android.util.Log
 import com.example.mda.data.local.dao.MediaDao
 import com.example.mda.data.local.dao.MovieHistoryDao
@@ -16,7 +18,6 @@ class LocalRepository(
     val movieHistoryDao: MovieHistoryDao
 ) {
 
-    // ---------------- MEDIA DATA ----------------
     fun getAll(): Flow<List<MediaEntity>> = mediaDao.getAll()
     fun getFavorites(): Flow<List<MediaEntity>> = mediaDao.getFavorites()
     fun getWatchlist(): Flow<List<MediaEntity>> = mediaDao.getWatchlist()
@@ -81,8 +82,6 @@ class LocalRepository(
     suspend fun isFavorite(id: Int): Boolean = mediaDao.isFavorite(id) ?: false
     suspend fun getById(id: Int): MediaEntity? = mediaDao.getByIdOnly(id)
 
-    // ---------------- SYNC HELPERS ----------------
-
     suspend fun clearAllFavorites() {
         val currentFavorites = mediaDao.getFavorites().first()
         currentFavorites.forEach { entity ->
@@ -99,8 +98,6 @@ class LocalRepository(
             mediaDao.updateFavoriteStatus(id, true)
         }
     }
-
-    // ---------------- SEARCH HISTORY (للـ user المحدد) ----------------
 
     fun getSearchHistory(userId: String?): Flow<List<SearchHistoryEntity>> =
         searchHistoryDao.getRecentHistory(userId)

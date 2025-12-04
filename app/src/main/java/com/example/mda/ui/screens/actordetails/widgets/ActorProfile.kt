@@ -31,9 +31,8 @@ fun ActorProfile(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(430.dp) // Big hero section
+            .height(430.dp)
     ) {
-        // 🖼️ Background image
         Image(
             painter = rememberAsyncImagePainter("https://image.tmdb.org/t/p/w500$profilePath"),
             contentDescription = name,
@@ -41,7 +40,6 @@ fun ActorProfile(
             modifier = Modifier.fillMaxSize()
         )
 
-        // 🌈 Gradient overlay
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -52,7 +50,6 @@ fun ActorProfile(
                 )
         )
 
-        // 🔙 Back arrow button (top-left)
         IconButton(
             onClick = { navController.popBackStack() },
             modifier = Modifier
@@ -67,7 +64,6 @@ fun ActorProfile(
             )
         }
 
-        // 🧑 Actor info (bottom-left)
         Column(
             modifier = Modifier
                 .align(Alignment.BottomStart)

@@ -7,11 +7,6 @@ import com.example.mda.data.local.entities.Video
 import com.example.mda.data.remote.model.Movie
 import com.example.mda.data.remote.model.MovieDetailsResponse
 
-/**
- * Mapper لتحويل Movie (من API / Trending / Popular) إلى MediaEntity.
- * defaultType: مرر "movie" أو "tv" من الـ Repository لما يكون معروف مسبقًا.
- * لو الـ API رجع media_type هنستخدمه، وإلا هنستنتج من الحقول.
- */
 fun Movie.toMediaEntity(defaultType: String? = this.mediaType): MediaEntity {
     val realType = this.mediaType ?: defaultType ?: if (!this.name.isNullOrEmpty() && this.title.isNullOrEmpty()) "tv" else "movie"
 
@@ -32,15 +27,10 @@ fun Movie.toMediaEntity(defaultType: String? = this.mediaType): MediaEntity {
     )
 }
 
-
-/**
- * 🆕 Mapper محدث لتحويل MovieDetailsResponse إلى MediaEntity مع كل التفاصيل
- */
 fun MovieDetailsResponse.toMediaEntity(type: String = "movie"): MediaEntity {
     val genreNames = this.genres?.mapNotNull { it.name } ?: emptyList()
     val genreIds = this.genres?.map { it.id } ?: emptyList()
     
-    // تحويل Cast من API إلى Cast Entity
     val castList = this.credits?.cast?.take(20)?.map { castItem ->
         Cast(
             id = castItem.id,
@@ -50,7 +40,6 @@ fun MovieDetailsResponse.toMediaEntity(type: String = "movie"): MediaEntity {
         )
     }
     
-    // تحويل Videos من API إلى Video Entity
     val videosList = this.videos?.results?.filter { 
         it.site?.equals("YouTube", ignoreCase = true) == true 
     }?.take(10)?.map { videoItem ->
@@ -62,13 +51,10 @@ fun MovieDetailsResponse.toMediaEntity(type: String = "movie"): MediaEntity {
         )
     }
     
-    // استخراج أسماء اللغات
     val languages = this.spokenLanguages?.mapNotNull { it.name }
     
-    // استخراج أسماء شركات الإنتاج
     val companies = this.productionCompanies?.mapNotNull { it.name }
     
-    // استخراج أسماء الدول المنتجة
     val countries = this.productionCountries?.mapNotNull { it.name }
 
     val isTv = type == "tv"
@@ -77,7 +63,6 @@ fun MovieDetailsResponse.toMediaEntity(type: String = "movie"): MediaEntity {
     val mappedFirstAir = if (isTv) (this.firstAirDate) else null
     val mappedRuntime = if (isTv) this.episodeRunTime?.firstOrNull() else this.runtime
 
-    // extract image paths
     val posters = this.images?.posters?.mapNotNull { it.filePath }
     val backdrops = this.images?.backdrops?.mapNotNull { it.filePath }
 
@@ -96,7 +81,6 @@ fun MovieDetailsResponse.toMediaEntity(type: String = "movie"): MediaEntity {
         genreIds = genreIds,
         genres = genreNames,
         
-        // ========== 🆕 الحقول الجديدة ==========
         runtime = mappedRuntime,
         tagline = this.tagline,
         status = this.status,
@@ -118,14 +102,13 @@ fun MovieDetailsResponse.toMediaEntity(type: String = "movie"): MediaEntity {
 fun MoviesViewedEntitty.toMediaEntity(): MediaEntity {
     return MediaEntity(
         id = this.id,
-        // إذا كان فيلم نضع الاسم في title، وإذا مسلسل نضعه في name
         title = if (this.mediaType == "movie") this.name else null,
         name = if (this.mediaType == "tv") this.name else null,
         posterPath = this.posterPath,
         backdropPath = this.backdropPath,
         mediaType = this.mediaType ?: "movie",
-        overview = "Recently Viewed", // نص توضيحي
-        voteAverage = 0.0, // غير متوفر في السجل
+        overview = "Recently Viewed",
+        voteAverage = 0.0,
         releaseDate = null,
         firstAirDate = null,
         timestamp = System.currentTimeMillis()

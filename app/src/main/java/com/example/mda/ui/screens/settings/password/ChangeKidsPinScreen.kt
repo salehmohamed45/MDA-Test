@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.settings.password
 
+// UI screen component
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -27,7 +29,7 @@ fun ChangeKidsPinScreen(
     val locManager = remember { LocalizationManager(context) }
     val appLanguage by locManager.currentLanguage.collectAsState(initial = LocalizationManager.Language.ENGLISH)
 
-    var stage by remember { mutableStateOf(0) } // 0=enter old, 1=enter new, 2=confirm new
+    var stage by remember { mutableStateOf(0) }
     var input by remember { mutableStateOf("") }
     var firstNew by remember { mutableStateOf("") }
     var error by remember { mutableStateOf<String?>(null) }
@@ -41,10 +43,9 @@ fun ChangeKidsPinScreen(
 
     LaunchedEffect(input, stage, savedPin) {
         if (input.length == 6) {
-            // clear previous error only when user completes another 6 digits
             error = null
             when (stage) {
-                0 -> { // verify old
+                0 -> {
                     if (savedPin != null && input == savedPin) {
                         stage = 1
                         input = ""
@@ -53,12 +54,12 @@ fun ChangeKidsPinScreen(
                         input = ""
                     }
                 }
-                1 -> { // new
+                1 -> {
                     firstNew = input
                     input = ""
                     stage = 2
                 }
-                2 -> { // confirm
+                2 -> {
                     if (firstNew == input) {
                         scope.launch {
                             store.setPin(input)

@@ -95,11 +95,9 @@ fun MovieCardWithFavorite(
                 )
             }
 
-            // Favorite Button
             Box(
                 modifier = Modifier.padding(end = 8.dp)
             ) {
-                // Convert Credit to Movie
                 val movieData = Movie(
                     id = movie.id,
                     title = movie.title,

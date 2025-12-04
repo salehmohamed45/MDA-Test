@@ -42,14 +42,12 @@ fun FavoritesScreen(
         )
     }
 
-    // ===== الصفحة بالكامل =====
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp)
     ) {
 
-        // ===== Title =====
         if (favorites.isNotEmpty()) {
             Row(
                 modifier = Modifier
@@ -68,7 +66,6 @@ fun FavoritesScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // ===== الحالة الفارغة =====
         if (favorites.isEmpty()) {
             emptyScreen(
                 title = "No favorite movies yet",
@@ -76,7 +73,6 @@ fun FavoritesScreen(
                 iconType = IconType.MOVIE
             )
         } else {
-            // ===== جريد المفضلات =====
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 modifier = Modifier
@@ -106,14 +102,12 @@ fun FavoritesScreen(
                         }
                     )
                 }
-                // ✅ Spacer تحت الجريد عشان يسيب مساحة عند آخر الصفحة
                 item { Spacer(modifier = Modifier.height(80.dp)) }
             }
         }
     }
 }
 
-// ✅ تحويل MediaEntity إلى Movie
 fun MediaEntity.toMovie(): Movie {
     return Movie(
         id = this.id,

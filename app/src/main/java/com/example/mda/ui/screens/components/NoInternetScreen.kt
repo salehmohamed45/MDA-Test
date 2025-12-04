@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.components
 
+// UI screen component
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -18,16 +20,14 @@ import com.example.mda.ui.theme.AppBackgroundGradient
 
 @Composable
 fun NoInternetScreen(
-    isDarkTheme: Boolean, // ✅ نستقبل حالة الثيم من الـ Main
+    isDarkTheme: Boolean,
     onRetry: () -> Unit
 ) {
-    // ❌ قمنا بإزالة: val isDark = isSystemInDarkTheme()
-    // لكي نعتمد على إعدادات التطبيق
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(AppBackgroundGradient(isDarkTheme)), // ✅ استخدام الثيم الممرر
+            .background(AppBackgroundGradient(isDarkTheme)),
         contentAlignment = Alignment.Center
     ) {
         Column(

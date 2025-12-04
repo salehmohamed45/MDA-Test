@@ -8,9 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
-/**
- * عنوان القسم (Section Title)
- */
 @Composable
 fun SectionTitle(
     title: String,

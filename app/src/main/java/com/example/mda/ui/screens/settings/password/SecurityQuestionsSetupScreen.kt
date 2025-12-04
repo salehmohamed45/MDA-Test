@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.settings.password
 
+// UI screen component
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -15,7 +17,6 @@ import com.example.mda.localization.LocalizationManager
 import com.example.mda.localization.LocalizationKeys
 import com.example.mda.localization.localizedString
 
-// Top-level model used by setup and verify screens
 data class QAItem(val question: String, val options: List<String>)
 
 @OptIn(ExperimentalMaterial3Api::class)

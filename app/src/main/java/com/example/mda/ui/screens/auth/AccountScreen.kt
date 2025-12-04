@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.auth
 
+// UI screen component
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -84,7 +86,6 @@ fun AccountScreen(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
-                        // ===== Avatar =====
                         Box(
                             modifier = Modifier
                                 .size(110.dp)
@@ -114,7 +115,6 @@ fun AccountScreen(
 
                         Spacer(modifier = Modifier.height(16.dp))
 
-                        // ===== Name & Username =====
                         Text(
                             text = account.name.ifEmpty { account.username },
                             style = MaterialTheme.typography.headlineSmall,
@@ -129,7 +129,6 @@ fun AccountScreen(
 
                         Spacer(modifier = Modifier.height(28.dp))
 
-                        // ===== Account Info Card =====
                         Surface(
                             shape = RoundedCornerShape(16.dp),
                             color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f),

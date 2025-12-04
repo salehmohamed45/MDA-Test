@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.genreScreen
 
+// UI screen component
+
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

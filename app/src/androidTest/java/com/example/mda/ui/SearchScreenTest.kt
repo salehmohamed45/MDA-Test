@@ -1,5 +1,7 @@
 package com.example.mda.ui
 
+// UI screen component
+
 import androidx.navigation.testing.TestNavHostController
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.runtime.mutableStateOf

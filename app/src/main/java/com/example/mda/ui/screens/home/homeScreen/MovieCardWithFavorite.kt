@@ -40,7 +40,6 @@ fun MovieCardWithFavorite(
                 modifier = Modifier.fillMaxSize()
             )
 
-            // تقييم فوق يسار
             Box(
                 modifier = Modifier
                     .align(Alignment.TopStart)
@@ -55,7 +54,6 @@ fun MovieCardWithFavorite(
                 )
             }
 
-            // زر القلب فوق يمين
             Box(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
@@ -63,7 +61,6 @@ fun MovieCardWithFavorite(
             ) {
                 favoriteButton()
             }
-
 
         }
     }

@@ -3,10 +3,6 @@ package com.example.mda.validation
 import org.junit.Test
 import org.junit.Assert.*
 
-/**
- * Unit tests for PIN validation logic
- * Tests PIN format, length, comparison, and edge cases
- */
 class PinValidationTest {
 
     @Test
@@ -128,7 +124,6 @@ class PinValidationTest {
         assertTrue(comparePins(pin1, pin2))
     }
 
-    // Helper functions
     private fun isValidPinLength(pin: String, requiredLength: Int): Boolean {
         return pin.length == requiredLength
     }

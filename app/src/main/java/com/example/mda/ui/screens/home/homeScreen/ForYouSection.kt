@@ -24,8 +24,8 @@ import androidx.navigation.NavController
 
 @Composable
 fun ForYouSection(
-    recommendedMovies: List<Movie>,   // 🔹 توصيات أفلام
-    recommendedTvShows: List<Movie>,  // 🔹 توصيات مسلسلات
+    recommendedMovies: List<Movie>,
+    recommendedTvShows: List<Movie>,
     onMovieClick: (Movie) -> Unit,
     favoritesViewModel: FavoritesViewModel,
     navController: NavController,
@@ -51,7 +51,6 @@ fun ForYouSection(
                 .clip(RoundedCornerShape(12.dp))
         ) {
             Column {
-                // ✅ تبويبات Movies / TV Shows
                 TabRow(
                     selectedTabIndex = selectedTab,
                     containerColor = barOverlayColor,
@@ -68,7 +67,6 @@ fun ForYouSection(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                // ✅ كل تبويب يعرض التوصيات الخاصة به
                 val itemsToShow = if (selectedTab == 0) recommendedMovies else recommendedTvShows
 
                 if (itemsToShow.isEmpty()) {

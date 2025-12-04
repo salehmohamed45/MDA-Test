@@ -2,6 +2,8 @@
 
 package com.example.mda.ui.screens.movieDetail
 
+// UI screen component
+
 import android.graphics.drawable.BitmapDrawable
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -77,8 +79,6 @@ import com.example.mda.ui.theme.TextSecondaryDark
 import com.google.accompanist.swiperefresh.*
 import kotlinx.coroutines.launch
 
-// --- Helper Components ---
-
 @Composable
 fun StyledChip(
     text: String,
@@ -87,8 +87,8 @@ fun StyledChip(
 ) {
     Surface(
         onClick = onClick,
-        shape = MaterialTheme.shapes.medium, // Uses Shape.kt (8.dp)
-        color = MaterialTheme.colorScheme.surfaceVariant, // Uses DarkSurfaceVariant
+        shape = MaterialTheme.shapes.medium,
+        color = MaterialTheme.colorScheme.surfaceVariant,
         contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
         modifier = Modifier.padding(vertical = 4.dp)
     ) {
@@ -101,13 +101,13 @@ fun StyledChip(
                     imageVector = icon,
                     contentDescription = null,
                     modifier = Modifier.size(16.dp),
-                    tint = MaterialTheme.colorScheme.primary // Uses PrimaryBlue
+                    tint = MaterialTheme.colorScheme.primary
                 )
                 Spacer(modifier = Modifier.width(8.dp))
             }
             Text(
                 text = text,
-                style = MaterialTheme.typography.labelLarge, // Uses Type.kt
+                style = MaterialTheme.typography.labelLarge,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -120,7 +120,7 @@ fun SectionHeader(title: String) {
     Text(
         text = title,
         style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
-        color = MaterialTheme.colorScheme.primary, // Uses PrimaryBlue
+        color = MaterialTheme.colorScheme.primary,
         modifier = Modifier.padding(bottom = 8.dp, top = 4.dp)
     )
 }
@@ -134,9 +134,9 @@ fun ProductionSection(details: MediaEntity) {
     if (languages.isEmpty() && companies.isEmpty() && countries.isEmpty()) return
 
     Surface(
-        tonalElevation = 1.dp, // Subtle elevation
-        shape = MaterialTheme.shapes.large, // Uses Shape.kt (16.dp)
-        color = MaterialTheme.colorScheme.surface, // Uses DarkSurface
+        tonalElevation = 1.dp,
+        shape = MaterialTheme.shapes.large,
+        color = MaterialTheme.colorScheme.surface,
         modifier = Modifier
             .padding(horizontal = 16.dp)
             .fillMaxWidth()
@@ -149,7 +149,6 @@ fun ProductionSection(details: MediaEntity) {
             )
             Spacer(Modifier.height(12.dp))
 
-            // 1. Spoken Languages
             if (languages.isNotEmpty()) {
                 SectionHeader(title = localizedString(LocalizationKeys.DETAIL_SPOKEN_LANGUAGES))
 
@@ -164,7 +163,6 @@ fun ProductionSection(details: MediaEntity) {
                 Spacer(Modifier.height(16.dp))
             }
 
-            // 2. Countries
             if (countries.isNotEmpty()) {
                 SectionHeader(title = localizedString(LocalizationKeys.DETAIL_PRODUCTION_COUNTRIES))
 
@@ -179,7 +177,6 @@ fun ProductionSection(details: MediaEntity) {
                 Spacer(Modifier.height(16.dp))
             }
 
-            // 3. Companies
             if (companies.isNotEmpty()) {
                 SectionHeader(title = localizedString(LocalizationKeys.DETAIL_COMPANIES))
 
@@ -196,7 +193,6 @@ fun ProductionSection(details: MediaEntity) {
     }
 }
 
-// --- UPDATED Genres Section (Matching Keywords Style) ---
 @Composable
 fun GenresSection(
     genres: List<Pair<Int, String>>,
@@ -233,7 +229,6 @@ fun GenresSection(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 genres.forEach { (id, name) ->
-                    // Uses the same style as KeywordsSection (Circle, Border, Transparent-ish bg)
                     Surface(
                         color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f),
                         shape = CircleShape,
@@ -264,8 +259,8 @@ fun KeywordsSection(keywords: List<KeywordItem>) {
 
     Surface(
         tonalElevation = 1.dp,
-        shape = MaterialTheme.shapes.large, // Uses Shape.kt (16.dp)
-        color = MaterialTheme.colorScheme.surface, // Uses DarkSurface
+        shape = MaterialTheme.shapes.large,
+        color = MaterialTheme.colorScheme.surface,
         modifier = Modifier
             .padding(horizontal = 16.dp)
             .fillMaxWidth()
@@ -291,14 +286,13 @@ fun KeywordsSection(keywords: List<KeywordItem>) {
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 keywords.take(15).forEach { k ->
-                    // Keyword Tag
                     Surface(
-                        color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f), // Uses DarkContainer
+                        color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f),
                         shape = CircleShape,
                         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)),
                         modifier = Modifier
                             .padding(bottom = 8.dp)
-                            .clickable { /* Handle click */ }
+                            .clickable {  }
                     ) {
                         Text(
                             text = "#${k.name}",
@@ -313,8 +307,6 @@ fun KeywordsSection(keywords: List<KeywordItem>) {
     }
 }
 
-// --- Rest of the Screen ---
-
 @Composable
 fun ExpandableText(
     text: String,
@@ -324,7 +316,7 @@ fun ExpandableText(
     Column {
         Text(
             text = text,
-            style = MaterialTheme.typography.bodyMedium, // Uses Type.kt
+            style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface,
             maxLines = if (expanded) Int.MAX_VALUE else collapsedLines,
             overflow = TextOverflow.Ellipsis
@@ -364,7 +356,7 @@ fun RecommendationsSimilarTabs(
             Spacer(Modifier.height(8.dp))
             TabRow(
                 selectedTabIndex = selected,
-                containerColor = MaterialTheme.colorScheme.surfaceVariant, // DarkSurfaceVariant
+                containerColor = MaterialTheme.colorScheme.surfaceVariant,
                 contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
                 indicator = { tabPositions ->
                     TabRowDefaults.SecondaryIndicator(
@@ -430,7 +422,7 @@ fun SimilarItemCard(
             .clickable { onClick() }
     ) {
         Surface(
-            shape = MaterialTheme.shapes.medium, // Shape.kt
+            shape = MaterialTheme.shapes.medium,
             color = MaterialTheme.colorScheme.surfaceVariant,
             modifier = Modifier
                 .height(180.dp)
@@ -467,7 +459,7 @@ fun SimilarItemCard(
                 Icon(
                     Icons.Default.Star,
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.tertiary, // Uses RatingYellow from Theme
+                    tint = MaterialTheme.colorScheme.tertiary,
                     modifier = Modifier.size(14.dp)
                 )
                 Spacer(Modifier.width(4.dp))
@@ -687,14 +679,12 @@ fun MovieDetailsContent(
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        // Persistent background image
         Image(
             painter = rememberAsyncImagePainter(bgUrl),
             contentDescription = null,
             modifier = Modifier.matchParentSize(),
             contentScale = ContentScale.Crop
         )
-        // Global scrim
         Box(
             modifier = Modifier
                 .matchParentSize()
@@ -703,12 +693,11 @@ fun MovieDetailsContent(
                         colors = listOf(
                             Color(0x99000000),
                             Color(0x66000000),
-                            MaterialTheme.colorScheme.background // Matches DarkBackground
+                            MaterialTheme.colorScheme.background
                         )
                     )
                 )
         )
-        // In light theme overlay
         if (!isDarkTheme) {
             Box(
                 modifier = Modifier
@@ -717,7 +706,6 @@ fun MovieDetailsContent(
             )
         }
 
-        // Top overlay actions
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -738,7 +726,6 @@ fun MovieDetailsContent(
             }
         }
 
-        // Foreground scrollable content
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -746,7 +733,6 @@ fun MovieDetailsContent(
         ) {
             val topSpacer = if (LocalConfiguration.current.screenHeightDp < 700) 64.dp else 100.dp
             Spacer(Modifier.height(topSpacer))
-            // Title row
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -814,7 +800,6 @@ fun MovieDetailsContent(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        // Date
                         Surface(color = chipBg, shape = MaterialTheme.shapes.small) {
                             Row(
                                 modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
@@ -830,7 +815,6 @@ fun MovieDetailsContent(
                                 )
                             }
                         }
-                        // Runtime
                         details.runtime?.let { rt ->
                             Surface(color = chipBg, shape = MaterialTheme.shapes.small) {
                                 Row(
@@ -843,7 +827,6 @@ fun MovieDetailsContent(
                                 }
                             }
                         }
-                        // Rating
                         Surface(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.85f), shape = MaterialTheme.shapes.small) {
                             Row(
                                 modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
@@ -897,12 +880,11 @@ fun MovieDetailsContent(
             )
             Spacer(Modifier.height(12.dp))
 
-            // Tagline
             details.tagline?.let { tagline ->
                 if (tagline.isNotEmpty()) {
                     Text(
                         text = "\"$tagline\"",
-                        color = MaterialTheme.colorScheme.secondary, // Uses AccentCyan
+                        color = MaterialTheme.colorScheme.secondary,
                         style = MaterialTheme.typography.titleMedium.copy(
                             fontStyle = FontStyle.Italic,
                             fontWeight = FontWeight.Medium
@@ -919,7 +901,6 @@ fun MovieDetailsContent(
             ExpandableOverview(text = details.overview ?: "No overview available")
             Spacer(Modifier.height(16.dp))
 
-            // Links
             Row(
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
@@ -953,7 +934,6 @@ fun MovieDetailsContent(
             }
             Spacer(Modifier.height(12.dp))
 
-            // --- Updated Genres Section ---
             val genresNames = details.genres ?: emptyList()
             val genresIds = details.genreIds ?: emptyList()
 
@@ -968,18 +948,15 @@ fun MovieDetailsContent(
                 Spacer(Modifier.height(16.dp))
             }
 
-
             AboutMovieCard(details)
             Spacer(Modifier.height(16.dp))
 
             MediaTabs(details)
             Spacer(Modifier.height(16.dp))
 
-            // Production Section
             ProductionSection(details)
 
             Spacer(Modifier.height(16.dp))
-
 
             val cast = details.cast
             if (!cast.isNullOrEmpty()) {
@@ -999,7 +976,7 @@ fun MovieDetailsContent(
                         )
                         Spacer(Modifier.height(12.dp))
                         androidx.compose.foundation.lazy.LazyRow(
-                            contentPadding = PaddingValues(horizontal = 0.dp), // Padding handled by container
+                            contentPadding = PaddingValues(horizontal = 0.dp),
                             horizontalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
                             items(items = cast) { castMember: Cast ->
@@ -1016,7 +993,6 @@ fun MovieDetailsContent(
                 Spacer(Modifier.height(16.dp))
             }
 
-            // JustWatch
             providers?.let { pg ->
                 val hasAny = pg.buy.isNotEmpty() || pg.rent.isNotEmpty() || pg.stream.isNotEmpty()
                 if (hasAny) {
@@ -1075,7 +1051,6 @@ fun MovieDetailsContent(
             )
             Spacer(Modifier.height(16.dp))
 
-            // Reviews
             if (reviews.isNotEmpty()) {
                 Surface(
                     tonalElevation = 1.dp,
@@ -1124,7 +1099,7 @@ fun MovieDetailsContent(
                                             Icon(
                                                 Icons.Default.Star,
                                                 contentDescription = null,
-                                                tint = MaterialTheme.colorScheme.tertiary, // RatingYellow
+                                                tint = MaterialTheme.colorScheme.tertiary,
                                                 modifier = Modifier.size(14.dp)
                                             )
                                             Spacer(Modifier.width(4.dp))
@@ -1179,7 +1154,6 @@ fun MovieDetailsScreen(
     val keywords by viewModel.keywords.collectAsState()
     val authUiState by authViewModel.uiState.collectAsState()
 
-    // Load from cache first
     LaunchedEffect(id, isTvShow) {
         scope.launch {
             if (isTvShow) viewModel.loadTvDetails(id)
@@ -1193,14 +1167,13 @@ fun MovieDetailsScreen(
 
     SwipeRefresh(
         state = rememberSwipeRefreshState(isRefreshing = false),
-        onRefresh = { /* Disable refresh */ }
+        onRefresh = {  }
     ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
         ) {
             when {
-                // --- SUCCESS HAS PRIORITY: show content even while loading ---
                 details != null -> AnimatedVisibility(visible = true, enter = fadeIn()) {
                     MovieDetailsContent(
                         details = details!!,
@@ -1216,10 +1189,8 @@ fun MovieDetailsScreen(
                     )
                 }
 
-                // --- ERROR STATE (Updated to match theme) ---
                 error != null -> {
                     Box(modifier = Modifier.fillMaxSize()) {
-                        // Back Button
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -1229,20 +1200,19 @@ fun MovieDetailsScreen(
                             Surface(
                                 shape = CircleShape,
                                 color = MaterialTheme.colorScheme.surface.copy(alpha = 0.3f),
-                                contentColor = Color.White, // Forced White for visibility on dark bg
+                                contentColor = Color.White,
                                 modifier = Modifier.size(40.dp)
                             ) {
                                 IconButton(onClick = { navController.popBackStack() }) {
                                     Icon(
                                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                         contentDescription = "Back",
-                                        tint = Color.White // Forced White
+                                        tint = Color.White
                                     )
                                 }
                             }
                         }
 
-                        // Error Content
                         Column(
                             modifier = Modifier
                                 .align(Alignment.Center)
@@ -1250,7 +1220,7 @@ fun MovieDetailsScreen(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Icon(
-                                imageVector = androidx.compose.material.icons.Icons.Default.Tag, // Or an Error icon if available
+                                imageVector = androidx.compose.material.icons.Icons.Default.Tag,
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.error,
                                 modifier = Modifier.size(48.dp)
@@ -1259,13 +1229,13 @@ fun MovieDetailsScreen(
                             Text(
                                 text = "Unable to load details",
                                 style = MaterialTheme.typography.titleMedium,
-                                color = Color.White // Force white
+                                color = Color.White
                             )
                             Spacer(Modifier.height(8.dp))
                             Text(
                                 text = error ?: "Unknown error",
                                 style = MaterialTheme.typography.bodyMedium,
-                                color = TextSecondaryDark, // Force light grey
+                                color = TextSecondaryDark,
                                 textAlign = TextAlign.Center
                             )
                             Spacer(Modifier.height(24.dp))
@@ -1355,7 +1325,6 @@ fun ProviderLogosRow(
         }
     }
 }
-
 
 @Composable
 fun MediaTabs(details: MediaEntity) {

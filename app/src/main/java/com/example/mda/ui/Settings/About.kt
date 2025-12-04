@@ -106,7 +106,6 @@ fun AboutScreen(
 fun HeroSection(dark: Boolean) {
     val colorScheme = MaterialTheme.colorScheme
 
-
     val cardGradient = if (dark) {
         Brush.verticalGradient(
             colorStops = arrayOf(
@@ -119,9 +118,9 @@ fun HeroSection(dark: Boolean) {
     } else {
         Brush.verticalGradient(
             colorStops = arrayOf(
-                0f to Color(0xFFE3F2FD),   // أفتح درجة فوق
-                0.4f to Color(0xFFD0E8FA), // وسط فاتح ناعم
-                1f to Color(0xFFB3E5FC)    // تحت أغمق درجة بسيطة
+                0f to Color(0xFFE3F2FD),
+                0.4f to Color(0xFFD0E8FA),
+                1f to Color(0xFFB3E5FC)
             )
         )
     }
@@ -141,7 +140,6 @@ fun HeroSection(dark: Boolean) {
                 .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            // 💡 محتوى الكارت
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,

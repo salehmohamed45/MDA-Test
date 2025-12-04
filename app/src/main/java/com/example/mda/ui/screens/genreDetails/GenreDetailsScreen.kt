@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.genreDetails
 
+// UI screen component
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -110,7 +112,6 @@ fun GenreDetailsScreen(
             .fillMaxSize()
             .background(Color.Transparent)
     ) {
-        // Media Type Filter Row (Movies / TV Shows)
         MediaTypeFilterRow(
             selectedFilter = viewModel.mediaTypeFilter,
             onFilterChange = { filter ->
@@ -395,7 +396,6 @@ fun LoadingIndicator() {
     }
 }
 
-// Extension function to convert MediaEntity to Movie
 private fun MediaEntity.toMovie(): Movie {
     return Movie(
         id = this.id,

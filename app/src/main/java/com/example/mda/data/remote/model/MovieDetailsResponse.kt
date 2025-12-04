@@ -1,5 +1,7 @@
 package com.example.mda.data.remote.model
 
+// Data model
+
 import com.google.gson.annotations.SerializedName
 
 data class MovieDetailsResponse(
@@ -21,7 +23,6 @@ data class MovieDetailsResponse(
     @SerializedName("production_companies") val productionCompanies: List<ProductionCompany>? = emptyList(),
     @SerializedName("production_countries") val productionCountries: List<ProductionCountry>? = emptyList(),
     @SerializedName("release_date") val releaseDate: String? = null,
-    // TV specific fields
     @SerializedName("name") val name: String? = null,
     @SerializedName("first_air_date") val firstAirDate: String? = null,
     @SerializedName("episode_run_time") val episodeRunTime: List<Int>? = emptyList(),

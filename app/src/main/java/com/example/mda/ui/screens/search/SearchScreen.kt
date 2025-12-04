@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.search
 
+// UI screen component
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -76,7 +78,6 @@ fun SearchScreen(
             .fillMaxSize()
             .padding(horizontal = 16.dp, vertical = 20.dp)
     ) {
-        // Search bar
         SearchBarComposable(
             query = query,
             onQueryChange = {
@@ -186,7 +187,6 @@ fun SearchScreen(
         }
     }
 }
-
 
 @Composable
 private fun NoResultsContent(query: String) {

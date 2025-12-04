@@ -1,5 +1,7 @@
 package com.example.mda.ui
 
+// UI screen component
+
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.test.assertIsDisplayed

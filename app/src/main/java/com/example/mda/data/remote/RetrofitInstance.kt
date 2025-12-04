@@ -1,6 +1,5 @@
 package com.example.mda.data.remote
 
-
 import com.example.mda.data.remote.api.TmdbApi
 import com.example.mda.localization.LanguageProvider
 import com.example.mda.util.Constants
@@ -24,11 +23,10 @@ object RetrofitInstance {
         .addInterceptor(LanguageQueryInterceptor())
         .build()
 
-
     val api: TmdbApi by lazy {
         Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
-            .client(client) // فيه Logging + AuthInterceptor
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(TmdbApi::class.java)
@@ -38,11 +36,9 @@ object RetrofitInstance {
         override fun intercept(chain: Interceptor.Chain): Response {
             val original = chain.request()
             val originalUrl = original.url
-            // If request already specifies a language, respect it
             if (originalUrl.queryParameter("language") != null) {
                 return chain.proceed(original)
             }
-            // Do not add language for people/actors endpoints to keep original API language
             val path = originalUrl.encodedPath
             val isPeopleEndpoint =
                 path.startsWith("/person") || path.startsWith("/search/person") || path.contains("/person/") || path == "/person/popular"

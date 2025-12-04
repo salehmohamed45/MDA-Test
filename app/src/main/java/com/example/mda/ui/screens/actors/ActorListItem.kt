@@ -57,7 +57,6 @@ fun ActorListItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            // صورة الممثل
             Box(
                 modifier = Modifier
                     .width(100.dp)
@@ -76,7 +75,6 @@ fun ActorListItem(
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            // النصوص
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -90,7 +88,6 @@ fun ActorListItem(
                 )
 
                 Spacer(modifier = Modifier.height(4.dp))
-
 
                 val department = actor.knownForDepartment ?: "Acting"
                 val infoLine = department

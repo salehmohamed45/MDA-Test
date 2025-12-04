@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.actors
 
+// UI screen component
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape

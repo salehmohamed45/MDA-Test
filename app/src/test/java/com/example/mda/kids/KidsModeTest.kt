@@ -9,10 +9,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.Assert.*
 
-/**
- * Unit tests for Kids Mode functionality
- * Tests kids mode persistence, PIN lock, and exit behavior
- */
 class KidsModeTest {
 
     private lateinit var context: Context
@@ -49,7 +45,6 @@ class KidsModeTest {
     fun testKidsModePersistence() = runBlocking {
         kidsSecurityStore.setActive(true)
         
-        // Create new instance to verify persistence
         val newStore = KidsSecurityDataStore(context)
         val isActive = newStore.activeFlow.first()
         assertTrue(isActive)
@@ -89,7 +84,6 @@ class KidsModeTest {
         kidsSecurityStore.setLockEnabled(true)
         kidsSecurityStore.setActive(true)
         
-        // Simulate exit with correct PIN
         val savedPin = kidsSecurityStore.pinFlow.first()
         val enteredPin = "123456"
         
@@ -108,7 +102,6 @@ class KidsModeTest {
         kidsSecurityStore.setLockEnabled(true)
         kidsSecurityStore.setActive(true)
         
-        // Simulate exit with incorrect PIN
         val savedPin = kidsSecurityStore.pinFlow.first()
         val enteredPin = "654321"
         
@@ -117,7 +110,7 @@ class KidsModeTest {
         }
         
         val isActive = kidsSecurityStore.activeFlow.first()
-        assertTrue(isActive) // Should still be active
+        assertTrue(isActive)
     }
 
     @Test
@@ -125,7 +118,6 @@ class KidsModeTest {
         kidsSecurityStore.setLockEnabled(false)
         kidsSecurityStore.setActive(true)
         
-        // Should be able to exit without PIN
         kidsSecurityStore.setActive(false)
         
         val isActive = kidsSecurityStore.activeFlow.first()
@@ -148,17 +140,14 @@ class KidsModeTest {
 
     @Test
     fun testKidsModeToggle() = runBlocking {
-        // Activate
         kidsSecurityStore.setActive(true)
         var isActive = kidsSecurityStore.activeFlow.first()
         assertTrue(isActive)
         
-        // Deactivate
         kidsSecurityStore.setActive(false)
         isActive = kidsSecurityStore.activeFlow.first()
         assertFalse(isActive)
         
-        // Activate again
         kidsSecurityStore.setActive(true)
         isActive = kidsSecurityStore.activeFlow.first()
         assertTrue(isActive)
@@ -166,7 +155,7 @@ class KidsModeTest {
 
     @Test
     fun testKidsModeWithLegacyPin() = runBlocking {
-        val legacyPin = "1234" // 4-digit PIN
+        val legacyPin = "1234"
         kidsSecurityStore.setPin(legacyPin)
         kidsSecurityStore.setActive(true)
         
@@ -179,7 +168,7 @@ class KidsModeTest {
 
     @Test
     fun testKidsModeWithModernPin() = runBlocking {
-        val modernPin = "123456" // 6-digit PIN
+        val modernPin = "123456"
         kidsSecurityStore.setPin(modernPin)
         kidsSecurityStore.setActive(true)
         
@@ -192,17 +181,14 @@ class KidsModeTest {
 
     @Test
     fun testKidsModeCompleteFlow() = runBlocking {
-        // 1. Setup
         kidsSecurityStore.setPin("123456")
         kidsSecurityStore.setLockEnabled(true)
         kidsSecurityStore.setSecurityQA(0, 1, 2, "A1", "A2", "A3")
         
-        // 2. Activate Kids Mode
         kidsSecurityStore.setActive(true)
         var isActive = kidsSecurityStore.activeFlow.first()
         assertTrue(isActive)
         
-        // 3. Verify all settings are persisted
         val pin = kidsSecurityStore.pinFlow.first()
         val lockEnabled = kidsSecurityStore.lockEnabledFlow.first()
         val qa = kidsSecurityStore.securityQAFlow.first()
@@ -211,7 +197,6 @@ class KidsModeTest {
         assertTrue(lockEnabled)
         assertEquals(0, qa.q1)
         
-        // 4. Exit Kids Mode with correct PIN
         kidsSecurityStore.setActive(false)
         isActive = kidsSecurityStore.activeFlow.first()
         assertFalse(isActive)

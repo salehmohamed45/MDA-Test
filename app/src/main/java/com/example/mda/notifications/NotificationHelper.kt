@@ -40,13 +40,12 @@ object NotificationHelper {
         ctx: Context,
         title: String,
         body: String,
-        imageUrl: String? = null, // 👈 باراميتر جديد للصورة
+        imageUrl: String? = null,
         tapIntent: Intent? = null
     ) {
         createChannelIfNeeded(ctx)
         val manager = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        // إعداد الـ Intent عند الضغط
         val pending = tapIntent?.let {
             PendingIntent.getActivity(
                 ctx, Random.nextInt(), it,
@@ -55,34 +54,31 @@ object NotificationHelper {
         }
 
         val builder = NotificationCompat.Builder(ctx, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_notification) // ⚠️ تأكد إن دي أيقونة شفافة أو استخدم أيقونة التطبيق
+            .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(title)
             .setContentText(body)
-            .setColor(ContextCompat.getColor(ctx, R.color.teal_200)) // 🎨 لون مميز للتطبيق
+            .setColor(ContextCompat.getColor(ctx, R.color.teal_200))
             .setAutoCancel(true)
             .setContentIntent(pending)
 
-        // ✅ لو فيه رابط صورة، حملها واعرضها بشكل BigPicture
         if (imageUrl != null) {
             val bitmap = getBitmapFromUrl(imageUrl)
             if (bitmap != null) {
-                builder.setLargeIcon(bitmap) // الصورة الصغيرة على اليمين
+                builder.setLargeIcon(bitmap)
                 builder.setStyle(
                     NotificationCompat.BigPictureStyle()
-                        .bigPicture(bitmap) // الصورة الكبيرة
-                        .bigLargeIcon(null as Bitmap?) // إخفاء الصورة الصغيرة لما نفتح الكبيرة
+                        .bigPicture(bitmap)
+                        .bigLargeIcon(null as Bitmap?)
                         .setSummaryText(body)
                 )
             }
         } else {
-            // لو مفيش صورة، استخدم BigTextStyle عشان النص الطويل يبان كله
             builder.setStyle(NotificationCompat.BigTextStyle().bigText(body))
         }
 
         manager.notify(Random.nextInt(1000, 9999), builder.build())
     }
 
-    // ⬇️ دالة مساعدة لتحميل الصورة من النت وتحويلها لـ Bitmap
     private fun getBitmapFromUrl(src: String): Bitmap? {
         return try {
             val url = URL(src)

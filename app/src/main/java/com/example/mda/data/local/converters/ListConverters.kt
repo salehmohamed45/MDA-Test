@@ -8,7 +8,6 @@ import com.example.mda.data.local.entities.Video
 
 class Converters {
 
-    // Int list <-> String
     @TypeConverter
     fun fromIntList(list: List<Int>?): String? {
         return list?.joinToString(",")
@@ -19,7 +18,6 @@ class Converters {
         return value?.split(",")?.mapNotNull { it.toIntOrNull() }
     }
 
-    // String list <-> String
     @TypeConverter
     fun fromStringList(list: List<String>?): String? {
         return list?.joinToString(",")
@@ -30,7 +28,6 @@ class Converters {
         return value?.split(",")
     }
 
-    // Cast list <-> JSON
     private val gson = Gson()
 
     @TypeConverter
@@ -45,7 +42,6 @@ class Converters {
         return gson.fromJson(json, type)
     }
 
-    // Video list <-> JSON
     @TypeConverter
     fun fromVideoList(videos: List<Video>?): String? {
         return gson.toJson(videos)

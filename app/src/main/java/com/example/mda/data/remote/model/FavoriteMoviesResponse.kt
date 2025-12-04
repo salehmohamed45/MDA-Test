@@ -1,5 +1,7 @@
 package com.example.mda.data.remote.model
 
+// Data model
+
 data class FavoriteMoviesResponse(
     val page: Int,
     val results: List<Movie>,

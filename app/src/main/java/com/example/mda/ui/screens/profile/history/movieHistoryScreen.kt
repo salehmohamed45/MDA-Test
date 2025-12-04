@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.profile.history
 
+// UI screen component
+
 import androidx.compose.foundation.Image
 import androidx. compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -82,7 +84,6 @@ fun MoviesHistoryScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        // ===== Movie Poster =====
                         SubcomposeAsyncImage(
                             model = imageUrl,
                             contentDescription = movie.name,
@@ -115,7 +116,6 @@ fun MoviesHistoryScreen(
 
                         Spacer(modifier = Modifier.width(16.dp))
 
-                        // ===== Movie Details =====
                         Column(
                             verticalArrangement = Arrangement.Center,
                             modifier = Modifier.align(Alignment.CenterVertically)

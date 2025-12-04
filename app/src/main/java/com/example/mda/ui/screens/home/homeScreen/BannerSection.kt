@@ -31,10 +31,9 @@ import androidx.compose.animation.Crossfade
 @Composable
 fun BannerSection(
     movies: List<Movie>,
-    slideIntervalMs: Long = 8000L // 8 ثواني
+    slideIntervalMs: Long = 8000L
 ) {
     if (movies.isEmpty()) {
-        // حماية من الكراش لو القائمة فاضية
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -49,7 +48,6 @@ fun BannerSection(
 
     var currentIndex by remember { mutableStateOf(0) }
 
-    // التأثير اللي يغير الفيلم كل فترة
     LaunchedEffect(movies) {
         while (true) {
             delay(slideIntervalMs)
@@ -67,7 +65,6 @@ fun BannerSection(
             .background(Color.Black),
         contentAlignment = Alignment.BottomStart
     ) {
-        // صورة الفيلم (بوستر)
         Crossfade(targetState = movie) { currentMovie ->
             AsyncImage(
                 model = "https://image.tmdb.org/t/p/w780${currentMovie.posterPath}",
@@ -77,8 +74,6 @@ fun BannerSection(
             )
         }
 
-
-        // الكتابة فوق الصورة
         Column(
             modifier = Modifier
                 .fillMaxWidth()

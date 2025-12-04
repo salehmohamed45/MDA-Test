@@ -1,5 +1,7 @@
 package com.example.mda.ui
 
+// UI screen component
+
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
@@ -27,17 +29,14 @@ class LanguageSettingsScreenTest {
             val navController = rememberNavController()
             LanguageSettingsScreen(
                 navController = navController,
-                onTopBarStateChange = { /* no-op in test */ }
+                onTopBarStateChange = {  }
             )
         }
 
-        // Title visible
         composeRule.onNodeWithText(title, substring = false).assertIsDisplayed()
-        // Language options visible by display names
         composeRule.onNodeWithText(LocalizationManager.Language.ENGLISH.displayName).assertIsDisplayed()
         composeRule.onNodeWithText(LocalizationManager.Language.ARABIC.displayName).assertIsDisplayed()
         composeRule.onNodeWithText(LocalizationManager.Language.GERMAN.displayName).assertIsDisplayed()
-        // Back button visible
         composeRule.onNodeWithText(back).assertIsDisplayed()
     }
 }

@@ -1,5 +1,7 @@
 package com.example.mda.ui.actor
 
+// ViewModel for managing UI state
+
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -56,9 +58,6 @@ class ActorViewModel(private val repository: ActorsRepository) : ViewModel() {
         }
     }
 
-
-
-    // Factory
     class ActorViewModelFactory(private val repository: ActorsRepository) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

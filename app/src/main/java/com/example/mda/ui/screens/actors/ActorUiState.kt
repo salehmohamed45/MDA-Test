@@ -2,7 +2,6 @@ package com.example.mda.ui.screens.actors
 
 import com.example.mda.data.remote.model.Actor
 
-// Khalid: UI states used by ActorsViewModel and ActorsScreen
 sealed class ActorUiState {
     object Loading : ActorUiState()
     data class Success(val actors: List<Actor>) : ActorUiState()

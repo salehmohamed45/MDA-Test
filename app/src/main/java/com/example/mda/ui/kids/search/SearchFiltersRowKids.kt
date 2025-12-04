@@ -1,6 +1,5 @@
 package com.example.mda.ui.kids.search
 
-
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

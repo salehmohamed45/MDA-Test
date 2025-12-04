@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.auth
 
+// UI screen component
+
 import android.annotation.SuppressLint
 import android.webkit.WebView
 import android.webkit.WebViewClient

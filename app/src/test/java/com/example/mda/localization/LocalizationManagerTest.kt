@@ -8,10 +8,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.Assert.*
 
-/**
- * Unit tests for LocalizationManager
- * Tests language switching, translation retrieval, and persistence
- */
 class LocalizationManagerTest {
 
     private lateinit var context: Context
@@ -45,10 +41,8 @@ class LocalizationManagerTest {
 
     @Test
     fun testLanguagePersistence() = runBlocking {
-        // Set language to Arabic
         localizationManager.setLanguage(LocalizationManager.Language.ARABIC)
         
-        // Create new instance to verify persistence
         val newManager = LocalizationManager(context)
         val currentLanguage = newManager.currentLanguage.first()
         assertEquals(LocalizationManager.Language.ARABIC, currentLanguage)

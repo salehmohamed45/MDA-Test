@@ -1,6 +1,7 @@
-// Khaled Edit: Comprehensive and unified typography for app consistency.
 
 package com.example.mda.ui.theme
+
+// Theme configuration
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

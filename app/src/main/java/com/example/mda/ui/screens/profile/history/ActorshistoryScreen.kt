@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.profile.history
 
+// UI screen component
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -82,7 +84,6 @@ fun HistoryScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        // صورة الممثل أو الفيلم
                         Box(
                             modifier = Modifier
                                 .width(100.dp)
@@ -101,7 +102,6 @@ fun HistoryScreen(
 
                         Spacer(modifier = Modifier.width(16.dp))
 
-                        // النصوص
                         Column(
                             modifier = Modifier.weight(1f)
                         ) {

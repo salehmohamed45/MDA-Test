@@ -8,10 +8,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.Assert.*
 
-/**
- * Unit tests for KidsSecurityDataStore
- * Tests PIN storage, lock state, security questions, and kids mode persistence
- */
 class KidsSecurityDataStoreTest {
 
     private lateinit var context: Context
@@ -34,12 +30,10 @@ class KidsSecurityDataStoreTest {
 
     @Test
     fun testClearPin() = runBlocking {
-        // First set a PIN
         dataStore.setPin("123456")
         var savedPin = dataStore.pinFlow.first()
         assertNotNull(savedPin)
         
-        // Clear the PIN
         dataStore.clearPin()
         savedPin = dataStore.pinFlow.first()
         assertNull(savedPin)
@@ -130,7 +124,6 @@ class KidsSecurityDataStoreTest {
         val testPin = "654321"
         dataStore.setPin(testPin)
         
-        // Create new instance to verify persistence
         val newDataStore = KidsSecurityDataStore(context)
         val savedPin = newDataStore.pinFlow.first()
         assertEquals(testPin, savedPin)
@@ -140,7 +133,6 @@ class KidsSecurityDataStoreTest {
     fun testLockEnabledPersistence() = runBlocking {
         dataStore.setLockEnabled(true)
         
-        // Create new instance to verify persistence
         val newDataStore = KidsSecurityDataStore(context)
         val lockEnabled = newDataStore.lockEnabledFlow.first()
         assertTrue(lockEnabled)
@@ -150,7 +142,6 @@ class KidsSecurityDataStoreTest {
     fun testActivePersistence() = runBlocking {
         dataStore.setActive(true)
         
-        // Create new instance to verify persistence
         val newDataStore = KidsSecurityDataStore(context)
         val active = newDataStore.activeFlow.first()
         assertTrue(active)
@@ -160,7 +151,6 @@ class KidsSecurityDataStoreTest {
     fun testSecurityQAPersistence() = runBlocking {
         dataStore.setSecurityQA(0, 1, 2, "Q1", "Q2", "Q3")
         
-        // Create new instance to verify persistence
         val newDataStore = KidsSecurityDataStore(context)
         val qa = newDataStore.securityQAFlow.first()
         assertEquals(0, qa.q1)
@@ -174,7 +164,7 @@ class KidsSecurityDataStoreTest {
         dataStore.setSecurityQA(0, 1, 2, pinWithSpaces, "a2", "a3")
         
         val qa = dataStore.securityQAFlow.first()
-        assertEquals("123456", qa.a1) // Should be trimmed
+        assertEquals("123456", qa.a1)
     }
 
     @Test

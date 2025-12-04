@@ -1,5 +1,7 @@
 package com.example.mda.ui.Settings
 
+// UI screen component
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -66,7 +68,6 @@ fun LanguageSettingsScreen(
                 color = MaterialTheme.colorScheme.onSurface
             )
 
-            // Language Options
             LocalizationManager.Language.values().forEach { language ->
                 LanguageOptionCard(
                     language = language,
@@ -81,7 +82,6 @@ fun LanguageSettingsScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Info Card
             Card(
                 shape = RoundedCornerShape(12.dp),
                 colors = CardDefaults.cardColors(
@@ -161,9 +161,9 @@ private fun LanguageOptionCard(
             Spacer(modifier = Modifier.width(12.dp))
 
             val flag = when (language) {
-                LocalizationManager.Language.ENGLISH -> "\uD83C\uDDEC\uD83C\uDDE7" // 🇬🇧
-                LocalizationManager.Language.ARABIC -> "\uD83C\uDDF8\uD83C\uDDE6" // 🇸🇦
-                LocalizationManager.Language.GERMAN -> "\uD83C\uDDE9\uD83C\uDDEA" // 🇩🇪
+                LocalizationManager.Language.ENGLISH -> "\uD83C\uDDEC\uD83C\uDDE7"
+                LocalizationManager.Language.ARABIC -> "\uD83C\uDDF8\uD83C\uDDE6"
+                LocalizationManager.Language.GERMAN -> "\uD83C\uDDE9\uD83C\uDDEA"
             }
             Text(text = flag, style = MaterialTheme.typography.titleLarge)
 

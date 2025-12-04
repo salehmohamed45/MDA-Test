@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.actordetails
 
+// UI screen component
+
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.background
@@ -44,11 +46,10 @@ fun ActorDetailsScreenContent(
                id = actor.id,
                name = actor.name ,
                profilePath = actor.profile_path,
-               knownForDepartment = actor.birthday   // will modifed
+               knownForDepartment = actor.birthday
            )
        )
    }
-
 
     val bgGradient = Brush.verticalGradient(
         colors = listOf(

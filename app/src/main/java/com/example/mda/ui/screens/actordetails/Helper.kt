@@ -10,7 +10,6 @@ import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
 
-// فتح رابط خارجي
 @Composable
 fun openUrl(url: String) {
     val context = LocalContext.current
@@ -18,7 +17,6 @@ fun openUrl(url: String) {
     context.startActivity(intent)
 }
 
-// حساب العمر من تاريخ الميلاد
 @RequiresApi(Build.VERSION_CODES.O)
 fun calculateAge(birthday: String?): Int? {
     return try {

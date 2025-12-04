@@ -1,5 +1,7 @@
 package com.example.mda.ui.kids
 
+// UI screen component
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -77,14 +79,12 @@ fun KidsHomeScreen(
         modifier = Modifier.fillMaxSize(),
        contentPadding = PaddingValues(bottom = 106.dp)
     ) {
-        // Hero carousel
         item {
             if (heroItems.value.isNotEmpty()) {
                 HeroCarousel(items = heroItems.value, onItemClick = onItemClick)
             }
         }
 
-        // Sections
         if (cartoons.value.isNotEmpty()) {
             item { SectionHeader(title = "New Cartoons", onClick = { onOpenSection("cartoons") }) }
             item { MediaRow(list = cartoons.value, onItemClick = onItemClick) }
@@ -180,7 +180,6 @@ private fun HeroCarousel(
                     }
                 }
 
-                // Gradient overlay
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -195,7 +194,6 @@ private fun HeroCarousel(
                         )
                 )
 
-                // Kids badge
                 Box(
                     modifier = Modifier
                         .align(Alignment.TopStart)
@@ -211,7 +209,6 @@ private fun HeroCarousel(
                     )
                 }
 
-                // Content overlay
                 Column(
                     modifier = Modifier
                         .align(Alignment.BottomStart)
@@ -265,7 +262,6 @@ private fun HeroCarousel(
                     }
                 }
 
-                // Page indicators
                 Row(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)

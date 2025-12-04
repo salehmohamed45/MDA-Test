@@ -1,5 +1,7 @@
 package com.example.mda.ui
 
+// UI screen component
+
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
@@ -29,14 +31,11 @@ class PasswordSettingsScreenTest {
             val navController = rememberNavController()
             PasswordSettingsScreen(
                 navController = navController,
-                onTopBarStateChange = { _: TopBarState -> /* ignore in test */ }
+                onTopBarStateChange = { _: TopBarState ->  }
             )
         }
 
-        // Action button should display either Set PIN or Change PIN depending on state; check either
         composeRule.onNodeWithText(setPin).assertExists()
-        // It's acceptable that only one of them appears depending on current DataStore; we assert at least one is present
-        // If change pin is visible, this also passes
         composeRule.onNodeWithText(changePin).assertExists()
     }
 }

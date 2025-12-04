@@ -1,5 +1,7 @@
 package com.example.mda.ui.navigation
 
+// Navigation configuration
+
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
@@ -61,18 +63,16 @@ fun MdaNavHost(
     historyViewModel: HistoryViewModel,
     moviesHistoryViewModel: MoviesHistoryViewModel,
     darkTheme: Boolean,
-    homeViewModel: HomeViewModel // ✅ نستقبل الـ VM الجاهز هنا
+    homeViewModel: HomeViewModel
 ) {
     NavHost(
         navController = navController,
         startDestination = "splash"
     ) {
-        // Splash
         composable("splash") {
             SplashScreen(navController = navController)
         }
 
-        // Password Settings & Kids PIN
         composable("password_settings") {
             com.example.mda.ui.screens.settings.password.PasswordSettingsScreen(
                 navController = navController,
@@ -104,12 +104,10 @@ fun MdaNavHost(
             )
         }
 
-        // Onboarding
         composable("onboarding") {
             OnboardingScreen(navController = navController)
         }
 
-        // Home
         composable("home") {
             HomeScreen(
                 viewModel = homeViewModel,   
@@ -120,7 +118,6 @@ fun MdaNavHost(
             )
         }
 
-        // Actors List
         composable("actors") {
             ActorsScreen(
                 navController = navController,
@@ -130,7 +127,6 @@ fun MdaNavHost(
             )
         }
 
-        // Search
         composable("search") {
             SearchScreen(
                 navController = navController,
@@ -141,7 +137,6 @@ fun MdaNavHost(
             )
         }
 
-        // Movies / Genres
         composable("movies") {
             GenreScreen(
                 navController = navController,
@@ -150,7 +145,6 @@ fun MdaNavHost(
             )
         }
 
-        // Actor Details
         composable(
             route = "ActorDetails/{personId}",
             arguments = listOf(navArgument("personId") { type = NavType.IntType })
@@ -167,7 +161,6 @@ fun MdaNavHost(
             )
         }
 
-        // Genre Details
         composable(
             route = "genre_details/{genreId}/{genreName}",
             arguments = listOf(
@@ -188,7 +181,6 @@ fun MdaNavHost(
             )
         }
 
-        // Movie / TV Details
         composable(
             route = "detail/{mediaType}/{id}",
             arguments = listOf(
@@ -211,7 +203,6 @@ fun MdaNavHost(
             )
         }
 
-        // Profile
         composable("profile") {
             ProfileScreen(
                 navController = navController,
@@ -223,7 +214,6 @@ fun MdaNavHost(
             )
         }
 
-        // Favorites
         composable("Favprofile") {
             FavoritesScreen(
                 navController = navController,
@@ -233,7 +223,6 @@ fun MdaNavHost(
             )
         }
 
-        // History
         composable("HistoryScreen") {
             HistoryScreen(
                 navController = navController,
@@ -242,7 +231,6 @@ fun MdaNavHost(
             )
         }
 
-        // Movies History
         composable("MovieHistoryScreen") {
             MoviesHistoryScreen(
                 navController = navController,
@@ -251,7 +239,6 @@ fun MdaNavHost(
             )
         }
 
-        // Authentication
         composable("login") {
             LoginScreen(
                 navController = navController,
@@ -274,7 +261,6 @@ fun MdaNavHost(
             )
         }
 
-        // Kids Mode
         composable("kids") {
             KidsRoot(
                 parentNavController = navController,
@@ -283,7 +269,6 @@ fun MdaNavHost(
                 localRepository = localRepository
             )
         }
-        // Kids Splash Screen
         composable("kids_splash") {
             KidsSplashScreen(
                 onFinished = {
@@ -297,7 +282,6 @@ fun MdaNavHost(
             DeveloperToolsScreen(navController, onTopBarStateChange)
         }
 
-        // Settings
         composable("settings") {
             SettingsScreen(
                 navController = navController,
@@ -306,7 +290,6 @@ fun MdaNavHost(
                 FavoritesViewModel = favoritesViewModel
             )
         }
-        // Language Settings
         composable("language_settings") {
             LanguageSettingsScreen(
                 navController = navController,
@@ -330,14 +313,11 @@ fun MdaNavHost(
             )
         }
 
-        // Popular Movies
         composable("popular_movies") {
-            // 🔥 تحسين هام: نستخدم نفس الـ ViewModel الممرر من الأعلى بدلاً من إنشاء واحد جديد
-            // هذا يمنع إعادة تحميل البيانات عند فتح هذه الشاشة
 
             PopularNowScreen(
                 navController = navController,
-                homeViewModel = homeViewModel, // ✅ استخدام النسخة المشتركة
+                homeViewModel = homeViewModel,
                 favoritesViewModel = favoritesViewModel ,
                 authViewModel = authViewModel,
                 onTopBarStateChange = onTopBarStateChange

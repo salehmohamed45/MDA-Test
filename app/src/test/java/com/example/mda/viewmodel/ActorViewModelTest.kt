@@ -1,5 +1,7 @@
 package com.example.mda.viewmodel
 
+// ViewModel for managing UI state
+
 import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.mda.data.repository.ActorsRepository
@@ -34,17 +36,13 @@ class ActorViewModelTest {
 
     @Before
     fun setUp() {
-        // 🔹 نثبت الـ Main Dispatcher لتست مش وهمي
         Dispatchers.setMain(testDispatcher)
 
-        // 🔹 نعمل Mock للـ Log علشان متسببش crash
-        // Mock لـ android.util.Log علشان ميعملش Crash
         mockkStatic(Log::class)
         every { Log.d(any<String>(), any<String>()) } returns 0
         every { Log.i(any<String>(), any<String>()) } returns 0
         every { Log.e(any<String>(), any<String>()) } returns 0
         every { Log.w(any<String>(), any<String>()) } returns 0
-        // 🔹 إعداد الـ Repository بحيث يرجّع بيانات تجريبية
         coEvery { repository.getPopularActorsWithCache(page = 1) } returns listOf(
             com.example.mda.data.local.entities.ActorEntity(
                 id = 1,
@@ -63,7 +61,6 @@ class ActorViewModelTest {
 
     @After
     fun tearDown() {
-        // 🔹 نرجّع الـ Main Dispatcher لوضعه الطبيعي بعد التست
         Dispatchers.resetMain()
     }
 

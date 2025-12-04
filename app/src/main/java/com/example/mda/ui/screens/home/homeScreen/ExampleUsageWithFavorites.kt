@@ -11,16 +11,6 @@ import com.example.mda.data.remote.model.Movie
 import com.example.mda.ui.screens.favorites.FavoritesViewModel
 import com.example.mda.ui.screens.favorites.components.FavoriteButton
 
-/**
- * مثال على كيفية استخدام MovieCardWithFavorite في أي Section
- * 
- * استخدم هذا المثال في:
- * - TrendingSection.kt
- * - PopularSection.kt
- * - ForYouSection.kt
- * - أي مكان آخر تعرض فيه قائمة أفلام
- */
-
 @Composable
 fun ExampleSectionWithFavorites(
     movies: List<Movie>,
@@ -33,7 +23,6 @@ fun ExampleSectionWithFavorites(
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         items(movies) { movie ->
-            // استخدم MovieCardWithFavorite بدلاً من MovieCard
             MovieCardWithFavorite(
                 movie = movie,
                 onClick = {
@@ -54,9 +43,6 @@ fun ExampleSectionWithFavorites(
     }
 }
 
-/**
- * مثال آخر: استخدام في Grid
- */
 @Composable
 fun ExampleGridWithFavorites(
     movies: List<Movie>,
@@ -92,19 +78,3 @@ fun ExampleGridWithFavorites(
     }
 }
 
-/**
- * ملاحظات مهمة:
- * 
- * 1. لاستخدام FavoriteButton في أي شاشة، تحتاج إلى:
- *    - تمرير favoritesViewModel كـ parameter للشاشة
- *    - استيراد FavoriteButton و MovieCardWithFavorite
- * 
- * 2. في HomeScreen، يمكنك الحصول على favoritesViewModel من MainActivity
- *    عن طريق تمريره كـ parameter
- * 
- * 3. FavoriteButton يعمل بشكل مستقل ولا يحتاج إلى state management إضافي
- * 
- * 4. Snackbar يظهر تلقائياً من ViewModel
- * 
- * 5. البيانات تحفظ في Room Database تلقائياً
- */

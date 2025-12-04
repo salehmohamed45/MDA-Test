@@ -3,10 +3,6 @@ package com.example.mda.localization
 import org.junit.Test
 import org.junit.Assert.*
 
-/**
- * Unit tests for LocalizationKeys
- * Verifies that all required localization keys are defined
- */
 class LocalizationKeysTest {
 
     @Test
@@ -96,7 +92,6 @@ class LocalizationKeysTest {
 
     @Test
     fun testKeyNamingConvention() {
-        // All keys should follow naming convention
         assertTrue(LocalizationKeys.SETTINGS_PASSWORD.startsWith("SETTINGS_") || 
                   LocalizationKeys.SETTINGS_PASSWORD.startsWith("PW_") ||
                   LocalizationKeys.SETTINGS_PASSWORD.startsWith("SQ_") ||

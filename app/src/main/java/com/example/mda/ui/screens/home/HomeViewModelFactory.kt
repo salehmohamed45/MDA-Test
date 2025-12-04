@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.home
 
+// ViewModel for managing UI state
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.mda.data.repository.AuthRepository

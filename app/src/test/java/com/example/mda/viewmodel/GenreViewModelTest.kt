@@ -1,5 +1,6 @@
 package com.example.mda.viewmodel
 
+// ViewModel for managing UI state
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.*
@@ -40,7 +41,6 @@ class GenreViewModelTest {
 
         viewModel = GenreViewModel(repository)
 
-        // advance coroutine scheduler so init/loadGenres completes
         advanceUntilIdle()
 
         val loaded = viewModel.genres.value

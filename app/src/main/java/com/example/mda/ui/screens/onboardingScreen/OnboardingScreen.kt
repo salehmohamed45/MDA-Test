@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.onboarding
 
+// UI screen component
+
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -261,8 +263,6 @@ fun GradientText(
         )
     )
 }
-
-// Data model
 
 data class OnboardingItem(
     val title: String,

@@ -1,5 +1,7 @@
 package com.example.mda.work
 
+// Background worker
+
 import android.content.Context
 import android.os.Build
 import android.util.Log
@@ -14,46 +16,41 @@ class InactiveUserWorker(ctx: Context, params: WorkerParameters) : CoroutineWork
 
     @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun doWork(): Result {
-        Log.d("WorkerDebug", "🟢 InactiveUserWorker: بدأ العمل") // 1. هل اشتغل أصلاً؟
+        Log.d("WorkerDebug", "InactiveUserWorker: Starting work")
 
         return try {
-            // ---------------------- Read user settings ----------------------
             val settingsDataStore = SettingsDataStore(applicationContext)
 
-            // قراءة القيمة وطباعتها
             val notificationsEnabled = settingsDataStore.notificationsFlow.first()
-            Log.d("WorkerDebug", "🧐 حالة الإشعارات في الإعدادات: $notificationsEnabled")
+            Log.d("WorkerDebug", "Notifications enabled in settings: $notificationsEnabled")
 
             if (!notificationsEnabled) {
-                Log.e("WorkerDebug", "⛔ توقف: المستخدم لاغي الإشعارات من إعدادات التطبيق")
+                Log.e("WorkerDebug", "Stopped: User disabled notifications in app settings")
                 return Result.success()
             }
 
-            // ---------------------- Check last open ----------------------
             val prefs = applicationContext.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
             val lastOpen = prefs.getLong("last_open", 0L)
 
-            // حساب الساعات وطباعتها
             val hours = (System.currentTimeMillis() - lastOpen) / (1000 * 60 * 60)
-            Log.d("WorkerDebug", "⏳ آخر فتح كان من: $hours ساعات")
+            Log.d("WorkerDebug", "Last opened: $hours hours ago")
 
-            // الشرط اللي إنت بتجرب بيه
             if (hours >= 0) {
-                Log.d("WorkerDebug", "🚀 الشرط تحقق! جاري إرسال الإشعار...")
+                Log.d("WorkerDebug", "Condition met! Sending notification...")
 
                 NotificationHelper.sendNotification(
                     applicationContext,
-                    "وحشتنا يا فنان!",
-                    "بقالك فترة متفرجتش — الحق افتح popular وشوف الجديد."
+                    "We miss you!",
+                    "It's been a while since you've watched anything. Check out popular movies and see what's new."
                 )
-                Log.d("WorkerDebug", "✅ تم استدعاء دالة الإرسال")
+                Log.d("WorkerDebug", "Notification sent")
             } else {
-                Log.d("WorkerDebug", "⚠️ الشرط لم يتحقق (عدد الساعات غير كافي)")
+                Log.d("WorkerDebug", "Condition not met (insufficient hours)")
             }
 
             Result.success()
         } catch (e: Exception) {
-            Log.e("WorkerDebug", "❌ خطأ (Crash) داخل الـ Worker: ${e.message}")
+            Log.e("WorkerDebug", "Error in Worker: ${e.message}")
             e.printStackTrace()
             Result.failure()
         }

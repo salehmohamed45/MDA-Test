@@ -1,17 +1,6 @@
 package com.example.mda.localization
 
-/**
- * Centralized Localization Keys for the Movie Discovery App
- * All user-facing strings are defined here with consistent naming convention:
- * - SCREEN_FEATURE_ELEMENT (e.g., HOME_TITLE, SEARCH_PLACEHOLDER)
- * - ERROR_TYPE (e.g., ERROR_INVALID_EMAIL)
- * - BTN_ACTION (e.g., BTN_LOGIN, BTN_SAVE)
- * - LABEL_FIELD (e.g., LABEL_USERNAME)
- * - MSG_TYPE (e.g., MSG_SUCCESS, MSG_LOADING)
- */
-
 object LocalizationKeys {
-    // ==================== HOME SCREEN ====================
     const val HOME_GREETING_MORNING = "home_greeting_morning"
     const val HOME_GREETING_AFTERNOON = "home_greeting_afternoon"
     const val HOME_GREETING_EVENING = "home_greeting_evening"
@@ -25,7 +14,6 @@ object LocalizationKeys {
     const val HOME_POPULAR_TV = "home_popular_tv"
     const val HOME_TOP_RATED = "home_top_rated"
 
-    // ==================== SEARCH SCREEN ====================
     const val SEARCH_TITLE = "search_title"
     const val DEVELOPER_TOOLS = "developer_tools"
     const val SEARCH_FILTER_ALL = "search_filter_all"
@@ -41,7 +29,6 @@ object LocalizationKeys {
     const val SEARCH_TRY_ANOTHER = "search_try_another"
     const val SEARCH_START_TYPING = "search_start_typing"
 
-    // ==================== MOVIE DETAIL SCREEN ====================
     const val DETAIL_PRODUCTION_DETAILS = "detail_production_details"
     const val DETAIL_SPOKEN_LANGUAGES = "detail_spoken_languages"
     const val DETAIL_PRODUCTION_COUNTRIES = "detail_production_countries"
@@ -58,19 +45,17 @@ object LocalizationKeys {
     const val DETAIL_RATING = "detail_rating"
     const val DETAIL_OVERVIEW = "detail_overview"
     const val DETAIL_DISCOVER = "detail_discover"
-    const val DETAIL_RECOMMENDATIONS_COUNT = "detail_recommendations_count" // {count}
-    const val DETAIL_SIMILAR_COUNT = "detail_similar_count" // {count}
+    const val DETAIL_RECOMMENDATIONS_COUNT = "detail_recommendations_count"
+    const val DETAIL_SIMILAR_COUNT = "detail_similar_count"
     const val DETAIL_NO_RECOMMENDATIONS = "detail_no_recommendations"
     const val DETAIL_NO_SIMILAR = "detail_no_similar"
 
-    // Extra labels for About section
     const val DETAIL_ABOUT_MOVIE = "detail_about_movie"
     const val DETAIL_STATUS = "detail_status"
     const val DETAIL_ORIGINAL_LANGUAGE = "detail_original_language"
     const val DETAIL_PRODUCTION_COUNTRY_SINGLE = "detail_production_country"
     const val DETAIL_PRODUCTION_COMPANIES = "detail_production_companies"
 
-    // ==================== AUTHENTICATION ====================
     const val AUTH_LOGIN_TITLE = "auth_login_title"
     const val AUTH_SIGNUP_TITLE = "auth_signup_title"
     const val AUTH_AUTHENTICATING = "auth_authenticating"
@@ -80,7 +65,6 @@ object LocalizationKeys {
     const val AUTH_LOGIN_REQUIRED = "auth_login_required"
     const val AUTH_LOGIN_REQUIRED_MSG = "auth_login_required_msg"
 
-    // ==================== SETTINGS SCREEN ====================
     const val SETTINGS_TITLE = "settings_title"
     const val SETTINGS_OTHER = "settings_other"
     const val SETTINGS_FAVORITES = "settings_favorites"
@@ -97,24 +81,20 @@ object LocalizationKeys {
     const val SETTINGS_LOGIN_PROMPT = "settings_login_prompt"
     const val SETTINGS_LOGIN_SUBTITLE = "settings_login_subtitle"
 
-    // ==================== LANGUAGE SETTINGS SCREEN ====================
     const val SETTINGS_LANGUAGE_SELECT_TITLE = "settings_language_select_title"
     const val SETTINGS_LANGUAGE_INFO_TITLE = "settings_language_info_title"
     const val SETTINGS_LANGUAGE_INFO_BODY = "settings_language_info_body"
     const val SETTINGS_LANGUAGE_SELECTED_CD = "settings_language_selected_cd"
 
-    // ==================== PROFILE ====================
     const val PROFILE_TITLE = "profile_title"
     const val PROFILE_LOGIN_OR_SIGNUP = "profile_login_or_signup"
     const val PROFILE_ACCESS_ACCOUNT = "profile_access_account"
 
-    // ==================== FAVORITES ====================
     const val FAVORITES_TITLE = "favorites_title"
     const val FAVORITES_EMPTY = "favorites_empty"
     const val FAVORITES_ADD_SUCCESS = "favorites_add_success"
     const val FAVORITES_REMOVE_SUCCESS = "favorites_remove_success"
 
-    // ==================== HELP & FAQ ====================
     const val HELP_TITLE = "help_title"
     const val HELP_FAQ_Q1 = "help_faq_q1"
     const val HELP_FAQ_A1 = "help_faq_a1"
@@ -129,7 +109,6 @@ object LocalizationKeys {
     const val HELP_FAQ_Q6 = "help_faq_q6"
     const val HELP_FAQ_A6 = "help_faq_a6"
 
-    // ==================== PRIVACY POLICY ====================
     const val PRIVACY_TITLE = "privacy_title"
     const val PRIVACY_COMMITMENT_TITLE = "privacy_commitment_title"
     const val PRIVACY_COMMITMENT_DESC = "privacy_commitment_desc"
@@ -141,7 +120,6 @@ object LocalizationKeys {
     const val PRIVACY_LEARN_MORE_DESC = "privacy_learn_more_desc"
     const val PRIVACY_VIEW_TMDB = "privacy_view_tmdb"
 
-    // ==================== ABOUT ====================
     const val ABOUT_TITLE = "about_title"
     const val ABOUT_APP_NAME = "about_app_name"
     const val ABOUT_APP_DESC = "about_app_desc"
@@ -166,7 +144,6 @@ object LocalizationKeys {
     const val ABOUT_TECH_ITEM_6 = "about_tech_item_6"
     const val ABOUT_COPYRIGHT = "about_copyright"
 
-    // ==================== KIDS MODE ====================
     const val KIDS_TITLE = "kids_title"
     const val KIDS_SEARCH_PLACEHOLDER = "kids_search_placeholder"
     const val KIDS_FILTER_MOVIES = "kids_filter_movies"
@@ -176,7 +153,6 @@ object LocalizationKeys {
     const val KIDS_NO_RESULTS = "kids_no_results"
     const val KIDS_TRY_ANOTHER = "kids_try_another"
 
-    // ==================== GENRE DETAILS ====================
     const val GENRE_TITLE = "genre_title"
     const val GENRE_FILTER_ALL = "genre_filter_all"
     const val GENRE_FILTER_TOP_RATED = "genre_filter_top_rated"
@@ -186,7 +162,6 @@ object LocalizationKeys {
     const val GENRE_FILTER_DIALOG_TITLE = "genre_filter_dialog_title"
     const val GENRE_FILTER_CLOSE = "genre_filter_close"
 
-    // ==================== BUTTONS ====================
     const val BTN_LOGIN = "btn_login"
     const val BTN_SIGNUP = "btn_signup"
     const val BTN_LOGOUT = "btn_logout"
@@ -200,7 +175,6 @@ object LocalizationKeys {
     const val BTN_NEXT = "btn_next"
     const val BTN_PREVIOUS = "btn_previous"
 
-    // ==================== LABELS ====================
     const val LABEL_USERNAME = "label_username"
     const val LABEL_EMAIL = "label_email"
     const val LABEL_PASSWORD = "label_password"
@@ -208,7 +182,6 @@ object LocalizationKeys {
     const val LABEL_LANGUAGE = "label_language"
     const val LABEL_THEME = "label_theme"
 
-    // ==================== MESSAGES ====================
     const val MSG_LOADING = "msg_loading"
     const val MSG_SUCCESS = "msg_success"
     const val MSG_ERROR = "msg_error"
@@ -216,18 +189,15 @@ object LocalizationKeys {
     const val MSG_NO_INTERNET = "msg_no_internet"
     const val MSG_REFRESH = "msg_refresh"
 
-    // ==================== VALIDATION ====================
     const val VALIDATION_REQUIRED = "validation_required"
     const val VALIDATION_INVALID_EMAIL = "validation_invalid_email"
     const val VALIDATION_PASSWORD_SHORT = "validation_password_short"
     const val VALIDATION_PASSWORD_MISMATCH = "validation_password_mismatch"
 
-    // ==================== DIALOGS ====================
     const val DIALOG_CONFIRM_DELETE = "dialog_confirm_delete"
     const val DIALOG_CONFIRM_LOGOUT = "dialog_confirm_logout"
     const val DIALOG_CONFIRM_CLEAR_HISTORY = "dialog_confirm_clear_history"
 
-    // ==================== NAVIGATION ====================
     const val NAV_HOME = "nav_home"
     const val NAV_MOVIES = "nav_movies"
     const val NAV_ACTORS = "nav_actors"
@@ -238,14 +208,12 @@ object LocalizationKeys {
     const val NAV_KIDS = "nav_kids"
     const val NAV_HISTORY = "nav_history"
 
-    // ==================== FILTER OPTIONS ====================
     const val FILTER_ALL_MOVIES = "filter_all_movies"
     const val FILTER_TOP_RATED = "filter_top_rated"
     const val FILTER_NEWEST = "filter_newest"
     const val FILTER_MOST_POPULAR = "filter_most_popular"
     const val FILTER_FAMILY_FRIENDLY = "filter_family_friendly"
 
-    // ==================== COMMON ====================
     const val COMMON_LOADING = "common_loading"
     const val COMMON_ERROR = "common_error"
     const val COMMON_RETRY = "common_retry"
@@ -266,7 +234,6 @@ object LocalizationKeys {
     const val COMMON_EXPAND = "common_expand"
     const val COMMON_COLLAPSE = "common_collapse"
 
-    // ==================== PASSWORD / KIDS PIN ====================
     const val PW_MANAGE_DESC = "pw_manage_desc"
     const val PW_REQUIRE_PIN_LABEL = "pw_require_pin_label"
     const val PW_SET_PIN_FIRST = "pw_set_pin_first"
@@ -288,7 +255,6 @@ object LocalizationKeys {
     const val PW_INCORRECT_OLD_PIN = "pw_incorrect_old_pin"
     const val PW_FORGOT_PIN = "pw_forgot_pin"
 
-    // ==================== SECURITY QUESTIONS ====================
     const val SQ_TITLE = "sq_title"
     const val SQ_VERIFY_TITLE = "sq_verify_title"
     const val SQ_HEADER_SETUP = "sq_header_setup"
@@ -309,7 +275,5 @@ object LocalizationKeys {
     const val SQ_QUESTION_1 = "sq_question_1"
     const val SQ_QUESTION_2 = "sq_question_2"
     const val SQ_QUESTION_3 = "sq_question_3"
-
-    // ==================== PRIVACY POLICY ====================
 
 }

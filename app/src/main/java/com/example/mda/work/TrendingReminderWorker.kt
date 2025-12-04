@@ -1,5 +1,7 @@
 package com.example.mda.work
 
+// Background worker
+
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -14,16 +16,13 @@ class TrendingReminderWorker(ctx: Context, params: WorkerParameters) : Coroutine
     @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun doWork(): Result {
         return try {
-            // ---------------------- Read user settings ----------------------
             val settingsDataStore = SettingsDataStore(applicationContext)
             val notificationsEnabled = settingsDataStore.notificationsFlow.first()
 
             if (!notificationsEnabled) {
-                // المستخدم مطفي الإشعارات → لا نفعل أي شيء
                 return Result.success()
             }
 
-            // ---------------------- Send Notification ----------------------
             NotificationHelper.sendNotification(
                 applicationContext,
                 "جديد اليوم 👀",

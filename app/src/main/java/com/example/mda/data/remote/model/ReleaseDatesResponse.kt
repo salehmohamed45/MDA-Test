@@ -1,8 +1,8 @@
 package com.example.mda.data.remote.model
 
-import com.google.gson.annotations.SerializedName
+// Data model
 
-// TMDB /movie/{movie_id}/release_dates
+import com.google.gson.annotations.SerializedName
 
 data class ReleaseDatesResponse(
     @SerializedName("id") val id: Int = 0,

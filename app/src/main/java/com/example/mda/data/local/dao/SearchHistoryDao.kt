@@ -1,20 +1,14 @@
 package com.example.mda.data.local.dao
 
+// Database access object
+
 import androidx.room.*
 import com.example.mda.data.local.entities.SearchHistoryEntity
 import kotlinx.coroutines.flow.Flow
 
-/**
- * SearchHistoryDao
- * - يمنع التكرار عبر UNIQUE index.
- * - يستخدم COLLATE NOCASE لجعل البحث غير حساس لحالة الحروف.
- * - يحتوي على upsertSafe (Insert IGNORE + Update timestamp).
- * - يدعم استرجاع التاريخ كسريان Flow أو دفعة واحدة.
- */
 @Dao
 interface SearchHistoryDao {
 
-    // ✅ هيرجع فقط السجلات الخاصة بالمستخدم الحالي
     @Query("SELECT * FROM search_history WHERE userId = :userId ORDER BY timestamp DESC LIMIT 10")
     fun getRecentHistory(userId: String?): Flow<List<SearchHistoryEntity>>
 

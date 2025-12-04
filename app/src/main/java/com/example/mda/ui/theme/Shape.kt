@@ -1,6 +1,7 @@
-// Khaled Edit: Default rounded corner shapes.
 
 package com.example.mda.ui.theme
+
+// Theme configuration
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Shapes

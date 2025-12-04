@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.mda.data.local.entities.Cast
 
-
 @Composable
 fun CastItem(
     cast: Cast,
@@ -28,7 +27,6 @@ fun CastItem(
             .width(120.dp)
             .clickable { onClick(cast.id) }
     ) {
-        // صورة الممثل داخل Surface
         Surface(
             shape = MaterialTheme.shapes.medium,
             color = MaterialTheme.colorScheme.surfaceVariant,

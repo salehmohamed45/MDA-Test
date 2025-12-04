@@ -1,5 +1,7 @@
 package com.example.mda.ui.navigation
 
+// Navigation configuration
+
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -19,10 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 
-/**
- * Bottom navigation bar عام وجاهز للاستخدام مع NavController.
- * لا يغير الشكل — يمنحك سلوك Nav كامل (save/restore state).
- */
 @Composable
 fun BottomNavigationBar(navController: NavController) {
     val items = listOf(
@@ -32,14 +30,13 @@ fun BottomNavigationBar(navController: NavController) {
         BottomNavItem(route = "profile", icon = Icons.Default.Person, label = "Profile")
     )
 
-    // currentBackStackEntryAsState() يستخدم لمراقبة الراوت الحالي
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
     NavigationBar(
-        containerColor = MaterialTheme.colorScheme.surface, // بدل من لون مختلف
-        tonalElevation = 3.dp, // ظل خفيف
-        modifier = Modifier.height(56.dp) // بدل من 80dp أو أكتر
+        containerColor = MaterialTheme.colorScheme.surface,
+        tonalElevation = 3.dp,
+        modifier = Modifier.height(56.dp)
     ) {
         items.forEach { item ->
             val selected = currentRoute == item.route
@@ -47,7 +44,6 @@ fun BottomNavigationBar(navController: NavController) {
                 selected = selected,
                 onClick = {
                     if (currentRoute != item.route) {
-                        // هذه الإعدادات تضمن سلوك جيد عند التنقل (singleTop, restore state)
                         navController.navigate(item.route) {
                             popUpTo(navController.graph.startDestinationId) { saveState = true }
                             launchSingleTop = true
@@ -59,7 +55,6 @@ fun BottomNavigationBar(navController: NavController) {
                     Icon(
                         imageVector = item.icon,
                         contentDescription = item.label,
-                        // اللون يتغير حسب الـ selected (تقدر تعدل الألوان حسب الثيم)
                         tint = if (selected) Color.Cyan else Color.Gray
                     )
                 },

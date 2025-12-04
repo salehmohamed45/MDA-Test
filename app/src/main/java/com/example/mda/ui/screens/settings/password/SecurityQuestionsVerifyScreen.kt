@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.settings.password
 
+// UI screen component
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -79,7 +81,7 @@ fun SecurityQuestionsVerifyScreen(
 
     val qIndices = remember(qa.q1, qa.q2, qa.q3) {
         val list = listOfNotNull(qa.q1, qa.q2, qa.q3)
-        list.shuffled() // randomize order when screen created
+        list.shuffled()
     }
 
     fun verify() {
@@ -105,10 +107,8 @@ fun SecurityQuestionsVerifyScreen(
         val selectedIndices = listOf(a1Index, a2Index, a3Index)
 
         val ok = if (expectedIndexForDisplayed.all { it != null }) {
-            // Compare by indices (language-independent)
             expectedIndexForDisplayed.zip(selectedIndices).all { (expected, selected) -> expected == selected }
         } else {
-            // Fallback: compare by text (legacy entries)
             val answersStored = listOf(qa.a1.orEmpty(), qa.a2.orEmpty(), qa.a3.orEmpty())
             val expectedTextForDisplayed = qIndices.map { idx ->
                 val pos = indexMap.indexOf(idx)

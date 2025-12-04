@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.actordetails
 
+// UI screen component
+
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi

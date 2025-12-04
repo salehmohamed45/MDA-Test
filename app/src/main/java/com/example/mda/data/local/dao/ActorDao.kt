@@ -1,5 +1,7 @@
 package com.example.mda.data.local.dao
 
+// Database access object
+
 import androidx.room.*
 import com.example.mda.data.local.entities.ActorEntity
 
@@ -15,6 +17,4 @@ interface ActorDao {
     @Query("SELECT * FROM actors")
     suspend fun getAllActors(): List<ActorEntity>
 
-
-    // Khalid: DAO for caching actor info and retrieving details
 }

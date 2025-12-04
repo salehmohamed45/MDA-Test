@@ -1,5 +1,7 @@
 package com.example.mda.ui.screens.actors
 
+// ViewModel for managing UI state
+
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

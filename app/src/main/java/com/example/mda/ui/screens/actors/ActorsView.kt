@@ -31,11 +31,9 @@ fun ActorsView(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
-    // 1. Save scroll position across navigation (Home <-> Actors)
     val gridState = rememberSaveable(saver = LazyGridState.Saver) { LazyGridState() }
     val listState = rememberSaveable(saver = LazyListState.Saver) { LazyListState() }
 
-    // 2. Pagination Logic
     LaunchedEffect(
         gridState.firstVisibleItemIndex,
         listState.firstVisibleItemIndex,
@@ -49,7 +47,6 @@ fun ActorsView(
             listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
         }
 
-        // Load more when reaching the bottom (threshold of 6 items)
         if (lastVisibleItemIndex != null && lastVisibleItemIndex >= actors.size - 6) {
             viewModel.loadMoreActors()
         }
@@ -67,7 +64,6 @@ fun ActorsView(
             items(actors, key = { "grid-${it.id}" }) { actor ->
                 ActorGridItem(actor = actor, navController = navController)
             }
-            // Bottom spacer to avoid navigation bar overlap
             item { Spacer(modifier = Modifier.height(100.dp)) }
         }
     } else {
@@ -87,7 +83,6 @@ fun ActorsView(
                     ActorListItem(actor = actor, navController = navController)
                 }
             }
-            // Bottom spacer to avoid navigation bar overlap
             item { Box(modifier = Modifier.height(100.dp)) }
         }
     }
